@@ -130,37 +130,41 @@
 </head>
 
 <script>
-document.getElementById("commandeForm").addEventListener("submit", function(e) {
-  e.preventDefault();
+  document.getElementById("commandeForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Empêche le rechargement de la page
 
-  if (!validerCommande()) return; // ⛔ N'envoie pas si validation échoue
+    const data = {
+      nom: document.querySelector('input[name="nom"]').value,
+      tel: document.querySelector('input[name="telephone"]').value,
+      taille: document.querySelector('input[name="taille"]:checked')?.value || '',
+      base: document.querySelector('input[name="base"]:checked')?.value || '',
+      proteines: Array.from(document.querySelectorAll('input[name="proteines"]:checked')).map(el => el.value).join(", "),
+      ingredients: Array.from(document.querySelectorAll('input[name="ingredients"]:checked')).map(el => el.value).join(", "),
+      remarques: document.querySelector('textarea[name="remarques"]').value || ''
+    };
 
-  const data = {
-    nom: document.querySelector('input[name="nom"]').value,
-    tel: document.querySelector('input[name="telephone"]').value,
-    taille: document.querySelector('input[name="taille"]:checked').value,
-    base: document.querySelector('input[name="base"]:checked').value,
-    proteines: Array.from(document.querySelectorAll('input[name="proteines"]:checked')).map(el => el.value).join(", "),
-    ingredients: Array.from(document.querySelectorAll('input[name="ingredients"]:checked')).map(el => el.value).join(", "),
-    remarques: document.querySelector('textarea[name="remarques"]').value
-  };
-
-  fetch("https://script.google.com/macros/s/AKfycbyjn9-mcQrUX5ZAhlwpwoA0dxu6bnBoFUIm2a5rFxfYOJnDAo0thQab54YJWQJGA5Q/exec", {
-    method: "POST",
-    body: JSON.stringify(data),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(response => {
-    alert("Commande envoyée !");
-    document.getElementById("commandeForm").reset();
-  })
-  .catch(error => {
-    alert("Erreur lors de l'envoi !");
-    console.error(error);
+    fetch("https://script.google.com/macros/s/AKfycbyjn9-mcQrUX5ZAhlwpwoA0dxu6bnBoFUIm2a5rFxfYOJnDAo0thQab54YJWQJGA5Q/exec", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => {
+      if (response.ok) {
+        alert("🎉 Ta commande a bien été enregistrée !");
+        document.getElementById("commandeForm").reset();
+      } else {
+        alert("❌ Erreur lors de l'envoi. Réessaie.");
+      }
+    })
+    .catch(error => {
+      alert("❌ Erreur lors de la soumission. Vérifie ta connexion.");
+      console.error(error);
+    });
   });
-});
-
 </script>
+
 
 
 <body>
