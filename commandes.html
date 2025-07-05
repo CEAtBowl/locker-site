@@ -91,6 +91,41 @@
       margin-top: 2em;
       color: #888;
     }
+
+.ingredients-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.ingredients-grid label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.8em;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.ingredients-grid label:hover {
+  transform: scale(1.05);
+}
+
+.ingredients-grid img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  margin-bottom: 0.5em;
+}
+
+.ingredients-grid input[type="checkbox"] {
+  margin-bottom: 0.5em;
+}
+
   </style>
 </head>
 <body>
@@ -110,34 +145,36 @@
     <div class="note">L = 5 ingrédients / 1 protéine — XL = 6 ingrédients / 2 protéines (minimum 5 ingrédients et 1 protéine)</div>
 
     <label>Choisis ta/tes protéine(s) :</label>
-    <div class="checkboxes" id="protéines">
-      <label><input type="checkbox" name="proteines" value="saumon"> Saumon</label>
-      <label><input type="checkbox" name="proteines" value="poulet"> Poulet</label>
-      <label><input type="checkbox" name="proteines" value="oeufs"> Œufs</label>
-      <label><input type="checkbox" name="proteines" value="tofu"> Tofu</label>
-      <label><input type="checkbox" name="proteines" value="thon"> Thon</label>
-    </div>
+  <div class="ingredients-grid" id="protéines">
+  <label><input type="checkbox" name="proteines" value="saumon"><img src="images/saumon.png" alt="Saumon"><span>Saumon</span></label>
+  <label><input type="checkbox" name="proteines" value="poulet"><img src="images/poulet.png" alt="Poulet"><span>Poulet</span></label>
+  <label><input type="checkbox" name="proteines" value="oeufs"><img src="images/oeufs.png" alt="Œufs"><span>Œufs</span></label>
+  <label><input type="checkbox" name="proteines" value="tofu"><img src="images/tofu.png" alt="Tofu"><span>Tofu</span></label>
+  <label><input type="checkbox" name="proteines" value="thon"><img src="images/thon.png" alt="Thon"><span>Thon</span></label>
+</div>
+
 
     <label>Choisis tes ingrédients :</label>
-    <div class="checkboxes" id="ingredients">
-      <label><input type="checkbox" name="ingredients" value="avocat"> Avocat</label>
-      <label><input type="checkbox" name="ingredients" value="betterave"> Betterave</label>
-      <label><input type="checkbox" name="ingredients" value="carotte"> Carotte</label>
-      <label><input type="checkbox" name="ingredients" value="champignon"> Champignon</label>
-      <label><input type="checkbox" name="ingredients" value="chouxrouge"> Choux rouge</label>
-      <label><input type="checkbox" name="ingredients" value="concombre"> Concombre</label>
-      <label><input type="checkbox" name="ingredients" value="edamame"> Edamame</label>
-      <label><input type="checkbox" name="ingredients" value="feta"> Feta</label>
-      <label><input type="checkbox" name="ingredients" value="grenade"> Grenade</label>
-      <label><input type="checkbox" name="ingredients" value="mais"> Maïs</label>
-      <label><input type="checkbox" name="ingredients" value="mangue"> Mangue</label>
-      <label><input type="checkbox" name="ingredients" value="mozzarella"> Mozzarella</label>
-      <label><input type="checkbox" name="ingredients" value="oignonrouge"> Oignon rouge</label>
-      <label><input type="checkbox" name="ingredients" value="poivrons"> Poivrons</label>
-      <label><input type="checkbox" name="ingredients" value="radis"> Radis</label>
-      <label><input type="checkbox" name="ingredients" value="tomates"> Tomates</label>
-      <label><input type="checkbox" name="ingredients" value="wakame"> Wakame</label>
-    </div>
+<div class="ingredients-grid" id="ingredients">
+  <label><input type="checkbox" name="ingredients" value="avocat"><img src="images/avocat.png" alt="Avocat"><span>Avocat</span></label>
+  <label><input type="checkbox" name="ingredients" value="betterave"><img src="images/betterave.png" alt="Betterave"><span>Betterave</span></label>
+  <label><input type="checkbox" name="ingredients" value="carotte"><img src="images/carotte.png" alt="Carotte"><span>Carotte</span></label>
+  <label><input type="checkbox" name="ingredients" value="champignon"><img src="images/champignon.png" alt="Champignon"><span>Champignon</span></label>
+  <label><input type="checkbox" name="ingredients" value="chouxrouge"><img src="images/chouxrouge.png" alt="Choux rouge"><span>Choux rouge</span></label>
+  <label><input type="checkbox" name="ingredients" value="concombre"><img src="images/concombre.png" alt="Concombre"><span>Concombre</span></label>
+  <label><input type="checkbox" name="ingredients" value="edamame"><img src="images/edamame.png" alt="Edamame"><span>Edamame</span></label>
+  <label><input type="checkbox" name="ingredients" value="feta"><img src="images/feta.png" alt="Feta"><span>Feta</span></label>
+  <label><input type="checkbox" name="ingredients" value="grenade"><img src="images/grenade.png" alt="Grenade"><span>Grenade</span></label>
+  <label><input type="checkbox" name="ingredients" value="mais"><img src="images/mais.png" alt="Maïs"><span>Maïs</span></label>
+  <label><input type="checkbox" name="ingredients" value="mangue"><img src="images/mangue.png" alt="Mangue"><span>Mangue</span></label>
+  <label><input type="checkbox" name="ingredients" value="mozzarella"><img src="images/mozzarella.png" alt="Mozzarella"><span>Mozzarella</span></label>
+  <label><input type="checkbox" name="ingredients" value="oignonrouge"><img src="images/oignonrouge.png" alt="Oignon rouge"><span>Oignon rouge</span></label>
+  <label><input type="checkbox" name="ingredients" value="poivrons"><img src="images/poivrons.png" alt="Poivrons"><span>Poivrons</span></label>
+  <label><input type="checkbox" name="ingredients" value="radis"><img src="images/radis.png" alt="Radis"><span>Radis</span></label>
+  <label><input type="checkbox" name="ingredients" value="tomates"><img src="images/tomates.png" alt="Tomates"><span>Tomates</span></label>
+  <label><input type="checkbox" name="ingredients" value="wakame"><img src="images/wakame.png" alt="Wakame"><span>Wakame</span></label>
+</div>
+
 
     <label>Remarques :</label>
     <textarea name="remarques" rows="3" placeholder="Allergies, sauces, préférences..."></textarea>
