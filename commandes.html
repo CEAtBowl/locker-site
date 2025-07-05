@@ -144,21 +144,13 @@
         remarques: document.querySelector('textarea[name="remarques"]').value || ''
       };
 
-      fetch("https://script.google.com/macros/s/AKfycbzkO0NwGv6wt3MtSPkccQSWxbQ1mQ6QBMbkh5V3rpWpV9kKsZVEMs5cBiPdvRNQcw/exec", {
+      fetch("/.netlify/functions/proxy", {
   method: "POST",
   headers: {
     "Content-Type": "application/json"
   },
-  body: JSON.stringify(data)
+  body: JSON.stringify(formData)
 })
-.then(response => response.json())
-.then(data => {
-  alert("Commande bien enregistrée !");
-})
-.catch(error => {
-  console.error("Erreur lors de la soumission :", error);
-  alert("Erreur lors de la soumission. Vérifiez votre connexion.");
-});
 
     });
   });
