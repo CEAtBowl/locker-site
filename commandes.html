@@ -128,6 +128,38 @@
 
   </style>
 </head>
+
+<script>
+document.getElementById("commandeForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const data = {
+    nom: document.querySelector('input[name="nom"]').value,
+    tel: document.querySelector('input[name="tel"]').value,
+    taille: document.querySelector('input[name="taille"]:checked').value,
+    base: document.querySelector('input[name="base"]:checked').value,
+    proteines: Array.from(document.querySelectorAll('input[name="proteines"]:checked')).map(el => el.value),
+    ingredients: Array.from(document.querySelectorAll('input[name="ingredients"]:checked')).map(el => el.value),
+    commentaires: document.querySelector('textarea[name="commentaires"]').value
+  };
+
+  fetch("https://script.google.com/macros/s/AKfycbyjn9-mcQrUX5ZAhlwpwoA0dxu6bnBoFUIm2a5rFxfYOJnDAo0thQab54YJWQJGA5Q/exec", {
+    method: "POST",
+    body: JSON.stringify(data),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(response => {
+    alert("Commande envoyée !");
+    document.getElementById("commandeForm").reset();
+  })
+  .catch(error => {
+    alert("Erreur lors de l'envoi !");
+    console.error(error);
+  });
+});
+</script>
+
+
 <body>
   <h1>Commande ton pokébowl</h1>
   <form name="pokeForm" method="POST" data-netlify="true" onsubmit="return validerCommande()">
@@ -151,7 +183,7 @@
   <label><input type="radio" name="base" value="pates"><img src="images/pates.png" alt="Pâtes"><span>Pâtes</span></label>
 </div>
 
-    
+
     <label>Choisis ta/tes protéine(s) :</label>
   <div class="ingredients-grid" id="protéines">
   <label><input type="checkbox" name="proteines" value="saumon"><img src="images/saumon.png" alt="Saumon"><span>Saumon</span></label>
