@@ -133,14 +133,16 @@
 document.getElementById("commandeForm").addEventListener("submit", function(e) {
   e.preventDefault();
 
+  if (!validerCommande()) return; // ⛔ N'envoie pas si validation échoue
+
   const data = {
     nom: document.querySelector('input[name="nom"]').value,
-    tel: document.querySelector('input[name="tel"]').value,
+    tel: document.querySelector('input[name="telephone"]').value,
     taille: document.querySelector('input[name="taille"]:checked').value,
     base: document.querySelector('input[name="base"]:checked').value,
-    proteines: Array.from(document.querySelectorAll('input[name="proteines"]:checked')).map(el => el.value),
-    ingredients: Array.from(document.querySelectorAll('input[name="ingredients"]:checked')).map(el => el.value),
-    commentaires: document.querySelector('textarea[name="commentaires"]').value
+    proteines: Array.from(document.querySelectorAll('input[name="proteines"]:checked')).map(el => el.value).join(", "),
+    ingredients: Array.from(document.querySelectorAll('input[name="ingredients"]:checked')).map(el => el.value).join(", "),
+    remarques: document.querySelector('textarea[name="remarques"]').value
   };
 
   fetch("https://script.google.com/macros/s/AKfycbyjn9-mcQrUX5ZAhlwpwoA0dxu6bnBoFUIm2a5rFxfYOJnDAo0thQab54YJWQJGA5Q/exec", {
@@ -157,12 +159,13 @@ document.getElementById("commandeForm").addEventListener("submit", function(e) {
     console.error(error);
   });
 });
+
 </script>
 
 
 <body>
   <h1>Commande ton pokébowl</h1>
-  <form name="pokeForm" method="POST" data-netlify="true" onsubmit="return validerCommande()">
+  <form id="commandeForm" onsubmit="return validerCommande()">
     <label>Nom</label>
     <input type="text" name="nom" required>
 
