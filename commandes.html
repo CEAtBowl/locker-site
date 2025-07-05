@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Commande ton pokébowl</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f5;
+      padding: 2em;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ff3a3a;
+    }
+
+    form {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      padding: 2em;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 1.2em;
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    textarea {
+      width: 100%;
+      padding: 0.8em;
+      margin-top: 0.5em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .options, .checkboxes {
+      margin-top: 0.5em;
+    }
+
+    .options label, .checkboxes label {
+      font-weight: normal;
+      display: inline-block;
+      margin-right: 1em;
+    }
+
+    .checkboxes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+
+    .checkboxes label {
+      display: flex;
+      align-items: center;
+      gap: 0.4em;
+    }
+
+    button {
+      background-color: #ff3a3a;
+      color: white;
+      padding: 1em 2em;
+      border: none;
+      border-radius: 12px;
+      font-size: 1em;
+      margin-top: 2em;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #e73232;
+    }
+
+    .note {
+      font-size: 0.9em;
+      color: #666;
+      margin-top: 0.5em;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2em;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <h1>Commande ton pokébowl</h1>
+  <form name="pokeForm" method="POST" data-netlify="true" onsubmit="return validerCommande()">
+    <label>Nom</label>
+    <input type="text" name="nom" required>
+
+    <label>Téléphone</label>
+    <input type="tel" name="telephone" required>
+
+    <label>Taille du poké :</label>
+    <div class="options">
+      <label><input type="radio" name="taille" value="L" required onclick="setTaille('L')"> L</label>
+      <label><input type="radio" name="taille" value="XL" onclick="setTaille('XL')"> XL</label>
+    </div>
+    <div class="note">L = 5 ingrédients / 1 protéine — XL = 6 ingrédients / 2 protéines (minimum 5 ingrédients et 1 protéine)</div>
+
+    <label>Choisis ta/tes protéine(s) :</label>
+    <div class="checkboxes" id="protéines">
+      <label><input type="checkbox" name="proteines" value="saumon"> Saumon</label>
+      <label><input type="checkbox" name="proteines" value="poulet"> Poulet</label>
+      <label><input type="checkbox" name="proteines" value="oeufs"> Œufs</label>
+      <label><input type="checkbox" name="proteines" value="tofu"> Tofu</label>
+      <label><input type="checkbox" name="proteines" value="thon"> Thon</label>
+    </div>
+
+    <label>Choisis tes ingrédients :</label>
+    <div class="checkboxes" id="ingredients">
+      <label><input type="checkbox" name="ingredients" value="avocat"> Avocat</label>
+      <label><input type="checkbox" name="ingredients" value="betterave"> Betterave</label>
+      <label><input type="checkbox" name="ingredients" value="carotte"> Carotte</label>
+      <label><input type="checkbox" name="ingredients" value="champignon"> Champignon</label>
+      <label><input type="checkbox" name="ingredients" value="chouxrouge"> Choux rouge</label>
+      <label><input type="checkbox" name="ingredients" value="concombre"> Concombre</label>
+      <label><input type="checkbox" name="ingredients" value="edamame"> Edamame</label>
+      <label><input type="checkbox" name="ingredients" value="feta"> Feta</label>
+      <label><input type="checkbox" name="ingredients" value="grenade"> Grenade</label>
+      <label><input type="checkbox" name="ingredients" value="mais"> Maïs</label>
+      <label><input type="checkbox" name="ingredients" value="mangue"> Mangue</label>
+      <label><input type="checkbox" name="ingredients" value="mozzarella"> Mozzarella</label>
+      <label><input type="checkbox" name="ingredients" value="oignonrouge"> Oignon rouge</label>
+      <label><input type="checkbox" name="ingredients" value="poivrons"> Poivrons</label>
+      <label><input type="checkbox" name="ingredients" value="radis"> Radis</label>
+      <label><input type="checkbox" name="ingredients" value="tomates"> Tomates</label>
+      <label><input type="checkbox" name="ingredients" value="wakame"> Wakame</label>
+    </div>
+
+    <label>Remarques :</label>
+    <textarea name="remarques" rows="3" placeholder="Allergies, sauces, préférences..."></textarea>
+
+    <button type="submit">Valider ma commande</button>
+  </form>
+
+  <footer>
+    <p>&copy; 2025 C&E Atelier de Bowl</p>
+  </footer>
+
+  <script>
+    let tailleChoisie = "";
+
+    function setTaille(taille) {
+      tailleChoisie = taille;
+    }
+
+    function validerCommande() {
+      const ingrédients = document.querySelectorAll('input[name="ingredients"]:checked').length;
+      const protéines = document.querySelectorAll('input[name="proteines"]:checked').length;
+
+      if (!tailleChoisie) {
+        alert("Merci de choisir une taille de poké.");
+        return false;
+      }
+
+      const minIng = 5;
+      const maxIng = (tailleChoisie === "L") ? 5 : 6;
+      const minProt = 1;
+      const maxProt = (tailleChoisie === "L") ? 1 : 2;
+
+      if (ingrédients < minIng) {
+        alert(`Merci de choisir au moins ${minIng} ingrédients.`);
+        return false;
+      }
+      if (ingrédients > maxIng) {
+        alert(`Tu as sélectionné trop d'ingrédients. Maximum pour un poké ${tailleChoisie} : ${maxIng}`);
+        return false;
+      }
+
+      if (protéines < minProt) {
+        alert(`Merci de choisir au moins ${minProt} protéine.`);
+        return false;
+      }
+      if (protéines > maxProt) {
+        alert(`Trop de protéines sélectionnées. Maximum pour un poké ${tailleChoisie} : ${maxProt}`);
+        return false;
+      }
+
+      return true;
+    }
+  </script>
+</body>
+</html>

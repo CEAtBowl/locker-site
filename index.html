@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C&E Atelier de Bowl</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff8f5;
+      color: #333;
+      text-align: center;
+    }
+
+    header {
+      padding: 2em 1em;
+      background-color: #ff3a3a;
+      color: white;
+    }
+
+    header h1 {
+      margin-bottom: 0.5em;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: white;
+      color: #ff3a3a;
+      padding: 1em 2em;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 12px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #e73232;
+      color: white;
+    }
+
+    .ingredients-gallery {
+      padding: 2em;
+    }
+
+    .ingredients-gallery h2 {
+      margin-bottom: 1em;
+      color: #ff3a3a;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      gap: 1em;
+      justify-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .ingredient-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .ingredient-item img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 12px;
+      background-color: #fff;
+      padding: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .ingredient-item span {
+      margin-top: 0.5em;
+      font-size: 0.9em;
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 3em;
+      padding: 1em;
+      background-color: #f4f4f4;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>C&E Atelier de Bowl</h1>
+    <p>Compose ton pokébowl avec des produits frais, colorés et tropicaux 🌿</p>
+    <a href="commande.html" class="btn">Commander maintenant</a>
+  </header>
+
+  <main>
+    <section class="ingredients-gallery">
+      <h2>Nos Ingrédients</h2>
+      <div class="grid">
+        <div class="ingredient-item"><img src="images/avocat.png" alt="Avocat"><span>Avocat</span></div>
+        <div class="ingredient-item"><img src="images/betterave.png" alt="Betterave"><span>Betterave</span></div>
+        <div class="ingredient-item"><img src="images/carotte.png" alt="Carotte"><span>Carotte</span></div>
+        <div class="ingredient-item"><img src="images/champignon.png" alt="Champignon"><span>Champignon</span></div>
+        <div class="ingredient-item"><img src="images/chouxrouge.png" alt="Choux Rouge"><span>Choux rouge</span></div>
+        <div class="ingredient-item"><img src="images/concombre.png" alt="Concombre"><span>Concombre</span></div>
+        <div class="ingredient-item"><img src="images/edamame.png" alt="Edamame"><span>Edamame</span></div>
+        <div class="ingredient-item"><img src="images/feta.png" alt="Feta"><span>Feta</span></div>
+        <div class="ingredient-item"><img src="images/grenade.png" alt="Grenade"><span>Grenade</span></div>
+        <div class="ingredient-item"><img src="images/mais.png" alt="Maïs"><span>Maïs</span></div>
+        <div class="ingredient-item"><img src="images/mangue.png" alt="Mangue"><span>Mangue</span></div>
+        <div class="ingredient-item"><img src="images/mozzarella.png" alt="Mozzarella"><span>Mozzarella</span></div>
+        <div class="ingredient-item"><img src="images/oeufs.png" alt="Œufs"><span>Œufs</span></div>
+        <div class="ingredient-item"><img src="images/oignonrouge.png" alt="Oignon rouge"><span>Oignon rouge</span></div>
+        <div class="ingredient-item"><img src="images/pates.png" alt="Pâtes"><span>Pâtes</span></div>
+        <div class="ingredient-item"><img src="images/poivrons.png" alt="Poivrons"><span>Poivrons</span></div>
+        <div class="ingredient-item"><img src="images/poulet.png" alt="Poulet"><span>Poulet</span></div>
+        <div class="ingredient-item"><img src="images/radis.png" alt="Radis"><span>Radis</span></div>
+        <div class="ingredient-item"><img src="images/riz.png" alt="Riz"><span>Riz</span></div>
+        <div class="ingredient-item"><img src="images/salade.png" alt="Salade"><span>Salade</span></div>
+        <div class="ingredient-item"><img src="images/saumon.png" alt="Saumon"><span>Saumon</span></div>
+        <div class="ingredient-item"><img src="images/thon.png" alt="Thon"><span>Thon</span></div>
+        <div class="ingredient-item"><img src="images/tofu.png" alt="Tofu"><span>Tofu</span></div>
+        <div class="ingredient-item"><img src="images/tomates.png" alt="Tomates"><span>Tomates</span></div>
+        <div class="ingredient-item"><img src="images/wakame.png" alt="Wakame"><span>Wakame</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 C&E Atelier de Bowl – Tous droits réservés</p>
+  </footer>
+</body>
+</html>
