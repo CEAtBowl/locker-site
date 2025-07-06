@@ -131,6 +131,15 @@
 <body>
   <h1>Commande ton pokébowl</h1>
   <form id="commandeForm" onsubmit="return validerCommande()">
+    <label>Choisis ton point de retrait :</label>
+<div class="ingredients-grid" id="locker">
+  <label>
+    <input type="radio" name="locker" value="locker_xxx" checked>
+    <img src="images/locker.png" alt="Locker">
+    <span>Locker de XXX</span>
+  </label>
+</div>
+
     <label>Nom</label>
     <input type="text" name="nom" required>
 
@@ -307,6 +316,7 @@ card.appendChild(toppingsGrid);
         if (!validerCommande()) return;
 
         const data = {
+          locker: document.querySelector('input[name="locker"]:checked')?.value || '',
           nom: document.querySelector('input[name="nom"]').value,
           tel: document.querySelector('input[name="telephone"]').value,
           taille: document.querySelector('input[name="taille"]:checked')?.value || '',
