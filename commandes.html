@@ -125,6 +125,36 @@
     .ingredients-grid input[type="checkbox"] {
       margin-bottom: 0.5em;
     }
+
+    @media (max-width: 768px) {
+  body {
+    padding: 1em;
+  }
+
+  form {
+    padding: 1.2em;
+  }
+
+  .ingredients-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0.6em;
+  }
+
+  .ingredients-grid label {
+    padding: 0.5em;
+  }
+
+  img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+    
   </style>
 </head>
 
