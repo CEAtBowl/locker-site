@@ -134,11 +134,22 @@
     <label>Choisis ton point de retrait :</label>
 <div class="ingredients-grid" id="locker">
   <label>
-    <input type="radio" name="locker" value="locker_xxx" checked>
+    <input type="radio" name="locker" value="magasin" checked>
+    <img src="images/shop.png" alt="Retrait en magasin">
+    <span>Retrait en magasin</span>
+  </label>
+  <label>
+    <input type="radio" name="locker" value="locker_xxx">
     <img src="images/locker.png" alt="Locker">
     <span>Locker de XXX</span>
   </label>
 </div>
+<label>Choisis ton créneau de retrait :</label>
+<div class="options">
+  <label><input type="radio" name="horaire" value="midi" required> Service du midi (à partir de 11h30)</label>
+  <label><input type="radio" name="horaire" value="soir" required> Service du soir (à partir de 18h30)</label>
+</div>
+
 
     <label>Nom</label>
     <input type="text" name="nom" required>
@@ -273,6 +284,7 @@ saucesLabel.textContent = "🥣 Sauces :";
 
         const data = {
           locker: document.querySelector('input[name="locker"]:checked')?.value || '',
+           horaire: document.querySelector('input[name="horaire"]:checked')?.value || '',
           nom: document.querySelector('input[name="nom"]').value,
           tel: document.querySelector('input[name="telephone"]').value,
           taille: document.querySelector('input[name="taille"]:checked')?.value || '',
