@@ -234,50 +234,6 @@
 const saucesLabel = document.createElement("div");
 saucesLabel.className = "label";
 saucesLabel.textContent = "🥣 Sauces :";
-card.appendChild(saucesLabel);
-
-const sauces = (commande["Sauces"] || "").split(",").map(s => s.trim()).filter(s => s);
-const saucesGrid = document.createElement("div");
-saucesGrid.className = "ingredients-grid";
-sauces.forEach(sauce => {
-  const container = document.createElement("div");
-  container.className = "ingredient-container";
-  const img = document.createElement("img");
-  img.src = `./images/${sauce.toLowerCase().replace(/ /g, "_")}.png`;
-  img.alt = sauce;
-  img.className = "ingredient-img";
-  const label = document.createElement("div");
-  label.textContent = sauce;
-  label.style.fontSize = "0.7em";
-  container.appendChild(img);
-  container.appendChild(label);
-  saucesGrid.appendChild(container);
-});
-card.appendChild(saucesGrid);
-// TOPPINGS
-const toppingsLabel = document.createElement("div");
-toppingsLabel.className = "label";
-toppingsLabel.textContent = "✨ Toppings :";
-card.appendChild(toppingsLabel);
-
-const toppings = (commande["Toppings"] || "").split(",").map(t => t.trim()).filter(t => t);
-const toppingsGrid = document.createElement("div");
-toppingsGrid.className = "ingredients-grid";
-toppings.forEach(topping => {
-  const container = document.createElement("div");
-  container.className = "ingredient-container";
-  const img = document.createElement("img");
-  img.src = `./images/${topping.toLowerCase().replace(/ /g, "_")}.png`;
-  img.alt = topping;
-  img.className = "ingredient-img";
-  const label = document.createElement("div");
-  label.textContent = topping;
-  label.style.fontSize = "0.7em";
-  container.appendChild(img);
-  container.appendChild(label);
-  toppingsGrid.appendChild(container);
-});
-card.appendChild(toppingsGrid);
 
       if (!tailleChoisie) {
         alert("Merci de choisir une taille de poké.");
