@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C&E Atelier de Bowl – Carte</title>
+  <style>
+    :root{
+      --brand:#ff3a3a; --bg:#fff8f5; --ink:#333; --panel:#ffffff;
+      --muted:#f4f4f4; --shadow:0 2px 10px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+    header{background:var(--brand);color:#fff;padding:2.2rem 1rem;text-align:center}
+    header h1{margin:.2rem 0 0;font-size:1.8rem}
+    header p{margin:.2rem 0 0;opacity:.95}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:1.2rem}
+    .actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem}
+    .btn{display:inline-block;background:#fff;color:var(--brand);padding:.8rem 1.2rem;border-radius:12px;
+         text-decoration:none;font-weight:700;box-shadow:var(--shadow);border:1px solid #ffd2d2}
+    .btn:hover{background:#ffe3e3}
+
+    .section{margin:1.6rem 0;background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:1rem}
+    .section h2{color:var(--brand);margin:.2rem 0 1rem;font-size:1.4rem;text-align:center}
+    .sub{margin:.8rem 0 .4rem;font-weight:700;color:#444}
+
+    .grid{
+      display:grid;gap:1rem;
+      grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    }
+    .card{
+      display:flex;flex-direction:column;align-items:center;gap:.5rem;
+      background:#fff;border-radius:14px;padding:.9rem;border:1px solid #eee;
+      box-shadow:var(--shadow); cursor:default;
+    }
+    .card img{width:120px;height:120px;object-fit:contain;background:#fff;border-radius:12px}
+    .card .label{font-weight:600}
+    .muted{color:#666}
+    footer{margin:2rem 0;padding:1rem;background:var(--muted);text-align:center}
+    nav.anchorbar{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:5}
+    nav.anchorbar .wrap{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
+    nav.anchorbar a{padding:.5rem .8rem;border-radius:999px;background:#fff;border:1px solid #eee;text-decoration:none;color:#333}
+    nav.anchorbar a:hover{background:#f9f9f9}
+  </style>
+</head>
+<body>
+  <header>
+    <p class="muted">C&E Atelier de Bowl</p>
+    <h1>Notre carte</h1>
+    <div class="actions">
+      <a href="index.html" class="btn">← Accueil</a>
+      <a href="#menu" class="btn">Voir le Menu</a>
+      <a href="#pokebowls" class="btn">Pokébowls</a>
+      <a href="#smoothies" class="btn">Smoothie Bowls</a>
+      <a href="#plaisirs" class="btn">Petits plaisirs</a>
+      <a href="#boissons" class="btn">Boissons</a>
+      <a href="#bubbletea" class="btn">Bubble Tea</a>
+    </div>
+  </header>
+
+  <nav class="anchorbar">
+    <div class="wrap">
+      <a href="#menu">Menu</a>
+      <a href="#pokebowls">Pokébowls</a>
+      <a href="#smoothies">Smoothie Bowls</a>
+      <a href="#plaisirs">Petits plaisirs</a>
+      <a href="#boissons">Boissons</a>
+      <a href="#bubbletea">Bubble Tea</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+
+    <!-- Section MENU (entrée vers les deux familles) -->
+    <section id="menu" class="section">
+      <h2>Menu</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="images/pokesmoothie.png" alt="Poké & Smoothie Bowl" loading="lazy">
+          <div class="label">Poké + Smoothie Bowl</div>
+          <div class="muted">Choisissez votre univers</div>
+          <div class="actions">
+            <a href="#pokebowls" class="btn">Aller aux Pokés</a>
+            <a href="#smoothies" class="btn">Aller aux Smoothies</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pokébowls -->
+    <section id="pokebowls" class="section">
+      <h2>Pokébowls</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="images/pokel.png" alt="Poké L" loading="lazy">
+          <div class="label">Poké L</div>
+        </div>
+        <div class="card">
+          <img src="images/pokexl.png" alt="Poké XL" loading="lazy">
+          <div class="label">Poké XL</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Smoothie Bowls -->
+    <section id="smoothies" class="section">
+      <h2>Smoothie Bowls</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="images/smoothiekiwi.png" alt="Smoothie Bowl Kiwi" loading="lazy">
+          <div class="label">Smoothie Bowl Kiwi</div>
+        </div>
+        <div class="card">
+          <img src="images/smoothiemangue.png" alt="Smoothie Bowl Mangue" loading="lazy">
+          <div class="label">Smoothie Bowl Mangue</div>
+        </div>
+        <div class="card">
+          <img src="images/smoothierouge.png" alt="Smoothie Bowl Fruits Rouges" loading="lazy">
+          <div class="label">Smoothie Bowl Fruits Rouges</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Petits plaisirs -->
+    <section id="plaisirs" class="section">
+      <h2>Petits plaisirs</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="images/cookiec.png" alt="Cookies chocolat" loading="lazy">
+          <div class="label">Cookies chocolat</div>
+        </div>
+        <div class="card">
+          <img src="images/cookief.png" alt="Cookie Framboise" loading="lazy">
+          <div class="label">Cookie Framboise</div>
+        </div>
+        <div class="card">
+          <img src="images/cookiem.png" alt="Cookie Mangue" loading="lazy">
+          <div class="label">Cookie Mangue</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Boissons -->
+    <section id="boissons" class="section">
+      <h2>Boissons</h2>
+      <div class="sub">Softs</div>
+      <div class="grid">
+        <div class="card"><img src="images/coca.png" alt="Coca-Cola" loading="lazy"><div class="label">Coca-Cola</div></div>
+        <div class="card"><img src="images/oasis.png" alt="Oasis" loading="lazy"><div class="label">Oasis</div></div>
+        <div class="card"><img src="images/icetea.png" alt="Ice Tea" loading="lazy"><div class="label">Ice Tea</div></div>
+        <div class="card"><img src="images/sprite.png" alt="Sprite" loading="lazy"><div class="label">Sprite</div></div>
+        <div class="card"><img src="images/mm.png" alt="Minute Maid" loading="lazy"><div class="label">Minute Maid</div></div>
+      </div>
+
+      <div class="sub" style="margin-top:1rem">Jus maison</div>
+      <div class="grid">
+        <div class="card"><img src="images/jusconcombre.png" alt="Jus concombre" loading="lazy"><div class="label">Jus concombre</div></div>
+        <div class="card"><img src="images/juspasteque.png" alt="Jus pastèque" loading="lazy"><div class="label">Jus pastèque</div></div>
+        <div class="card"><img src="images/juscarotte.png" alt="Jus carotte" loading="lazy"><div class="label">Jus carotte</div></div>
+      </div>
+    </section>
+
+    <!-- Bubble Tea -->
+    <section id="bubbletea" class="section">
+      <h2>Bubble Tea</h2>
+      <div class="grid">
+        <div class="card">
+          <img src="images/bbt.png" alt="Bubble Tea" loading="lazy">
+          <div class="label">Bubble Tea</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; 2025 C&E Atelier de Bowl – Tous droits réservés</p>
+  </footer>
+</body>
+</html>
