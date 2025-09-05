@@ -330,57 +330,87 @@
     }
   });
 
- document.getElementById('btnCheckout').addEventListener('click', ()=>{
-  const cart = loadCart();
+<script>
+// ... (tes fonctions loadCart / saveCart / computeTotals / formatPrice / render existent déjà)
 
-  if(cart.length === 0){
-    alert("Votre panier est vide.");
+// Transforme un item en objet “propre” pour l’envoi
+function serializeItem(it){
+  const out = {
+    type: it.type,
+    title: it.title || (it.type === 'menu' ? `Menu Poké ${it.poke_size} + Smoothie` : (it.size ? `Poké ${it.size}` : it.type)),
+    qty: Number(it.qty||1),
+    price: typeof it.price === 'number' ? it.price : null
+  };
+  // détails poké/menu
+  const isPoke = it.type === 'poke' || it.type === 'menu';
+  if(isPoke){
+    out.details = {
+      poke_size: it.poke_size || it.size || null,
+      base: it.base || null,
+      ingredients: Array.isArray(it.ingredients)? it.ingredients : [],
+      proteines: Array.isArray(it.proteines)? it.proteines : [],
+      sauce: it.sauce || null,
+      toppings: Array.isArray(it.toppings)? it.toppings : [],
+      smoothie: it.smoothie || null
+    };
+  }
+  return out;
+}
+
+document.getElementById('btnCheckout').addEventListener('click', async ()=>{
+  const items = loadCart();
+  if(items.length === 0){
+    alert('Votre panier est vide.');
     return;
   }
 
-  // on prépare les données à envoyer (format lisible par Google Sheet)
-  const data = {
-    date: new Date().toLocaleString("fr-FR"),
-    articles: cart.map(item=>{
-      let details = "";
+  // Récupère infos formulaire
+  const name  = (document.getElementById('chkName')?.value || '').trim();
+  const phone = (document.getElementById('chkPhone')?.value || '').trim();
+  const mode  = document.getElementById('chkMode')?.value || 'magasin';
+  const slot  = document.getElementById('chkSlot')?.value || '';
+  const note  = (document.getElementById('chkNote')?.value || '').trim();
 
-      if(item.type === "menu"){
-        details = `Poké ${item.poke_size}, Base:${item.base}, Ingrédients:${(item.ingredients||[]).join(", ")}, Prot:${(item.proteines||[]).join(", ")}, Sauce:${item.sauce}, Toppings:${(item.toppings||[]).join(", ")}, Smoothie:${item.smoothie}`;
-      } else if(item.type === "poke"){
-        details = `Poké ${item.size}, Base:${item.base}, Ingrédients:${(item.ingredients||[]).join(", ")}, Prot:${(item.proteines||[]).join(", ")}, Sauce:${item.sauce}, Toppings:${(item.toppings||[]).join(", ")}`;
-      } else {
-        details = item.title || item.type;
-      }
+  if(!name || !phone){
+    alert('Merci de renseigner au minimum votre nom et téléphone.');
+    return;
+  }
 
-      return {
-        type: item.type,
-        titre: item.title || (item.type==="menu" ? `Menu Poké ${item.poke_size} + Smoothie` : `Poké ${item.size}`),
-        quantite: item.qty,
-        prix: item.price,
-        details
-      };
-    }),
-    total: computeTotals(cart).total
+  const totals = computeTotals(items);
+  const payload = {
+    created_at: new Date().toLocaleString('fr-FR'),
+    client: { name, phone },
+    pickup: { mode, slot },
+    note,
+    items: items.map(serializeItem),
+    total: totals.total
   };
 
-  // envoi vers Netlify → Google Sheet
-  fetch("/.netlify/functions/proxy", {
-    method:"POST",
-    headers: {"Content-Type":"application/json"},
-    body: JSON.stringify(data)
-  })
-  .then(r=>r.json())
-  .then(res=>{
-    alert("✅ Commande envoyée avec succès !\nPaiement à effectuer en magasin.");
-    // vider le panier après validation
+  try{
+    const res = await fetch('/.netlify/functions/proxy', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const json = await res.json();
+
+    if(!res.ok){
+      console.error('Proxy error:', json);
+      alert('Erreur lors de l’envoi de la commande.');
+      return;
+    }
+
+    alert('✅ Commande envoyée ! Paiement en magasin.\nMerci 🙂');
+    // Vide le panier + rerender
     localStorage.setItem(CART_KEY, JSON.stringify([]));
     render();
-  })
-  .catch(err=>{
-    console.error(err);
-    alert("❌ Erreur lors de l’envoi. Vérifie ta connexion.");
-  });
+  }catch(e){
+    console.error(e);
+    alert('❌ Erreur réseau. Réessaie dans un instant.');
+  }
 });
+</script>
+
 
 
   // Init
