@@ -58,6 +58,12 @@
 
   .breadcrumb{font-size:.95rem;margin:.4rem 0 .8rem}
   .breadcrumb a{color:var(--brand);text-decoration:none}
+  /* Légère réduction uniquement pour l'image "Riz Noir" */
+.ingredients-grid img[alt="Riz Noir"]{
+  width:82px;   /* avant 90px */
+  height:82px;  /* avant 90px */
+}
+
 </style>
 </head>
 <body>
@@ -93,6 +99,7 @@
       <label><input type="radio" name="base" value="riz" required><img src="images/riz.png" alt="Riz"><span>Riz</span></label>
       <label><input type="radio" name="base" value="salade"><img src="images/salade.png" alt="Salade"><span>Salade</span></label>
       <label><input type="radio" name="base" value="riz noir"><img src="images/riznoir.png" alt="Riz Noir"><span>Riz Noir</span></label>
+       <label> <input type="radio" name="base" value="duo de riz"><img src="images/duoderiz.png" alt="Duo de riz"><span>Duo de riz</span></label>
     </div>
   </section>
 
