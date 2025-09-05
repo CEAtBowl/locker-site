@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C&E – Personnalisation Poké L</title>
+<style>
+  :root{
+    --brand:#ff3a3a; --bg:#fff8f5; --ink:#333; --panel:#ffffff;
+    --muted:#f4f4f4; --shadow:0 2px 10px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--brand);color:#fff;padding:1.6rem 1rem}
+  header .wrap{max-width:1100px;margin:0 auto;display:flex;gap:1rem;align-items:center;justify-content:space-between}
+  header a{color:#fff;text-decoration:none;font-weight:700}
+  .wrap{max-width:1100px;margin:0 auto;padding:1rem}
+
+  .section{margin:1rem 0;background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:1rem}
+  .section h2{margin:.2rem 0 1rem;color:var(--brand);font-size:1.4rem}
+  .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .ingredients-grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+  .ingredients-grid label{
+    display:flex;flex-direction:column;align-items:center;gap:.5rem;
+    border:1px solid #eee;background:#fff;border-radius:14px;padding:.8rem;cursor:pointer;
+    box-shadow:var(--shadow)
+  }
+  .ingredients-grid img{width:90px;height:90px;object-fit:contain}
+  .counter{font-size:.95rem;color:#555;margin:.4rem 0}
+  .muted{color:#666}
+  .actions{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:flex-end;margin-top:1rem}
+  .btn{background:var(--brand);color:#fff;border:none;border-radius:12px;padding:.9rem 1.2rem;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .note{background:#fff3f3;border:1px solid #ffd2d2;color:#b60000;padding:.6rem .8rem;border-radius:10px;margin:.4rem 0}
+  .fab-cart{position:fixed; right:18px; bottom:18px; z-index:20;background:var(--brand); border:none; color:#fff;width:62px; height:62px; border-radius:50%;box-shadow:0 8px 24px rgba(255,58,58,.35);display:flex; align-items:center; justify-content:center;cursor:pointer;}
+  .fab-cart img{ width:30px; height:30px; filter:invert(1) brightness(9); }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div><a href="carte.html">← Retour à la carte</a></div>
+    <strong>Compose ton Poké L</strong>
+    <a href="panier.html">Voir le panier</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="section">
+    <h2>Base</h2>
+    <div class="ingredients-grid">
+      <label><input type="radio" name="base" value="riz" required><img src="images/riz.png"><span>Riz</span></label>
+      <label><input type="radio" name="base" value="salade"><img src="images/salade.png"><span>Salade</span></label>
+      <label><input type="radio" name="base" value="riz noir"><img src="images/riznoir.png"><span>Riz Noir</span></label>
+      <label><input type="radio" name="base" value="duo riz"><img src="images/duoriz.png"><span>Duo de Riz</span></label>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Ingrédients (5 max)</h2>
+    <div class="counter" id="ingCounter"></div>
+    <div class="ingredients-grid" id="ingredients">
+      <!-- même liste d’ingrédients que ton code précédent -->
+    </div>
+    <div class="note" id="ingHint" style="display:none"></div>
+  </div>
+
+  <div class="section">
+    <h2>Protéine (1 max)</h2>
+    <div class="ingredients-grid" id="proteines">
+      <!-- mêmes protéines que ton code précédent -->
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Sauce</h2>
+    <div class="ingredients-grid" id="sauces">
+      <!-- mêmes sauces que ton code précédent -->
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Toppings (optionnels)</h2>
+    <div class="ingredients-grid" id="toppings">
+      <!-- mêmes toppings que ton code précédent -->
+    </div>
+  </div>
+
+  <div class="section actions">
+    <button class="btn" id="addToCart" disabled>Ajouter au panier (11,5 €)</button>
+  </div>
+</main>
+
+<button class="fab-cart" onclick="location.href='panier.html'"><img src="images/caddie.png"></button>
+
+<script>
+const CART_KEY = 'ce-panier';
+if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
+
+function validate(){
+  const ingSel = document.querySelectorAll('#ingredients input:checked').length;
+  const protSel = document.querySelectorAll('#proteines input:checked').length;
+  const baseOk = !!document.querySelector('input[name="base"]:checked');
+  const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
+  document.getElementById('ingCounter').textContent = `Ingrédients : ${ingSel}/5`;
+  document.getElementById('addToCart').disabled = !(ingSel===5 && protSel===1 && baseOk && sauceOk);
+}
+document.querySelectorAll('input').forEach(el=>el.addEventListener('change', validate));
+
+document.getElementById('addToCart').addEventListener('click', ()=>{
+  const item = {
+    type:'poke',
+    size:'L',
+    base:document.querySelector('input[name="base"]:checked').value,
+    ingredients:[...document.querySelectorAll('#ingredients input:checked')].map(x=>x.value),
+    proteines:[...document.querySelectorAll('#proteines input:checked')].map(x=>x.value),
+    sauce:document.querySelector('input[name="sauce"]:checked').value,
+    toppings:[...document.querySelectorAll('#toppings input:checked')].map(x=>x.value),
+    price:11.5,
+    qty:1,
+    ts:Date.now()
+  };
+  const cart = JSON.parse(localStorage.getItem(CART_KEY));
+  cart.push(item);
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  alert("Poké L ajouté !");
+});
+</script>
+</body>
+</html>
