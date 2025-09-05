@@ -149,7 +149,11 @@
   </div>
 </main>
 
-<button class="fab-cart" onclick="location.href='panier.html'"><img src="images/caddie.png"></button>
+<button class="fab-cart" title="Voir le panier" onclick="window.location.href='panier.html'">
+  <img src="images/caddie.png" alt="Panier">
+  <div class="badge" id="cartBadge">0</div>
+</button>
+
 
 <script>
 const CART_KEY = 'ce-panier';
