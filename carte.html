@@ -30,12 +30,13 @@
       grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
     }
     .card{
-      display:flex;flex-direction:column;align-items:center;gap:.5rem;
+      display:flex;flex-direction:column;align-items:center;gap:.4rem;
       background:#fff;border-radius:14px;padding:.9rem;border:1px solid #eee;
       box-shadow:var(--shadow); cursor:default;
     }
     .card img{width:120px;height:120px;object-fit:contain;background:#fff;border-radius:12px}
     .card .label{font-weight:600}
+    .card .price{color:var(--brand);font-weight:700}
     .muted{color:#666}
     footer{margin:2rem 0;padding:1rem;background:var(--muted);text-align:center}
     nav.anchorbar{position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:5}
@@ -84,7 +85,7 @@
         <div class="card">
           <img src="images/pokesmoothie.png" alt="Poké & Smoothie Bowl" loading="lazy">
           <div class="label">Poké + Smoothie Bowl</div>
-          <div class="muted">Choisissez votre univers</div>
+          <div class="price">L = 14 € • XL = 17 €</div>
           <a href="personnalisation.html" class="btn">Composer →</a>
         </div>
       </div>
@@ -97,11 +98,13 @@
         <div class="card">
           <img src="images/pokel.png" alt="Poké L" loading="lazy">
           <div class="label">Poké L</div>
+          <div class="price">11,5 €</div>
           <button class="btn add-cart" data-type="poke" data-title="Poké L" data-price="11.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/pokexl.png" alt="Poké XL" loading="lazy">
           <div class="label">Poké XL</div>
+          <div class="price">14,5 €</div>
           <button class="btn add-cart" data-type="poke" data-title="Poké XL" data-price="14.5">Ajouter</button>
         </div>
       </div>
@@ -114,16 +117,19 @@
         <div class="card">
           <img src="images/smoothiekiwi.png" alt="Smoothie Bowl Kiwi" loading="lazy">
           <div class="label">Smoothie Bowl Kiwi</div>
+          <div class="price">4,5 €</div>
           <button class="btn add-cart" data-type="smoothie" data-title="Smoothie Bowl Kiwi" data-price="4.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/smoothiemangue.png" alt="Smoothie Bowl Mangue" loading="lazy">
           <div class="label">Smoothie Bowl Mangue</div>
+          <div class="price">4,5 €</div>
           <button class="btn add-cart" data-type="smoothie" data-title="Smoothie Bowl Mangue" data-price="4.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/smoothierouge.png" alt="Smoothie Bowl Fruits Rouges" loading="lazy">
           <div class="label">Smoothie Bowl Fruits Rouges</div>
+          <div class="price">4,5 €</div>
           <button class="btn add-cart" data-type="smoothie" data-title="Smoothie Bowl Fruits Rouges" data-price="4.5">Ajouter</button>
         </div>
       </div>
@@ -136,16 +142,19 @@
         <div class="card">
           <img src="images/cookie.png" alt="Cookie chocolat" loading="lazy">
           <div class="label">Cookie chocolat</div>
+          <div class="price">2,5 €</div>
           <button class="btn add-cart" data-type="cookie" data-title="Cookie chocolat" data-price="2.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/cookief.png" alt="Cookie Framboise" loading="lazy">
           <div class="label">Cookie Framboise</div>
+          <div class="price">2,5 €</div>
           <button class="btn add-cart" data-type="cookie" data-title="Cookie Framboise" data-price="2.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/cookiem.png" alt="Cookie Mangue" loading="lazy">
           <div class="label">Cookie Mangue</div>
+          <div class="price">2,5 €</div>
           <button class="btn add-cart" data-type="cookie" data-title="Cookie Mangue" data-price="2.5">Ajouter</button>
         </div>
       </div>
@@ -156,18 +165,18 @@
       <h2>Boissons</h2>
       <div class="sub">Softs</div>
       <div class="grid">
-        <div class="card"><img src="images/coca.png" alt="Coca-Cola"><div class="label">Coca-Cola</div><button class="btn add-cart" data-type="soda" data-title="Coca-Cola" data-price="2">Ajouter</button></div>
-        <div class="card"><img src="images/oasis.png" alt="Oasis"><div class="label">Oasis</div><button class="btn add-cart" data-type="soda" data-title="Oasis" data-price="2">Ajouter</button></div>
-        <div class="card"><img src="images/icetea.png" alt="Ice Tea"><div class="label">Ice Tea</div><button class="btn add-cart" data-type="soda" data-title="Ice Tea" data-price="2">Ajouter</button></div>
-        <div class="card"><img src="images/sprite.png" alt="Sprite"><div class="label">Sprite</div><button class="btn add-cart" data-type="soda" data-title="Sprite" data-price="2">Ajouter</button></div>
-        <div class="card"><img src="images/o.png" alt="Orangina"><div class="label">Orangina</div><button class="btn add-cart" data-type="soda" data-title="Orangina" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/coca.png" alt="Coca-Cola"><div class="label">Coca-Cola</div><div class="price">2 €</div><button class="btn add-cart" data-type="soda" data-title="Coca-Cola" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/oasis.png" alt="Oasis"><div class="label">Oasis</div><div class="price">2 €</div><button class="btn add-cart" data-type="soda" data-title="Oasis" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/icetea.png" alt="Ice Tea"><div class="label">Ice Tea</div><div class="price">2 €</div><button class="btn add-cart" data-type="soda" data-title="Ice Tea" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/sprite.png" alt="Sprite"><div class="label">Sprite</div><div class="price">2 €</div><button class="btn add-cart" data-type="soda" data-title="Sprite" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/o.png" alt="Orangina"><div class="label">Orangina</div><div class="price">2 €</div><button class="btn add-cart" data-type="soda" data-title="Orangina" data-price="2">Ajouter</button></div>
       </div>
 
       <div class="sub" style="margin-top:1rem">Jus maison</div>
       <div class="grid">
-        <div class="card"><img src="images/jusconcombre.png" alt="Jus concombre"><div class="label">Jus concombre</div><button class="btn add-cart" data-type="jus" data-title="Jus concombre" data-price="2.5">Ajouter</button></div>
-        <div class="card"><img src="images/juspasteque.png" alt="Jus pastèque"><div class="label">Jus pastèque</div><button class="btn add-cart" data-type="jus" data-title="Jus pastèque" data-price="2.5">Ajouter</button></div>
-        <div class="card"><img src="images/juscarotte.png" alt="Jus carotte"><div class="label">Jus carotte</div><button class="btn add-cart" data-type="jus" data-title="Jus carotte" data-price="2.5">Ajouter</button></div>
+        <div class="card"><img src="images/jusconcombre.png" alt="Jus concombre"><div class="label">Jus concombre</div><div class="price">2,5 €</div><button class="btn add-cart" data-type="jus" data-title="Jus concombre" data-price="2.5">Ajouter</button></div>
+        <div class="card"><img src="images/juspasteque.png" alt="Jus pastèque"><div class="label">Jus pastèque</div><div class="price">2,5 €</div><button class="btn add-cart" data-type="jus" data-title="Jus pastèque" data-price="2.5">Ajouter</button></div>
+        <div class="card"><img src="images/juscarotte.png" alt="Jus carotte"><div class="label">Jus carotte</div><div class="price">2,5 €</div><button class="btn add-cart" data-type="jus" data-title="Jus carotte" data-price="2.5">Ajouter</button></div>
       </div>
     </section>
 
@@ -178,6 +187,7 @@
         <div class="card">
           <img src="images/bbt.png" alt="Bubble Tea" loading="lazy">
           <div class="label">Bubble Tea</div>
+          <div class="price">–</div>
           <button class="btn add-cart" data-type="bubbletea" data-title="Bubble Tea" data-price="0">Ajouter</button>
         </div>
       </div>
