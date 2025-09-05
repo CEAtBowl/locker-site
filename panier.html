@@ -62,6 +62,24 @@
 
   /* Petits libellés */
   .tiny{font-size:.85rem;color:#666}
+  /* pastille sur le bouton caddie */
+.fab-cart {
+  position:fixed; right:18px; bottom:18px; z-index:20;
+  background:var(--brand); border:none; color:#fff;
+  width:62px; height:62px; border-radius:50%;
+  box-shadow:0 8px 24px rgba(255,58,58,.35);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; position:relative;
+}
+.fab-cart img{ width:30px; height:30px; filter:invert(1) brightness(9); }
+.fab-cart .badge {
+  position:absolute; top:6px; right:6px;
+  background:#fff; color:var(--brand);
+  font-weight:700; font-size:.8rem;
+  border-radius:999px; padding:2px 6px;
+  box-shadow:0 2px 6px rgba(0,0,0,.25);
+}
+
 </style>
 </head>
 <body>
@@ -290,6 +308,66 @@
   // Init
   if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
   render();
+
+  function renderCart(){
+  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+  const container = document.getElementById('cartContainer');
+  container.innerHTML = '';
+
+  if(cart.length === 0){
+    container.innerHTML = '<p>Votre panier est vide.</p>';
+  } else {
+    cart.forEach(item=>{
+      let title = '';
+      if(item.type === 'poke'){
+        title = `Poké ${item.size}`;
+      } else if(item.type === 'menu'){
+        title = `Menu Poké ${item.poke_size} + Smoothie Bowl`;
+      } else {
+        title = item.type; // cookies, sodas etc.
+      }
+
+      // rappel composition
+      let details = '';
+      if(item.type === 'poke' || item.type === 'menu'){
+        details += `<div class="muted">Base : ${item.base}</div>`;
+        details += `<div class="muted">Ingrédients : ${item.ingredients.join(', ')}</div>`;
+        details += `<div class="muted">Protéines : ${item.proteines.join(', ')}</div>`;
+        details += `<div class="muted">Sauce : ${item.sauce}</div>`;
+        if(item.toppings && item.toppings.length>0){
+          details += `<div class="muted">Toppings : ${item.toppings.join(', ')}</div>`;
+        }
+        if(item.type === 'menu'){
+          details += `<div class="muted">Smoothie : ${item.smoothie}</div>`;
+        }
+      }
+
+      container.innerHTML += `
+        <div class="card">
+          <div class="label">${title}</div>
+          ${details}
+          <div class="muted">Quantité : ${item.qty}</div>
+          <div class="muted">Prix : ${item.price} €</div>
+        </div>
+      `;
+    });
+  }
+
+  // maj badge
+  updateBadge(cart.length);
+}
+function updateBadge(count){
+  document.getElementById('cartBadge').textContent = count;
+}
+
+// initialisation
+renderCart();
+
 </script>
 </body>
+  <button class="fab-cart" onclick="location.href='panier.html'">
+  <img src="images/caddie.png">
+  <div class="badge" id="cartBadge">0</div>
+</button>
+
 </html>
