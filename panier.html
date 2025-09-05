@@ -44,6 +44,39 @@
   .qty input{
     width:46px;height:34px;text-align:center;border:1px solid var(--border);border-radius:10px
   }
+  <!-- Infos retrait / client -->
+<div class="panel" style="margin-top:1rem">
+  <h2 style="margin-top:0">Infos de retrait</h2>
+  <div style="display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div>
+      <label class="tiny">Nom</label>
+      <input id="chkName" type="text" placeholder="Votre nom" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+    </div>
+    <div>
+      <label class="tiny">Téléphone</label>
+      <input id="chkPhone" type="tel" placeholder="06..." style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+    </div>
+    <div>
+      <label class="tiny">Mode de retrait</label>
+      <select id="chkMode" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+        <option value="magasin" selected>Retrait en magasin</option>
+      </select>
+    </div>
+    <div>
+      <label class="tiny">Horaire</label>
+      <select id="chkSlot" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+        <option value="midi">Déjeuner (dès 11h30)</option>
+        <option value="soir">Dîner (dès 18h30)</option>
+      </select>
+    </div>
+  </div>
+  <div style="margin-top:.6rem">
+    <label class="tiny">Remarques (allergies, sauces, précisions...)</label>
+    <textarea id="chkNote" rows="2" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px"></textarea>
+  </div>
+  <p class="tiny muted" style="margin:.4rem 0 0">Le paiement s’effectue en magasin.</p>
+</div>
+
   .actions{display:flex;gap:.6rem;flex-wrap:wrap}
   .btn{
     border:none;border-radius:12px;padding:.8rem 1.1rem;cursor:pointer;font-weight:700;box-shadow:var(--shadow)
