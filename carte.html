@@ -236,6 +236,16 @@
   const CART_KEY = 'ce-panier';
   if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
 
+  function updateBadge(){
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    const badge = document.getElementById('cartBadge');
+    if (badge) badge.textContent = cart.length;
+  }
+
+  // mettre à jour dès le chargement
+  updateBadge();
+
+  // gestion des boutons "Ajouter"
   document.querySelectorAll('.add-cart').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const item = {
@@ -248,23 +258,12 @@
       const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
       cart.push(item);
       localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+      updateBadge(); // ✅ MAJ immédiate de la bulle
       alert(item.title + " ajouté au panier !");
     });
   });
-  const CART_KEY = 'ce-panier';
-if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
-
-function updateBadge(){
-  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  document.getElementById('cartBadge').textContent = cart.length;
-}
-
-// mettre à jour dès le chargement
-updateBadge();
-
-// si tu veux que ça s’actualise aussi après chaque ajout au panier,
-// appelle `updateBadge()` juste après avoir fait `localStorage.setItem(...)`
-
 </script>
+
 </body>
 </html>
