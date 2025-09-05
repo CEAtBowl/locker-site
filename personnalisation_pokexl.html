@@ -156,52 +156,74 @@
 
 
 <script>
-const CART_KEY = 'ce-panier';
-if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
-
-function validate(){
-  const ingSel = document.querySelectorAll('#ingredients input:checked').length;
-  const protSel = document.querySelectorAll('#proteines input:checked').length;
-  const baseOk = !!document.querySelector('input[name="base"]:checked');
-  const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
-  document.getElementById('ingCounter').textContent = `Ingrédients : ${ingSel}/6`;
-  document.getElementById('protCounter').textContent = `Protéines : ${protSel}/2`;
-  document.getElementById('addToCart').disabled = !(ingSel===6 && protSel===2 && baseOk && sauceOk);
-}
-document.querySelectorAll('input').forEach(el=>el.addEventListener('change', validate));
-
-document.getElementById('addToCart').addEventListener('click', ()=>{
-  const item = {
-    type:'poke',
-    size:'XL',
-    base:document.querySelector('input[name="base"]:checked').value,
-    ingredients:[...document.querySelectorAll('#ingredients input:checked')].map(x=>x.value),
-    proteines:[...document.querySelectorAll('#proteines input:checked')].map(x=>x.value),
-    sauce:document.querySelector('input[name="sauce"]:checked').value,
-    toppings:[...document.querySelectorAll('#toppings input:checked')].map(x=>x.value),
-    price:14.5,
-    qty:1,
-    ts:Date.now()
-  };
-  const cart = JSON.parse(localStorage.getItem(CART_KEY));
-  cart.push(item);
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-  alert("Poké XL ajouté !");
-});
+  // --- stockage & badge ---
   const CART_KEY = 'ce-panier';
-if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
+  if (!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
 
-function updateBadge(){
-  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  document.getElementById('cartBadge').textContent = cart.length;
-}
+  function updateBadge() {
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    const badge = document.getElementById('cartBadge');
+    if (badge) badge.textContent = cart.length;
+  }
 
-// mettre à jour dès le chargement
-updateBadge();
+  // --- validation + limites (XL = 6 ingrédients, 2 protéines) ---
+  function validate() {
+    const ingSel = document.querySelectorAll('#ingredients input:checked').length;
+    const protSel = document.querySelectorAll('#proteines input:checked').length;
+    const baseOk = !!document.querySelector('input[name="base"]:checked');
+    const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
 
-// si tu veux que ça s’actualise aussi après chaque ajout au panier,
-// appelle `updateBadge()` juste après avoir fait `localStorage.setItem(...)`
+    const ingCounter = document.getElementById('ingCounter');
+    if (ingCounter) ingCounter.textContent = `Ingrédients : ${ingSel}/6`;
 
+    const protCounter = document.getElementById('protCounter');
+    if (protCounter) protCounter.textContent = `Protéines : ${protSel}/2`;
+
+    document.getElementById('addToCart').disabled = !(ingSel === 6 && protSel === 2 && baseOk && sauceOk);
+  }
+
+  function enforceLimits() {
+    const ingInputs = Array.from(document.querySelectorAll('#ingredients input[type="checkbox"]'));
+    const protInputs = Array.from(document.querySelectorAll('#proteines input[type="checkbox"]'));
+    const ingSel = ingInputs.filter(i => i.checked).length;
+    const protSel = protInputs.filter(i => i.checked).length;
+
+    ingInputs.forEach(i => { i.disabled = (!i.checked && ingSel >= 6); });
+    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= 2); });
+  }
+
+  // --- listeners ---
+  document.querySelectorAll('#ingredients input, #proteines input, input[name="base"], input[name="sauce"]')
+    .forEach(el => el.addEventListener('change', () => { enforceLimits(); validate(); }));
+
+  // --- Ajouter au panier ---
+  document.getElementById('addToCart').addEventListener('click', () => {
+    const item = {
+      type: 'poke',
+      size: 'XL',
+      base: document.querySelector('input[name="base"]:checked').value,
+      ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
+      proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
+      sauce: document.querySelector('input[name="sauce"]:checked').value,
+      toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
+      price: 14.5,
+      qty: 1,
+      ts: Date.now()
+    };
+
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    cart.push(item);
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+    updateBadge(); // <— met à jour la bulle
+    alert("Poké XL ajouté !");
+  });
+
+  // --- init ---
+  enforceLimits();
+  validate();
+  updateBadge();
 </script>
+
 </body>
 </html>
