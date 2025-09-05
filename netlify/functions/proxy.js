@@ -33,7 +33,7 @@ export async function handler(event, context) {
   }
 
   try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyPVJz6YQJJLvywiXBEq6vU3kmO0d7V2bCWKIQYOgCraBcAf_lYr2Ii8gXosAUNjUo/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbyLqFMW1ZGPqQcIKgJNpZ_4fvWLh33xyNkYJvxAEncg-6BLz_5RVnC68-V39h4_kzE/exec', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
@@ -62,3 +62,4 @@ export async function handler(event, context) {
     };
   }
 }
+
