@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C&E – Personnalisation Menu</title>
+<style>
+  :root{
+    --brand:#ff3a3a; --bg:#fff8f5; --ink:#333; --panel:#ffffff;
+    --muted:#f4f4f4; --shadow:0 2px 10px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--brand);color:#fff;padding:1.6rem 1rem}
+  header .wrap{max-width:1100px;margin:0 auto;display:flex;gap:1rem;align-items:center;justify-content:space-between}
+  header a{color:#fff;text-decoration:none;font-weight:700}
+  .wrap{max-width:1100px;margin:0 auto;padding:1rem}
+
+  .section{margin:1rem 0;background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:1rem}
+  .section h2{margin:.2rem 0 1rem;color:var(--brand);font-size:1.4rem}
+  .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+  .choice{display:flex;gap:.6rem;flex-wrap:wrap}
+  .pill{padding:.6rem 1rem;border:1px solid #ffd2d2;background:#fff;border-radius:999px;cursor:pointer;font-weight:700;color:var(--brand)}
+  .pill input{display:none}
+  .pill.active{background:#ffe3e3}
+
+  .ingredients-grid{
+    display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))
+  }
+  .ingredients-grid label{
+    display:flex;flex-direction:column;align-items:center;gap:.5rem;
+    border:1px solid #eee;background:#fff;border-radius:14px;padding:.8rem;cursor:pointer;
+    box-shadow:var(--shadow)
+  }
+  .ingredients-grid img{width:90px;height:90px;object-fit:contain}
+  .ingredients-grid input{margin-top:.2rem}
+  .counter{font-size:.95rem;color:#555;margin:.4rem 0}
+  .row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+  .muted{color:#666}
+  .actions{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:flex-end;margin-top:1rem}
+  .btn{
+    background:var(--brand);color:#fff;border:none;border-radius:12px;padding:.9rem 1.2rem;
+    font-weight:700;cursor:pointer;box-shadow:var(--shadow)
+  }
+  .btn[disabled]{opacity:.5;cursor:not-allowed}
+  .note{background:#fff3f3;border:1px solid #ffd2d2;color:#b60000;padding:.6rem .8rem;border-radius:10px;margin:.4rem 0}
+
+  /* Bouton flottant caddie */
+  .fab-cart{
+    position:fixed; right:18px; bottom:18px; z-index:20;
+    background:var(--brand); border:none; color:#fff;
+    width:62px; height:62px; border-radius:50%;
+    box-shadow:0 8px 24px rgba(255,58,58,.35);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+  }
+  .fab-cart img{ width:30px; height:30px; filter:invert(1) brightness(9); }
+  .fab-cart:hover{ transform:translateY(-1px); }
+
+  .breadcrumb{font-size:.95rem;margin:.4rem 0 .8rem}
+  .breadcrumb a{color:var(--brand);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div><a href="carte.html">← Retour à la carte</a></div>
+    <strong>Compose ton Menu : Poké + Smoothie Bowl</strong>
+    <a href="panier.html">Voir le panier</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="breadcrumb">
+    <a href="carte.html">Carte</a> › Personnalisation du menu
+  </div>
+
+  <!-- Étape 1 : Taille -->
+  <section class="section" id="etape-taille">
+    <h2>1) Choisis la taille du Poké</h2>
+    <div class="choice" id="sizeChoice">
+      <label class="pill"><input type="radio" name="size" value="L" required>Poké L (5 ingrédients • 1 protéine)</label>
+      <label class="pill"><input type="radio" name="size" value="XL">Poké XL (6 ingrédients • 2 protéines)</label>
+    </div>
+    <div class="counter" id="rulesNotice"></div>
+  </section>
+
+  <!-- Étape 2 : Base -->
+  <section class="section">
+    <h2>2) Ta base</h2>
+    <label class="muted">1 choix requis</label>
+    <div class="ingredients-grid" id="base">
+      <label><input type="radio" name="base" value="riz" required><img src="images/riz.png" alt="Riz"><span>Riz</span></label>
+      <label><input type="radio" name="base" value="salade"><img src="images/salade.png" alt="Salade"><span>Salade</span></label>
+      <label><input type="radio" name="base" value="riz noir"><img src="images/riznoir.png" alt="Riz Noir"><span>Riz Noir</span></label>
+    </div>
+  </section>
+
+  <!-- Étape 3 : Ingrédients -->
+  <section class="section">
+    <h2>3) Tes ingrédients</h2>
+    <div class="counter" id="ingCounter" aria-live="polite"></div>
+    <div class="ingredients-grid" id="ingredients">
+      <label><input type="checkbox" name="ingredients" value="avocat"><img src="images/avocat.png" alt="Avocat"><span>Avocat</span></label>
+      <label><input type="checkbox" name="ingredients" value="betterave"><img src="images/betterave.png" alt="Betterave"><span>Betterave</span></label>
+      <label><input type="checkbox" name="ingredients" value="carotte"><img src="images/carotte.png" alt="Carotte"><span>Carotte</span></label>
+      <label><input type="checkbox" name="ingredients" value="champignon"><img src="images/champignon.png" alt="Champignon"><span>Champignon</span></label>
+      <label><input type="checkbox" name="ingredients" value="chouxrouge"><img src="images/chouxrouge.png" alt="Choux rouge"><span>Choux rouge</span></label>
+      <label><input type="checkbox" name="ingredients" value="concombre"><img src="images/concombre.png" alt="Concombre"><span>Concombre</span></label>
+      <label><input type="checkbox" name="ingredients" value="edamame"><img src="images/edamame.png" alt="Edamame"><span>Edamame</span></label>
+      <label><input type="checkbox" name="ingredients" value="feta"><img src="images/feta.png" alt="Feta"><span>Feta</span></label>
+      <label><input type="checkbox" name="ingredients" value="grenade"><img src="images/grenade.png" alt="Grenade"><span>Grenade</span></label>
+      <label><input type="checkbox" name="ingredients" value="mais"><img src="images/mais.png" alt="Maïs"><span>Maïs</span></label>
+      <label><input type="checkbox" name="ingredients" value="mangue"><img src="images/mangue.png" alt="Mangue"><span>Mangue</span></label>
+      <label><input type="checkbox" name="ingredients" value="mozzarella"><img src="images/mozzarella.png" alt="Mozzarella"><span>Mozzarella</span></label>
+      <label><input type="checkbox" name="ingredients" value="oignonrouge"><img src="images/oignonrouge.png" alt="Oignon rouge"><span>Oignon rouge</span></label>
+      <label><input type="checkbox" name="ingredients" value="poivrons"><img src="images/poivrons.png" alt="Poivrons"><span>Poivrons</span></label>
+      <label><input type="checkbox" name="ingredients" value="radis"><img src="images/radis.png" alt="Radis"><span>Radis</span></label>
+      <label><input type="checkbox" name="ingredients" value="tomates"><img src="images/tomates.png" alt="Tomates"><span>Tomates</span></label>
+      <label><input type="checkbox" name="ingredients" value="wakame"><img src="images/wakame.png" alt="Wakame"><span>Wakame</span></label>
+    </div>
+    <div class="note" id="ingHint" style="display:none"></div>
+  </section>
+
+  <!-- Étape 4 : Protéines -->
+  <section class="section">
+    <h2>4) Ta/tes protéine(s)</h2>
+    <div class="counter" id="protCounter" aria-live="polite"></div>
+    <div class="ingredients-grid" id="protéines">
+      <label><input type="checkbox" name="proteines" value="saumon"><img src="images/saumon.png" alt="Saumon"><span>Saumon</span></label>
+      <label><input type="checkbox" name="proteines" value="poulet"><img src="images/poulet.png" alt="Poulet"><span>Poulet</span></label>
+      <label><input type="checkbox" name="proteines" value="oeufs"><img src="images/oeufs.png" alt="Œufs"><span>Œufs</span></label>
+      <label><input type="checkbox" name="proteines" value="tofu"><img src="images/tofu.png" alt="Tofu"><span>Tofu</span></label>
+      <label><input type="checkbox" name="proteines" value="thon"><img src="images/thon.png" alt="Thon"><span>Thon</span></label>
+    </div>
+  </section>
+
+  <!-- Étape 5 : Sauce -->
+  <section class="section">
+    <h2>5) Ta sauce</h2>
+    <div class="ingredients-grid" id="sauces">
+      <label><input type="radio" name="sauce" value="soja sucrée" required><img src="images/soja.png" alt="Soja sucrée"><span>Soja sucrée</span></label>
+      <label><input type="radio" name="sauce" value="soja salée"><img src="images/soja.png" alt="Soja salée"><span>Soja salée</span></label>
+      <label><input type="radio" name="sauce" value="césar"><img src="images/césar.png" alt="César"><span>César</span></label>
+      <label><input type="radio" name="sauce" value="moutarde miel"><img src="images/miel_moutarde.png" alt="Moutarde miel"><span>Moutarde miel</span></label>
+      <label><input type="radio" name="sauce" value="curry mangue"><img src="images/curry_mango.png" alt="Curry mangue"><span>Curry mangue</span></label>
+      <label><input type="radio" name="sauce" value="mayo épicée"><img src="images/mayo_epicee.png" alt="Mayo épicée"><span>Mayo épicée</span></label>
+      <label><input type="radio" name="sauce" value="passion"><img src="images/passion.png" alt="Passion"><span>Passion</span></label>
+      <label><input type="radio" name="sauce" value="balsamique"><img src="images/balsamique.png" alt="Balsamique"><span>Balsamique</span></label>
+    </div>
+  </section>
+
+  <!-- Étape 6 : Toppings -->
+  <section class="section">
+    <h2>6) Tes toppings (optionnel)</h2>
+    <div class="ingredients-grid" id="toppings">
+      <label><input type="checkbox" name="toppings" value="sésame"><img src="images/sésame.png" alt="Sésame"><span>Sésame</span></label>
+      <label><input type="checkbox" name="toppings" value="pavot"><img src="images/pavot.png" alt="Pavot"><span>Pavot</span></label>
+      <label><input type="checkbox" name="toppings" value="cacahuete"><img src="images/cacahuètes.png" alt="Cacahuète"><span>Cacahuète</span></label>
+      <label><input type="checkbox" name="toppings" value="croutons"><img src="images/croutons.png" alt="Croûtons"><span>Croûtons</span></label>
+      <label><input type="checkbox" name="toppings" value="coriandre fraiche"><img src="images/coriandre.png" alt="Coriandre"><span>Coriandre</span></label>
+      <label><input type="checkbox" name="toppings" value="oignons frits"><img src="images/oignons_frits.png" alt="Oignons frits"><span>Oignons frits</span></label>
+    </div>
+  </section>
+
+  <!-- Étape 7 : Smoothie -->
+  <section class="section">
+    <h2>7) Ton Smoothie Bowl</h2>
+    <label class="muted">1 choix requis</label>
+    <div class="ingredients-grid">
+      <label><input type="radio" name="smoothie" value="kiwi" required><img src="images/smoothiekiwi.png" alt="Smoothie Bowl Kiwi"><span>Kiwi</span></label>
+      <label><input type="radio" name="smoothie" value="mangue"><img src="images/smoothiemangue.png" alt="Smoothie Bowl Mangue"><span>Mangue</span></label>
+      <label><input type="radio" name="smoothie" value="fruits rouges"><img src="images/smoothierouge.png" alt="Smoothie Bowl Fruits rouges"><span>Fruits rouges</span></label>
+    </div>
+  </section>
+
+  <!-- Actions -->
+  <section class="section">
+    <div class="row">
+      <div class="muted" id="review"></div>
+      <div class="actions">
+        <button class="btn" id="addToCart" disabled>Ajouter au panier</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Bouton flottant caddie -->
+<button class="fab-cart" title="Voir le panier" onclick="window.location.href='panier.html'">
+  <img src="images/caddie.png" alt="Panier">
+</button>
+
+<script>
+  const CART_KEY = 'ce-panier';
+  if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
+
+  // UI : pills actives
+  document.querySelectorAll('.pill').forEach(p=>{
+    p.addEventListener('click', ()=> {
+      document.querySelectorAll('.pill').forEach(x=>x.classList.remove('active'));
+      p.classList.add('active');
+      p.querySelector('input').checked = true;
+      updateRules();
+      enforceLimits();
+    });
+  });
+
+  let limits = {ing:0, prot:0}; // définis par L/XL
+
+  function currentSize(){
+    const s = document.querySelector('input[name="size"]:checked');
+    return s ? s.value : null;
+  }
+
+  function updateRules(){
+    const size = currentSize();
+    const rules = document.getElementById('rulesNotice');
+    if(size==='L'){ limits={ing:5, prot:1}; rules.textContent='Sélectionne exactement 5 ingrédients et 1 protéine.'; }
+    else if(size==='XL'){ limits={ing:6, prot:2}; rules.textContent='Sélectionne exactement 6 ingrédients et 2 protéines.'; }
+    else { limits={ing:0, prot:0}; rules.textContent=''; }
+    updateCounters();
+  }
+
+  function updateCounters(){
+    const ingSel = document.querySelectorAll('#ingredients input[type="checkbox"]:checked').length;
+    const protSel = document.querySelectorAll('#protéines input[type="checkbox"]:checked').length;
+    document.getElementById('ingCounter').textContent =
+      limits.ing ? `Ingrédients : ${ingSel} / ${limits.ing}` : 'Choisis d’abord la taille.';
+    document.getElementById('protCounter').textContent =
+      limits.prot ? `Protéines : ${protSel} / ${limits.prot}` : '';
+    document.getElementById('ingHint').style.display = limits.ing && ingSel>limits.ing ? 'block':'none';
+    document.getElementById('ingHint').textContent = ingSel>limits.ing ? 'Tu as dépassé la limite : décoche un ingrédient.' : '';
+    validateAll();
+  }
+
+  function enforceLimits(){
+    const ing = Array.from(document.querySelectorAll('#ingredients input[type="checkbox"]'));
+    const prot = Array.from(document.querySelectorAll('#protéines input[type="checkbox"]'));
+    const ingSel = ing.filter(i=>i.checked).length;
+    const protSel = prot.filter(i=>i.checked).length;
+
+    ing.forEach(i=>{
+      i.disabled = (limits.ing && !i.checked && ingSel>=limits.ing);
+    });
+    prot.forEach(i=>{
+      i.disabled = (limits.prot && !i.checked && protSel>=limits.prot);
+    });
+  }
+
+  // Listeners
+  document.querySelectorAll('#ingredients input[type="checkbox"], #protéines input[type="checkbox"]').forEach(el=>{
+    el.addEventListener('change', ()=>{ enforceLimits(); updateCounters(); });
+  });
+  document.querySelectorAll('input[name="size"]').forEach(el=>{
+    el.addEventListener('change', ()=>{ updateRules(); enforceLimits(); });
+  });
+  document.querySelectorAll('input[name="base"], input[name="sauce"], input[name="smoothie"]').forEach(el=>{
+    el.addEventListener('change', validateAll);
+  });
+
+  function validateAll(){
+    const size = currentSize();
+    const ingSel = document.querySelectorAll('#ingredients input[type="checkbox"]:checked').length;
+    const protSel = document.querySelectorAll('#protéines input[type="checkbox"]:checked').length;
+    const baseOk = !!document.querySelector('input[name="base"]:checked');
+    const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
+    const smoothieOk = !!document.querySelector('input[name="smoothie"]:checked');
+
+    let rulesOk = false;
+    if(size==='L') rulesOk = (ingSel===5 && protSel===1);
+    if(size==='XL') rulesOk = (ingSel===6 && protSel===2);
+
+    document.getElementById('addToCart').disabled = !(rulesOk && baseOk && sauceOk && smoothieOk && size);
+
+    // aperçu
+    const sel = {
+      size, base: valChecked('base'), ingredients: valsChecked('ingredients'),
+      proteines: valsChecked('proteines'), sauce: valChecked('sauce'), toppings: valsChecked('toppings'),
+      smoothie: valChecked('smoothie')
+    };
+    document.getElementById('review').textContent =
+      (rulesOk && baseOk && sauceOk && smoothieOk && size)
+        ? `Prêt : Poké ${size} + Smoothie ${sel.smoothie}`
+        : '';
+  }
+
+  function valChecked(name){
+    const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null;
+  }
+  function valsChecked(name){
+    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(x=>x.value);
+  }
+
+  // Ajouter au panier
+  document.getElementById('addToCart').addEventListener('click', ()=>{
+    const item = {
+      type:'menu',
+      poke_size: currentSize(),
+      base: valChecked('base'),
+      ingredients: valsChecked('ingredients'),
+      proteines: valsChecked('proteines'),
+      sauce: valChecked('sauce'),
+      toppings: valsChecked('toppings'),
+      smoothie: valChecked('smoothie'),
+      qty: 1,
+      ts: Date.now()
+    };
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    cart.push(item);
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    // retour visuel simple
+    alert('Ajouté au panier !');
+  });
+
+  // init
+  updateRules(); enforceLimits(); updateCounters(); validateAll();
+</script>
+</body>
+</html>
