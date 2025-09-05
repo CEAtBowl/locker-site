@@ -44,38 +44,6 @@
   .qty input{
     width:46px;height:34px;text-align:center;border:1px solid var(--border);border-radius:10px
   }
-  <!-- Infos retrait / client -->
-<div class="panel" style="margin-top:1rem">
-  <h2 style="margin-top:0">Infos de retrait</h2>
-  <div style="display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
-    <div>
-      <label class="tiny">Nom</label>
-      <input id="chkName" type="text" placeholder="Votre nom" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
-    </div>
-    <div>
-      <label class="tiny">Téléphone</label>
-      <input id="chkPhone" type="tel" placeholder="06..." style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
-    </div>
-    <div>
-      <label class="tiny">Mode de retrait</label>
-      <select id="chkMode" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
-        <option value="magasin" selected>Retrait en magasin</option>
-      </select>
-    </div>
-    <div>
-      <label class="tiny">Horaire</label>
-      <select id="chkSlot" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
-        <option value="midi">Déjeuner (dès 11h30)</option>
-        <option value="soir">Dîner (dès 18h30)</option>
-      </select>
-    </div>
-  </div>
-  <div style="margin-top:.6rem">
-    <label class="tiny">Remarques (allergies, sauces, précisions...)</label>
-    <textarea id="chkNote" rows="2" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px"></textarea>
-  </div>
-  <p class="tiny muted" style="margin:.4rem 0 0">Le paiement s’effectue en magasin.</p>
-</div>
 
   .actions{display:flex;gap:.6rem;flex-wrap:wrap}
   .btn{
@@ -112,7 +80,6 @@
   border-radius:999px; padding:2px 6px;
   box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
-
 </style>
 </head>
 <body>
@@ -143,6 +110,39 @@
       <div class="row total"><span>Total</span><span id="sumTotal">—</span></div>
     </div>
 
+    <!-- Infos retrait / client -->
+    <div class="panel" style="margin-top:1rem">
+      <h2 style="margin-top:0">Infos de retrait</h2>
+      <div style="display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+        <div>
+          <label class="tiny">Nom</label>
+          <input id="chkName" type="text" placeholder="Votre nom" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+        </div>
+        <div>
+          <label class="tiny">Téléphone</label>
+          <input id="chkPhone" type="tel" placeholder="06..." style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+        </div>
+        <div>
+          <label class="tiny">Mode de retrait</label>
+          <select id="chkMode" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+            <option value="magasin" selected>Retrait en magasin</option>
+          </select>
+        </div>
+        <div>
+          <label class="tiny">Horaire</label>
+          <select id="chkSlot" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px">
+            <option value="midi">Déjeuner (dès 11h30)</option>
+            <option value="soir">Dîner (dès 18h30)</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-top:.6rem">
+        <label class="tiny">Remarques (allergies, sauces, précisions...)</label>
+        <textarea id="chkNote" rows="2" style="width:100%;padding:.6rem;border:1px solid #eee;border-radius:10px"></textarea>
+      </div>
+      <p class="tiny muted" style="margin:.4rem 0 0">Le paiement s’effectue en magasin.</p>
+    </div>
+
     <div class="actions" id="cartActions" style="display:none;margin-top:1rem;justify-content:flex-end">
       <button class="btn btn-ghost" id="btnClear">Vider le panier</button>
       <a class="btn btn-light" href="carte.html">Ajouter d’autres produits</a>
@@ -150,7 +150,7 @@
     </div>
 
     <p class="tiny" style="margin-top:.8rem">
-      Astuce : si vous avez ajouté un **Menu Poké + Smoothie**, les détails du poké (taille, base, ingrédients, protéines, sauce, toppings)
+      Astuce : si vous avez ajouté un <b>Menu Poké + Smoothie</b>, les détails du poké (taille, base, ingrédients, protéines, sauce, toppings)
       et du smoothie sont affichés ci-dessous.
     </p>
   </section>
