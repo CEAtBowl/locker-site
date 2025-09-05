@@ -42,8 +42,30 @@
     nav.anchorbar .wrap{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
     nav.anchorbar a{padding:.5rem .8rem;border-radius:999px;background:#fff;border:1px solid #eee;text-decoration:none;color:#333}
     nav.anchorbar a:hover{background:#f9f9f9}
+    /* Bouton flottant caddie */
+.fab-cart{
+  position:fixed; right:18px; bottom:18px; z-index:20;
+  background:var(--brand); border:none; color:#fff;
+  width:62px; height:62px; border-radius:50%;
+  box-shadow:0 8px 24px rgba(255,58,58,.35);
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer;
+}
+.fab-cart img{ width:30px; height:30px; filter:invert(1) brightness(9); }
+.fab-cart:hover{ transform:translateY(-1px); }
+
   </style>
 </head>
+  <button class="fab-cart" title="Voir le panier" onclick="window.location.href='panier.html'">
+  <img src="images/caddie.png" alt="Panier">
+</button>
+
+<script>
+  // Exemple minimal : compteur panier stocké en localStorage
+  const CART_KEY = 'ce-panier';
+  if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
+</script>
+
 <body>
   <header>
     <h1>Notre carte</h1>
@@ -66,18 +88,22 @@
 
   <main class="wrap">
 
+    <!-- ... en-tête identique ... -->
+
+  <main class="wrap">
+
     <!-- Section MENU -->
     <section id="menu" class="section">
       <h2>Menu</h2>
       <div class="grid">
-        <div class="card">
+        <a class="card" href="personnalisation.html" style="text-decoration:none">
           <img src="images/pokesmoothie.png" alt="Poké & Smoothie Bowl" loading="lazy">
           <div class="label">Poké + Smoothie Bowl</div>
-          <div class="muted">Choisissez votre univers</div>
-          <!-- Boutons internes supprimés -->
-        </div>
+          <div class="muted">Compose ton duo</div>
+        </a>
       </div>
     </section>
+
 
     <!-- Pokébowls -->
     <section id="pokebowls" class="section">
