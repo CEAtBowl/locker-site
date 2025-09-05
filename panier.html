@@ -297,13 +297,58 @@
     }
   });
 
-  document.getElementById('btnCheckout').addEventListener('click', ()=>{
-    // Point d’accroche : ici, on enverra le panier au serveur / ou on ouvrira une page de paiement.
-    // Pour l’instant, simple aperçu JSON :
-    const data = loadCart();
-    console.log('Checkout payload:', data);
-    alert('Votre panier est prêt. (Intégration paiement à ajouter)');
+ document.getElementById('btnCheckout').addEventListener('click', ()=>{
+  const cart = loadCart();
+
+  if(cart.length === 0){
+    alert("Votre panier est vide.");
+    return;
+  }
+
+  // on prépare les données à envoyer (format lisible par Google Sheet)
+  const data = {
+    date: new Date().toLocaleString("fr-FR"),
+    articles: cart.map(item=>{
+      let details = "";
+
+      if(item.type === "menu"){
+        details = `Poké ${item.poke_size}, Base:${item.base}, Ingrédients:${(item.ingredients||[]).join(", ")}, Prot:${(item.proteines||[]).join(", ")}, Sauce:${item.sauce}, Toppings:${(item.toppings||[]).join(", ")}, Smoothie:${item.smoothie}`;
+      } else if(item.type === "poke"){
+        details = `Poké ${item.size}, Base:${item.base}, Ingrédients:${(item.ingredients||[]).join(", ")}, Prot:${(item.proteines||[]).join(", ")}, Sauce:${item.sauce}, Toppings:${(item.toppings||[]).join(", ")}`;
+      } else {
+        details = item.title || item.type;
+      }
+
+      return {
+        type: item.type,
+        titre: item.title || (item.type==="menu" ? `Menu Poké ${item.poke_size} + Smoothie` : `Poké ${item.size}`),
+        quantite: item.qty,
+        prix: item.price,
+        details
+      };
+    }),
+    total: computeTotals(cart).total
+  };
+
+  // envoi vers Netlify → Google Sheet
+  fetch("/.netlify/functions/proxy", {
+    method:"POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify(data)
+  })
+  .then(r=>r.json())
+  .then(res=>{
+    alert("✅ Commande envoyée avec succès !\nPaiement à effectuer en magasin.");
+    // vider le panier après validation
+    localStorage.setItem(CART_KEY, JSON.stringify([]));
+    render();
+  })
+  .catch(err=>{
+    console.error(err);
+    alert("❌ Erreur lors de l’envoi. Vérifie ta connexion.");
   });
+});
+
 
   // Init
   if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
