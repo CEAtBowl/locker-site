@@ -300,25 +300,32 @@
   }
 
   // Ajouter au panier
-  document.getElementById('addToCart').addEventListener('click', ()=>{
-    const item = {
-      type:'menu',
-      poke_size: currentSize(),
-      base: valChecked('base'),
-      ingredients: valsChecked('ingredients'),
-      proteines: valsChecked('proteines'),
-      sauce: valChecked('sauce'),
-      toppings: valsChecked('toppings'),
-      smoothie: valChecked('smoothie'),
-      qty: 1,
-      ts: Date.now()
-    };
-    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-    cart.push(item);
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    // retour visuel simple
-    alert('Ajouté au panier !');
-  });
+document.getElementById('addToCart').addEventListener('click', ()=>{
+  const size = currentSize();
+  let price = 0;
+  if(size === 'L') price = 14.0;
+  if(size === 'XL') price = 17.0;
+
+  const item = {
+    type:'menu',
+    poke_size: size,
+    base: valChecked('base'),
+    ingredients: valsChecked('ingredients'),
+    proteines: valsChecked('proteines'),
+    sauce: valChecked('sauce'),
+    toppings: valsChecked('toppings'),
+    smoothie: valChecked('smoothie'),
+    qty: 1,
+    price: price,
+    ts: Date.now()
+  };
+
+  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+  cart.push(item);
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  alert('Ajouté au panier !');
+});
+
 
   // init
   updateRules(); enforceLimits(); updateCounters(); validateAll();
