@@ -177,7 +177,6 @@
     localStorage.setItem(CART_KEY, JSON.stringify(items));
   }
 
-  // Optionnel : si un prix est stocké sur l'item (item.price), on l’utilise. Sinon, pas de total (—).
   function computeTotals(items){
     let count = 0;
     let hasPrice = items.some(i => typeof i.price === 'number');
@@ -195,17 +194,15 @@
   }
 
   function itemTitle(it){
-    // Exemple de titres :
-    // - type:'menu' => "Menu Poké + Smoothie"
-    // - sinon fallback générique
     if(it.type === 'menu') return 'Menu Poké + Smoothie';
+    if(it.type === 'poke' && it.size) return `Poké ${it.size}`;
     return it.title || 'Article';
   }
 
   function itemMeta(it){
-    if(it.type === 'menu'){
+    if(it.type === 'menu' || it.type === 'poke'){
       const parts = [];
-      if(it.poke_size) parts.push(`<b>Poké ${it.poke_size}</b>`);
+      if(it.poke_size || it.size) parts.push(`<b>Poké ${it.poke_size || it.size}</b>`);
       if(it.base) parts.push(`Base : ${it.base}`);
       if(Array.isArray(it.ingredients) && it.ingredients.length) parts.push(`Ingrédients : ${it.ingredients.join(', ')}`);
       if(Array.isArray(it.proteines) && it.proteines.length) parts.push(`Protéine(s) : ${it.proteines.join(', ')}`);
@@ -214,7 +211,6 @@
       if(it.smoothie) parts.push(`<b>Smoothie</b> : ${it.smoothie}`);
       return parts.join(' • ');
     }
-    // Autres types potentiels (ex: poké simple, boisson…)
     const p = [];
     if(it.variant) p.push(it.variant);
     if(it.note) p.push(it.note);
@@ -229,6 +225,7 @@
       elEmpty.style.display = '';
       elSummary.style.display = 'none';
       elActions.style.display = 'none';
+      updateBadge(0);
       return;
     }
     elEmpty.style.display = 'none';
@@ -242,7 +239,7 @@
       const left = document.createElement('div');
       left.innerHTML = `
         <div class="item-head">
-          <span class="badge">${it.type ? it.type : 'article'}</span>
+          <span class="badge">${it.type || 'article'}</span>
           <strong>${itemTitle(it)}</strong>
         </div>
         <div class="meta">${itemMeta(it) || ''}</div>
@@ -251,16 +248,12 @@
       const right = document.createElement('div');
       right.className = 'item-right';
 
-      // Prix unitaire si présent
       const priceLine = document.createElement('div');
       priceLine.className = 'muted';
-      if(typeof it.price === 'number'){
-        priceLine.textContent = 'Prix unitaire : ' + formatPrice(it.price);
-      }else{
-        priceLine.textContent = 'Prix : —';
-      }
+      priceLine.textContent = (typeof it.price === 'number')
+        ? 'Prix unitaire : ' + formatPrice(it.price)
+        : 'Prix : —';
 
-      // Quantité
       const qty = document.createElement('div');
       qty.className = 'qty';
       qty.innerHTML = `
@@ -269,7 +262,6 @@
         <button aria-label="Augmenter" data-act="inc">+</button>
       `;
 
-      // Actions
       const act = document.createElement('div');
       act.className = 'actions';
       act.innerHTML = `<button class="btn btn-light" data-act="remove">Supprimer</button>`;
@@ -278,12 +270,10 @@
       right.appendChild(qty);
       right.appendChild(act);
 
-      // Compose
       div.appendChild(left);
       div.appendChild(right);
       elList.appendChild(div);
 
-      // Events
       const input = qty.querySelector('input');
       const btnInc = qty.querySelector('button[data-act="inc"]');
       const btnDec = qty.querySelector('button[data-act="dec"]');
@@ -296,8 +286,7 @@
       });
       btnDec.addEventListener('click', ()=>{
         const arr = loadCart();
-        const q = Math.max(1, Number(arr[idx].qty||1) - 1);
-        arr[idx].qty = q;
+        arr[idx].qty = Math.max(1, Number(arr[idx].qty||1) - 1);
         saveCart(arr); render();
       });
       input.addEventListener('change', ()=>{
@@ -310,7 +299,6 @@
       });
     });
 
-    // Totaux
     const totals = computeTotals(items);
     elSumItems.textContent = totals.count;
     if(totals.hasPrice){
@@ -320,9 +308,15 @@
       elSumPrice.textContent = '—';
       elSumTotal.textContent = '—';
     }
+
+    updateBadge(totals.count);
   }
 
-  // Boutons globaux
+  function updateBadge(count){
+    const badge = document.getElementById('cartBadge');
+    if(badge) badge.textContent = count;
+  }
+
   document.getElementById('btnClear').addEventListener('click', ()=>{
     if(confirm('Vider complètement le panier ?')){
       localStorage.setItem(CART_KEY, JSON.stringify([]));
@@ -330,147 +324,83 @@
     }
   });
 
-<script>
-// ... (tes fonctions loadCart / saveCart / computeTotals / formatPrice / render existent déjà)
-
-// Transforme un item en objet “propre” pour l’envoi
-function serializeItem(it){
-  const out = {
-    type: it.type,
-    title: it.title || (it.type === 'menu' ? `Menu Poké ${it.poke_size} + Smoothie` : (it.size ? `Poké ${it.size}` : it.type)),
-    qty: Number(it.qty||1),
-    price: typeof it.price === 'number' ? it.price : null
-  };
-  // détails poké/menu
-  const isPoke = it.type === 'poke' || it.type === 'menu';
-  if(isPoke){
-    out.details = {
-      poke_size: it.poke_size || it.size || null,
-      base: it.base || null,
-      ingredients: Array.isArray(it.ingredients)? it.ingredients : [],
-      proteines: Array.isArray(it.proteines)? it.proteines : [],
-      sauce: it.sauce || null,
-      toppings: Array.isArray(it.toppings)? it.toppings : [],
-      smoothie: it.smoothie || null
+  // ---- Checkout ----
+  function serializeItem(it){
+    const out = {
+      type: it.type,
+      title: it.title || (it.type === 'menu' ? `Menu Poké ${it.poke_size} + Smoothie` : (it.size ? `Poké ${it.size}` : it.type)),
+      qty: Number(it.qty||1),
+      price: typeof it.price === 'number' ? it.price : null
     };
-  }
-  return out;
-}
-
-document.getElementById('btnCheckout').addEventListener('click', async ()=>{
-  const items = loadCart();
-  if(items.length === 0){
-    alert('Votre panier est vide.');
-    return;
-  }
-
-  // Récupère infos formulaire
-  const name  = (document.getElementById('chkName')?.value || '').trim();
-  const phone = (document.getElementById('chkPhone')?.value || '').trim();
-  const mode  = document.getElementById('chkMode')?.value || 'magasin';
-  const slot  = document.getElementById('chkSlot')?.value || '';
-  const note  = (document.getElementById('chkNote')?.value || '').trim();
-
-  if(!name || !phone){
-    alert('Merci de renseigner au minimum votre nom et téléphone.');
-    return;
+    if(it.type === 'poke' || it.type === 'menu'){
+      out.details = {
+        poke_size: it.poke_size || it.size || null,
+        base: it.base || null,
+        ingredients: Array.isArray(it.ingredients)? it.ingredients : [],
+        proteines: Array.isArray(it.proteines)? it.proteines : [],
+        sauce: it.sauce || null,
+        toppings: Array.isArray(it.toppings)? it.toppings : [],
+        smoothie: it.smoothie || null
+      };
+    }
+    return out;
   }
 
-  const totals = computeTotals(items);
-  const payload = {
-    created_at: new Date().toLocaleString('fr-FR'),
-    client: { name, phone },
-    pickup: { mode, slot },
-    note,
-    items: items.map(serializeItem),
-    total: totals.total
-  };
-
-  try{
-    const res = await fetch('/.netlify/functions/proxy', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(payload)
-    });
-    const json = await res.json();
-
-    if(!res.ok){
-      console.error('Proxy error:', json);
-      alert('Erreur lors de l’envoi de la commande.');
+  document.getElementById('btnCheckout').addEventListener('click', async ()=>{
+    const items = loadCart();
+    if(items.length === 0){
+      alert('Votre panier est vide.');
       return;
     }
 
-    alert('✅ Commande envoyée ! Paiement en magasin.\nMerci 🙂');
-    // Vide le panier + rerender
-    localStorage.setItem(CART_KEY, JSON.stringify([]));
-    render();
-  }catch(e){
-    console.error(e);
-    alert('❌ Erreur réseau. Réessaie dans un instant.');
-  }
-});
-</script>
+    const name  = (document.getElementById('chkName')?.value || '').trim();
+    const phone = (document.getElementById('chkPhone')?.value || '').trim();
+    const mode  = document.getElementById('chkMode')?.value || 'magasin';
+    const slot  = document.getElementById('chkSlot')?.value || '';
+    const note  = (document.getElementById('chkNote')?.value || '').trim();
 
+    if(!name || !phone){
+      alert('Merci de renseigner au minimum votre nom et téléphone.');
+      return;
+    }
 
+    const totals = computeTotals(items);
+    const payload = {
+      created_at: new Date().toLocaleString('fr-FR'),
+      client: { name, phone },
+      pickup: { mode, slot },
+      note,
+      items: items.map(serializeItem),
+      total: totals.total
+    };
+
+    try{
+      const res = await fetch('/.netlify/functions/proxy', {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const json = await res.json();
+
+      if(!res.ok){
+        console.error('Proxy error:', json);
+        alert('Erreur lors de l’envoi de la commande.');
+        return;
+      }
+
+      alert('✅ Commande envoyée ! Paiement en magasin.\nMerci 🙂');
+      localStorage.setItem(CART_KEY, JSON.stringify([]));
+      render();
+    }catch(e){
+      console.error(e);
+      alert('❌ Erreur réseau. Réessaie dans un instant.');
+    }
+  });
 
   // Init
   if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
   render();
-
-  function renderCart(){
-  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  const container = document.getElementById('cartContainer');
-  container.innerHTML = '';
-
-  if(cart.length === 0){
-    container.innerHTML = '<p>Votre panier est vide.</p>';
-  } else {
-    cart.forEach(item=>{
-      let title = '';
-      if(item.type === 'poke'){
-        title = `Poké ${item.size}`;
-      } else if(item.type === 'menu'){
-        title = `Menu Poké ${item.poke_size} + Smoothie Bowl`;
-      } else {
-        title = item.type; // cookies, sodas etc.
-      }
-
-      // rappel composition
-      let details = '';
-      if(item.type === 'poke' || item.type === 'menu'){
-        details += `<div class="muted">Base : ${item.base}</div>`;
-        details += `<div class="muted">Ingrédients : ${item.ingredients.join(', ')}</div>`;
-        details += `<div class="muted">Protéines : ${item.proteines.join(', ')}</div>`;
-        details += `<div class="muted">Sauce : ${item.sauce}</div>`;
-        if(item.toppings && item.toppings.length>0){
-          details += `<div class="muted">Toppings : ${item.toppings.join(', ')}</div>`;
-        }
-        if(item.type === 'menu'){
-          details += `<div class="muted">Smoothie : ${item.smoothie}</div>`;
-        }
-      }
-
-      container.innerHTML += `
-        <div class="card">
-          <div class="label">${title}</div>
-          ${details}
-          <div class="muted">Quantité : ${item.qty}</div>
-          <div class="muted">Prix : ${item.price} €</div>
-        </div>
-      `;
-    });
-  }
-
-  // maj badge
-  updateBadge(cart.length);
-}
-function updateBadge(count){
-  document.getElementById('cartBadge').textContent = count;
-}
-
-// initialisation
-renderCart();
-
 </script>
+
 </body>
 </html>
