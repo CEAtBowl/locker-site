@@ -17,8 +17,8 @@
 
     .wrap{max-width:1100px;margin:0 auto;padding:1.2rem}
     .actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem}
-    .btn{display:inline-block;background:#fff;color:var(--brand);padding:.8rem 1.2rem;border-radius:12px;
-         text-decoration:none;font-weight:700;box-shadow:var(--shadow);border:1px solid #ffd2d2}
+    .btn{display:inline-block;background:#fff;color:var(--brand);padding:.6rem 1rem;border-radius:12px;
+         text-decoration:none;font-weight:700;box-shadow:var(--shadow);border:1px solid #ffd2d2;cursor:pointer}
     .btn:hover{background:#ffe3e3}
 
     .section{margin:1.6rem 0;background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:1rem}
@@ -42,34 +42,23 @@
     nav.anchorbar .wrap{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center}
     nav.anchorbar a{padding:.5rem .8rem;border-radius:999px;background:#fff;border:1px solid #eee;text-decoration:none;color:#333}
     nav.anchorbar a:hover{background:#f9f9f9}
-    /* Bouton flottant caddie */
-.fab-cart{
-  position:fixed; right:18px; bottom:18px; z-index:20;
-  background:var(--brand); border:none; color:#fff;
-  width:62px; height:62px; border-radius:50%;
-  box-shadow:0 8px 24px rgba(255,58,58,.35);
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer;
-}
-.fab-cart img{ width:30px; height:30px; filter:invert(1) brightness(9); }
-.fab-cart:hover{ transform:translateY(-1px); }
 
+    /* bouton flottant caddie */
+    .fab-cart{
+      position:fixed; right:18px; bottom:18px; z-index:20;
+      background:var(--brand); border:none; color:#fff;
+      width:62px; height:62px; border-radius:50%;
+      box-shadow:0 8px 24px rgba(255,58,58,.35);
+      display:flex; align-items:center; justify-content:center;
+      cursor:pointer;
+    }
+    .fab-cart img{ width:30px; height:30px; filter:invert(1) brightness(9); }
+    .fab-cart:hover{ transform:translateY(-1px); }
   </style>
 </head>
-  <button class="fab-cart" title="Voir le panier" onclick="window.location.href='panier.html'">
-  <img src="images/caddie.png" alt="Panier">
-</button>
-
-<script>
-  // Exemple minimal : compteur panier stocké en localStorage
-  const CART_KEY = 'ce-panier';
-  if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
-</script>
-
 <body>
   <header>
     <h1>Notre carte</h1>
-    <!-- Seul le bouton Accueil est conservé -->
     <div class="actions">
       <a href="index.html" class="btn">Accueil</a>
     </div>
@@ -88,22 +77,18 @@
 
   <main class="wrap">
 
-    <!-- ... en-tête identique ... -->
-
-  <main class="wrap">
-
     <!-- Section MENU -->
     <section id="menu" class="section">
       <h2>Menu</h2>
       <div class="grid">
-        <a class="card" href="personnalisation.html" style="text-decoration:none">
+        <div class="card">
           <img src="images/pokesmoothie.png" alt="Poké & Smoothie Bowl" loading="lazy">
           <div class="label">Poké + Smoothie Bowl</div>
-          <div class="muted">Compose ton duo</div>
-        </a>
+          <div class="muted">Choisissez votre univers</div>
+          <a href="personnalisation.html" class="btn">Composer →</a>
+        </div>
       </div>
     </section>
-
 
     <!-- Pokébowls -->
     <section id="pokebowls" class="section">
@@ -112,10 +97,12 @@
         <div class="card">
           <img src="images/pokel.png" alt="Poké L" loading="lazy">
           <div class="label">Poké L</div>
+          <button class="btn add-cart" data-type="poke" data-title="Poké L" data-price="11.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/pokexl.png" alt="Poké XL" loading="lazy">
           <div class="label">Poké XL</div>
+          <button class="btn add-cart" data-type="poke" data-title="Poké XL" data-price="14.5">Ajouter</button>
         </div>
       </div>
     </section>
@@ -127,14 +114,17 @@
         <div class="card">
           <img src="images/smoothiekiwi.png" alt="Smoothie Bowl Kiwi" loading="lazy">
           <div class="label">Smoothie Bowl Kiwi</div>
+          <button class="btn add-cart" data-type="smoothie" data-title="Smoothie Bowl Kiwi" data-price="4.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/smoothiemangue.png" alt="Smoothie Bowl Mangue" loading="lazy">
           <div class="label">Smoothie Bowl Mangue</div>
+          <button class="btn add-cart" data-type="smoothie" data-title="Smoothie Bowl Mangue" data-price="4.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/smoothierouge.png" alt="Smoothie Bowl Fruits Rouges" loading="lazy">
           <div class="label">Smoothie Bowl Fruits Rouges</div>
+          <button class="btn add-cart" data-type="smoothie" data-title="Smoothie Bowl Fruits Rouges" data-price="4.5">Ajouter</button>
         </div>
       </div>
     </section>
@@ -145,15 +135,18 @@
       <div class="grid">
         <div class="card">
           <img src="images/cookie.png" alt="Cookie chocolat" loading="lazy">
-          <div class="label">Cookies chocolat</div>
+          <div class="label">Cookie chocolat</div>
+          <button class="btn add-cart" data-type="cookie" data-title="Cookie chocolat" data-price="2.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/cookief.png" alt="Cookie Framboise" loading="lazy">
           <div class="label">Cookie Framboise</div>
+          <button class="btn add-cart" data-type="cookie" data-title="Cookie Framboise" data-price="2.5">Ajouter</button>
         </div>
         <div class="card">
           <img src="images/cookiem.png" alt="Cookie Mangue" loading="lazy">
           <div class="label">Cookie Mangue</div>
+          <button class="btn add-cart" data-type="cookie" data-title="Cookie Mangue" data-price="2.5">Ajouter</button>
         </div>
       </div>
     </section>
@@ -163,18 +156,18 @@
       <h2>Boissons</h2>
       <div class="sub">Softs</div>
       <div class="grid">
-        <div class="card"><img src="images/coca.png" alt="Coca-Cola" loading="lazy"><div class="label">Coca-Cola</div></div>
-        <div class="card"><img src="images/oasis.png" alt="Oasis" loading="lazy"><div class="label">Oasis</div></div>
-        <div class="card"><img src="images/icetea.png" alt="Ice Tea" loading="lazy"><div class="label">Ice Tea</div></div>
-        <div class="card"><img src="images/sprite.png" alt="Sprite" loading="lazy"><div class="label">Sprite</div></div>
-        <div class="card"><img src="images/o.png" alt="Orangina" loading="lazy"><div class="label">Orangina</div></div>
+        <div class="card"><img src="images/coca.png" alt="Coca-Cola"><div class="label">Coca-Cola</div><button class="btn add-cart" data-type="soda" data-title="Coca-Cola" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/oasis.png" alt="Oasis"><div class="label">Oasis</div><button class="btn add-cart" data-type="soda" data-title="Oasis" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/icetea.png" alt="Ice Tea"><div class="label">Ice Tea</div><button class="btn add-cart" data-type="soda" data-title="Ice Tea" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/sprite.png" alt="Sprite"><div class="label">Sprite</div><button class="btn add-cart" data-type="soda" data-title="Sprite" data-price="2">Ajouter</button></div>
+        <div class="card"><img src="images/o.png" alt="Orangina"><div class="label">Orangina</div><button class="btn add-cart" data-type="soda" data-title="Orangina" data-price="2">Ajouter</button></div>
       </div>
 
       <div class="sub" style="margin-top:1rem">Jus maison</div>
       <div class="grid">
-        <div class="card"><img src="images/jusconcombre.png" alt="Jus concombre" loading="lazy"><div class="label">Jus concombre</div></div>
-        <div class="card"><img src="images/juspasteque.png" alt="Jus pastèque" loading="lazy"><div class="label">Jus pastèque</div></div>
-        <div class="card"><img src="images/juscarotte.png" alt="Jus carotte" loading="lazy"><div class="label">Jus carotte</div></div>
+        <div class="card"><img src="images/jusconcombre.png" alt="Jus concombre"><div class="label">Jus concombre</div><button class="btn add-cart" data-type="jus" data-title="Jus concombre" data-price="2.5">Ajouter</button></div>
+        <div class="card"><img src="images/juspasteque.png" alt="Jus pastèque"><div class="label">Jus pastèque</div><button class="btn add-cart" data-type="jus" data-title="Jus pastèque" data-price="2.5">Ajouter</button></div>
+        <div class="card"><img src="images/juscarotte.png" alt="Jus carotte"><div class="label">Jus carotte</div><button class="btn add-cart" data-type="jus" data-title="Jus carotte" data-price="2.5">Ajouter</button></div>
       </div>
     </section>
 
@@ -185,6 +178,7 @@
         <div class="card">
           <img src="images/bbt.png" alt="Bubble Tea" loading="lazy">
           <div class="label">Bubble Tea</div>
+          <button class="btn add-cart" data-type="bubbletea" data-title="Bubble Tea" data-price="0">Ajouter</button>
         </div>
       </div>
     </section>
@@ -194,5 +188,31 @@
   <footer>
     <p>&copy; 2025 C&E Atelier de Bowl – Tous droits réservés</p>
   </footer>
+
+  <!-- Bouton flottant panier -->
+  <button class="fab-cart" title="Voir le panier" onclick="window.location.href='panier.html'">
+    <img src="images/caddie.png" alt="Panier">
+  </button>
+
+<script>
+  const CART_KEY = 'ce-panier';
+  if(!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
+
+  document.querySelectorAll('.add-cart').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const item = {
+        type: btn.dataset.type,
+        title: btn.dataset.title,
+        price: parseFloat(btn.dataset.price),
+        qty: 1,
+        ts: Date.now()
+      };
+      const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+      cart.push(item);
+      localStorage.setItem(CART_KEY, JSON.stringify(cart));
+      alert(item.title + " ajouté au panier !");
+    });
+  });
+</script>
 </body>
 </html>
