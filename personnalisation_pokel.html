@@ -220,32 +220,41 @@
   document.querySelectorAll('#ingredients input, #proteines input, input[name="base"], input[name="sauce"]')
     .forEach(el => el.addEventListener('change', () => { enforceLimits(); validate(); }));
 
-  // --- Ajouter au panier ---
-  document.getElementById('addToCart').addEventListener('click', () => {
-    const item = {
-      type: 'poke',
-      size: 'L',
-      base: document.querySelector('input[name="base"]:checked').value,
-      ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
-      proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
-      sauce: document.querySelector('input[name="sauce"]:checked').value,
-      toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
-      price: 11.5,
-      qty: 1,
-      ts: Date.now()
-    };
+// --- Ajouter au panier ---
+const btnAdd = document.getElementById('addToCart');
+btnAdd.addEventListener('click', () => {
+  const item = {
+    type: 'poke',
+    size: 'L',
+    base: document.querySelector('input[name="base"]:checked').value,
+    ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
+    proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
+    sauce: document.querySelector('input[name="sauce"]:checked').value,
+    toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
+    price: 11.5,
+    qty: 1,
+    ts: Date.now()
+  };
 
-    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-    cart.push(item);
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
-    updateBadge(); // <-- maj bulle
-      const badge = document.getElementById('cartBadge');
+  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+  cart.push(item);
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+
+  updateBadge(); // MAJ bulle
+
+  // Feedback visuel (pulse)
+  const badge = document.getElementById('cartBadge');
   if (badge) {
     badge.classList.add('pulse');
     setTimeout(()=> badge.classList.remove('pulse'), 400);
   }
 
-  });
+  // Anti double-clic + redirection après l’animation
+  btnAdd.disabled = true;
+  setTimeout(() => { window.location.href = 'carte.html'; }, 450);
+  // Variante directe vers une section :
+  // setTimeout(() => { window.location.href = 'carte.html#pokebowls'; }, 450);
+});
 
   // --- init ---
   enforceLimits();
