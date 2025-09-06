@@ -48,34 +48,14 @@
   justify-content: center;
   cursor: pointer;
 }
-.fab-cart img {
-  width: 30px;
-  height: 30px;
-  filter: invert(1) brightness(9);
-}
+.fab-cart img { width: 30px; height: 30px; filter: invert(1) brightness(9); }
 .fab-cart .badge {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: #fff;
-  color: var(--brand);
-  font-weight: 700;
-  font-size: .8rem;
-  border-radius: 999px;
-  padding: 2px 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  position: absolute; top: 6px; right: 6px; background: #fff; color: var(--brand);
+  font-weight: 700; font-size: .8rem; border-radius: 999px; padding: 2px 6px; box-shadow: 0 2px 6px rgba(0,0,0,.25);
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.25); }
-  100% { transform: scale(1); }
-}
-.badge.pulse {
-  animation: pulse 0.4s ease;
-}
-
-  
+@keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.25)} 100%{transform:scale(1)} }
+.badge.pulse { animation: pulse 0.4s ease; }
 </style>
 </head>
 <body>
@@ -92,49 +72,49 @@
   <div class="section">
     <h2>Base</h2>
     <div class="ingredients-grid">
-      <label><input type="radio" name="base" value="riz" required><img src="images/riz.png"><span>Riz</span></label>
-      <label><input type="radio" name="base" value="riz noir"><img src="images/riznoir.png"><span>Riz Noir</span></label>
-      <label><input type="radio" name="base" value="duo riz"><img src="images/duoderiz.png"><span>Duo de Riz</span></label>
-            <label><input type="radio" name="base" value="salade"><img src="images/salade.png"><span>Salade</span></label>
+      <label><input type="radio" name="base" value="riz" required><img src="images/riz.png" alt="Riz"><span>Riz</span></label>
+      <label><input type="radio" name="base" value="riz noir"><img src="images/riznoir.png" alt="Riz noir"><span>Riz Noir</span></label>
+      <label><input type="radio" name="base" value="duo riz"><img src="images/duoderiz.png" alt="Duo de riz"><span>Duo de Riz</span></label>
+      <label><input type="radio" name="base" value="salade"><img src="images/salade.png" alt="Salade"><span>Salade</span></label>
     </div>
   </div>
 
   <!-- Ingrédients -->
   <div class="section">
-    <h2>Ingrédients (6 max)</h2>
+    <h2>Ingrédients (3 à 6)</h2>
     <div class="counter" id="ingCounter"></div>
     <div class="ingredients-grid" id="ingredients">
-      <label><input type="checkbox" value="avocat"><img src="images/avocat.png"><span>Avocat</span></label>
-      <label><input type="checkbox" value="betterave"><img src="images/betterave.png"><span>Betterave</span></label>
-      <label><input type="checkbox" value="carotte"><img src="images/carotte.png"><span>Carotte</span></label>
-      <label><input type="checkbox" value="champignon"><img src="images/champignon.png"><span>Champignon</span></label>
-      <label><input type="checkbox" value="chouxrouge"><img src="images/chouxrouge.png"><span>Choux rouge</span></label>
-      <label><input type="checkbox" value="concombre"><img src="images/concombre.png"><span>Concombre</span></label>
-      <label><input type="checkbox" value="edamame"><img src="images/edamame.png"><span>Edamame</span></label>
-      <label><input type="checkbox" value="feta"><img src="images/feta.png"><span>Feta</span></label>
-      <label><input type="checkbox" value="grenade"><img src="images/grenade.png"><span>Grenade</span></label>
-      <label><input type="checkbox" value="mais"><img src="images/mais.png"><span>Maïs</span></label>
-      <label><input type="checkbox" value="mangue"><img src="images/mangue.png"><span>Mangue</span></label>
-      <label><input type="checkbox" value="mozzarella"><img src="images/mozzarella.png"><span>Mozzarella</span></label>
-      <label><input type="checkbox" value="oignonrouge"><img src="images/oignonrouge.png"><span>Oignon rouge</span></label>
-      <label><input type="checkbox" value="poivrons"><img src="images/poivrons.png"><span>Poivrons</span></label>
-      <label><input type="checkbox" value="radis"><img src="images/radis.png"><span>Radis</span></label>
-      <label><input type="checkbox" value="tomates"><img src="images/tomates.png"><span>Tomates</span></label>
-      <label><input type="checkbox" value="wakame"><img src="images/wakame.png"><span>Wakame</span></label>
+      <label><input type="checkbox" value="avocat"><img src="images/avocat.png" alt="Avocat"><span>Avocat</span></label>
+      <label><input type="checkbox" value="betterave"><img src="images/betterave.png" alt="Betterave"><span>Betterave</span></label>
+      <label><input type="checkbox" value="carotte"><img src="images/carotte.png" alt="Carotte"><span>Carotte</span></label>
+      <label><input type="checkbox" value="champignon"><img src="images/champignon.png" alt="Champignon"><span>Champignon</span></label>
+      <label><input type="checkbox" value="chouxrouge"><img src="images/chouxrouge.png" alt="Choux rouge"><span>Choux rouge</span></label>
+      <label><input type="checkbox" value="concombre"><img src="images/concombre.png" alt="Concombre"><span>Concombre</span></label>
+      <label><input type="checkbox" value="edamame"><img src="images/edamame.png" alt="Edamame"><span>Edamame</span></label>
+      <label><input type="checkbox" value="feta"><img src="images/feta.png" alt="Feta"><span>Feta</span></label>
+      <label><input type="checkbox" value="grenade"><img src="images/grenade.png" alt="Grenade"><span>Grenade</span></label>
+      <label><input type="checkbox" value="mais"><img src="images/mais.png" alt="Maïs"><span>Maïs</span></label>
+      <label><input type="checkbox" value="mangue"><img src="images/mangue.png" alt="Mangue"><span>Mangue</span></label>
+      <label><input type="checkbox" value="mozzarella"><img src="images/mozzarella.png" alt="Mozzarella"><span>Mozzarella</span></label>
+      <label><input type="checkbox" value="oignonrouge"><img src="images/oignonrouge.png" alt="Oignon rouge"><span>Oignon rouge</span></label>
+      <label><input type="checkbox" value="poivrons"><img src="images/poivrons.png" alt="Poivrons"><span>Poivrons</span></label>
+      <label><input type="checkbox" value="radis"><img src="images/radis.png" alt="Radis"><span>Radis</span></label>
+      <label><input type="checkbox" value="tomates"><img src="images/tomates.png" alt="Tomates"><span>Tomates</span></label>
+      <label><input type="checkbox" value="wakame"><img src="images/wakame.png" alt="Wakame"><span>Wakame</span></label>
     </div>
     <div class="note" id="ingHint" style="display:none"></div>
   </div>
 
   <!-- Protéines -->
   <div class="section">
-    <h2>Protéines (2 max)</h2>
+    <h2>Protéines (1 à 2)</h2>
     <div class="counter" id="protCounter"></div>
     <div class="ingredients-grid" id="proteines">
-      <label><input type="checkbox" value="saumon"><img src="images/saumon.png"><span>Saumon</span></label>
-      <label><input type="checkbox" value="poulet"><img src="images/poulet.png"><span>Poulet</span></label>
-      <label><input type="checkbox" value="oeufs"><img src="images/oeufs.png"><span>Œufs</span></label>
-      <label><input type="checkbox" value="tofu"><img src="images/tofu.png"><span>Tofu</span></label>
-      <label><input type="checkbox" value="thon"><img src="images/thon.png"><span>Thon</span></label>
+      <label><input type="checkbox" value="saumon"><img src="images/saumon.png" alt="Saumon"><span>Saumon</span></label>
+      <label><input type="checkbox" value="poulet"><img src="images/poulet.png" alt="Poulet"><span>Poulet</span></label>
+      <label><input type="checkbox" value="oeufs"><img src="images/oeufs.png" alt="Œufs"><span>Œufs</span></label>
+      <label><input type="checkbox" value="tofu"><img src="images/tofu.png" alt="Tofu"><span>Tofu</span></label>
+      <label><input type="checkbox" value="thon"><img src="images/thon.png" alt="Thon"><span>Thon</span></label>
     </div>
   </div>
 
@@ -142,27 +122,28 @@
   <div class="section">
     <h2>Sauce</h2>
     <div class="ingredients-grid" id="sauces">
-      <label><input type="radio" name="sauce" value="soja sucrée" required><img src="images/soja.png"><span>Soja sucrée</span></label>
-      <label><input type="radio" name="sauce" value="soja salée"><img src="images/soja.png"><span>Soja salée</span></label>
-      <label><input type="radio" name="sauce" value="césar"><img src="images/césar.png"><span>César</span></label>
-      <label><input type="radio" name="sauce" value="moutarde miel"><img src="images/miel_moutarde.png"><span>Moutarde miel</span></label>
-      <label><input type="radio" name="sauce" value="curry mangue"><img src="images/curry_mango.png"><span>Curry mangue</span></label>
-      <label><input type="radio" name="sauce" value="mayo épicée"><img src="images/mayo_epicee.png"><span>Mayo épicée</span></label>
-      <label><input type="radio" name="sauce" value="passion"><img src="images/passion.png"><span>Passion</span></label>
-      <label><input type="radio" name="sauce" value="balsamique"><img src="images/balsamique.png"><span>Balsamique</span></label>
+      <label><input type="radio" name="sauce" value="soja sucrée" required><img src="images/soja.png" alt="Soja sucrée"><span>Soja sucrée</span></label>
+      <label><input type="radio" name="sauce" value="soja salée"><img src="images/soja.png" alt="Soja salée"><span>Soja salée</span></label>
+      <label><input type="radio" name="sauce" value="césar"><img src="images/césar.png" alt="César"><span>César</span></label>
+      <label><input type="radio" name="sauce" value="moutarde miel"><img src="images/miel_moutarde.png" alt="Moutarde miel"><span>Moutarde miel</span></label>
+      <label><input type="radio" name="sauce" value="curry mangue"><img src="images/curry_mango.png" alt="Curry mangue"><span>Curry mangue</span></label>
+      <label><input type="radio" name="sauce" value="mayo épicée"><img src="images/mayo_epicee.png" alt="Mayo épicée"><span>Mayo épicée</span></label>
+      <label><input type="radio" name="sauce" value="passion"><img src="images/passion.png" alt="Passion"><span>Passion</span></label>
+      <label><input type="radio" name="sauce" value="balsamique"><img src="images/balsamique.png" alt="Balsamique"><span>Balsamique</span></label>
     </div>
   </div>
 
   <!-- Toppings -->
   <div class="section">
-    <h2>Toppings (optionnels)</h2>
+    <h2>Toppings (optionnels, 2 max)</h2>
+    <div class="counter" id="topCounter"></div>
     <div class="ingredients-grid" id="toppings">
-      <label><input type="checkbox" value="sésame"><img src="images/sésame.png"><span>Sésame</span></label>
-      <label><input type="checkbox" value="pavot"><img src="images/pavot.png"><span>Pavot</span></label>
-      <label><input type="checkbox" value="cacahuete"><img src="images/cacahuètes.png"><span>Cacahuète</span></label>
-      <label><input type="checkbox" value="croutons"><img src="images/croutons.png"><span>Croûtons</span></label>
-      <label><input type="checkbox" value="coriandre"><img src="images/coriandre.png"><span>Coriandre</span></label>
-      <label><input type="checkbox" value="oignons frits"><img src="images/oignons_frits.png"><span>Oignons frits</span></label>
+      <label><input type="checkbox" value="sésame"><img src="images/sésame.png" alt="Sésame"><span>Sésame</span></label>
+      <label><input type="checkbox" value="pavot"><img src="images/pavot.png" alt="Pavot"><span>Pavot</span></label>
+      <label><input type="checkbox" value="cacahuete"><img src="images/cacahuètes.png" alt="Cacahuète"><span>Cacahuète</span></label>
+      <label><input type="checkbox" value="croutons"><img src="images/croutons.png" alt="Croûtons"><span>Croûtons</span></label>
+      <label><input type="checkbox" value="coriandre"><img src="images/coriandre.png" alt="Coriandre"><span>Coriandre</span></label>
+      <label><input type="checkbox" value="oignons frits"><img src="images/oignons_frits.png" alt="Oignons frits"><span>Oignons frits</span></label>
     </div>
   </div>
 
@@ -177,82 +158,106 @@
   <div class="badge" id="cartBadge">0</div>
 </button>
 
-
 <script>
-  // --- stockage & badge ---
+  // === Paramètres ===
   const CART_KEY = 'ce-panier';
-  if (!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
+  const ING_MIN = 3, ING_MAX = 6;
+  const PROT_MIN = 1, PROT_MAX = 2;
+  const TOP_MAX = 2;
 
+  // --- stockage & badge ---
+  if (!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
   function updateBadge() {
     const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
     const badge = document.getElementById('cartBadge');
     if (badge) badge.textContent = cart.length;
   }
 
-  // --- validation + limites (XL = 6 ingrédients, 2 protéines) ---
+  // --- validation + limites ---
   function validate() {
     const ingSel = document.querySelectorAll('#ingredients input:checked').length;
     const protSel = document.querySelectorAll('#proteines input:checked').length;
+    const topSel = document.querySelectorAll('#toppings input:checked').length;
     const baseOk = !!document.querySelector('input[name="base"]:checked');
     const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
 
+    // Compteurs
     const ingCounter = document.getElementById('ingCounter');
-    if (ingCounter) ingCounter.textContent = `Ingrédients : ${ingSel}/6`;
-
+    if (ingCounter) ingCounter.textContent = `Ingrédients : ${ingSel}/${ING_MAX} (min ${ING_MIN})`;
     const protCounter = document.getElementById('protCounter');
-    if (protCounter) protCounter.textContent = `Protéines : ${protSel}/2`;
+    if (protCounter) protCounter.textContent = `Protéines : ${protSel}/${PROT_MAX} (min ${PROT_MIN})`;
+    const topCounter = document.getElementById('topCounter');
+    if (topCounter) topCounter.textContent = `Toppings : ${topSel}/${TOP_MAX}`;
 
-    document.getElementById('addToCart').disabled = !(ingSel === 6 && protSel === 2 && baseOk && sauceOk);
+    // Hint si < min ingrédients
+    const ingHint = document.getElementById('ingHint');
+    if (ingHint) {
+      if (ingSel < ING_MIN) {
+        ingHint.style.display = 'block';
+        ingHint.textContent = `Choisis encore ${ING_MIN - ingSel} ingrédient(s) pour atteindre le minimum.`;
+      } else {
+        ingHint.style.display = 'none';
+      }
+    }
+
+    // Conditions d'activation
+    const validIngr = ingSel >= ING_MIN && ingSel <= ING_MAX;
+    const validProt = protSel >= PROT_MIN && protSel <= PROT_MAX;
+    const validTop  = topSel <= TOP_MAX;
+
+    document.getElementById('addToCart').disabled = !(validIngr && validProt && baseOk && sauceOk && validTop);
   }
 
   function enforceLimits() {
     const ingInputs = Array.from(document.querySelectorAll('#ingredients input[type="checkbox"]'));
     const protInputs = Array.from(document.querySelectorAll('#proteines input[type="checkbox"]'));
+    const topInputs = Array.from(document.querySelectorAll('#toppings input[type="checkbox"]'));
+
     const ingSel = ingInputs.filter(i => i.checked).length;
     const protSel = protInputs.filter(i => i.checked).length;
+    const topSel = topInputs.filter(i => i.checked).length;
 
-    ingInputs.forEach(i => { i.disabled = (!i.checked && ingSel >= 6); });
-    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= 2); });
+    // Désactiver les cases non cochées quand on atteint les limites max
+    ingInputs.forEach(i => { i.disabled = (!i.checked && ingSel >= ING_MAX); });
+    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= PROT_MAX); });
+    topInputs.forEach(i => { i.disabled = (!i.checked && topSel >= TOP_MAX); });
   }
 
   // --- listeners ---
-  document.querySelectorAll('#ingredients input, #proteines input, input[name="base"], input[name="sauce"]')
-    .forEach(el => el.addEventListener('change', () => { enforceLimits(); validate(); }));
+  document.querySelectorAll('#ingredients input, #proteines input, #toppings input, input[name="base"], input[name="sauce"]').forEach(el => {
+    el.addEventListener('change', () => { enforceLimits(); validate(); });
+  });
 
-// --- Ajouter au panier ---
-const btnAdd = document.getElementById('addToCart'); // ✅ pour pouvoir le désactiver
-btnAdd.addEventListener('click', () => {
-  const item = {
-    type: 'poke',
-    size: 'XL',
-    base: document.querySelector('input[name="base"]:checked').value,
-    ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
-    proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
-    sauce: document.querySelector('input[name="sauce"]:checked').value,
-    toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
-    price: 14.5,
-    qty: 1,
-    ts: Date.now()
-  };
+  // --- Ajouter au panier ---
+  const btnAdd = document.getElementById('addToCart');
+  btnAdd.addEventListener('click', () => {
+    const item = {
+      type: 'poke',
+      size: 'XL',
+      base: document.querySelector('input[name="base"]:checked').value,
+      ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
+      proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
+      sauce: document.querySelector('input[name="sauce"]:checked').value,
+      toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
+      price: 14.5,
+      qty: 1,
+      ts: Date.now()
+    };
 
-  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  cart.push(item);
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    cart.push(item);
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
-  updateBadge(); // met à jour la bulle
+    updateBadge();
 
-  // Feedback visuel (pulse)
-  const badge = document.getElementById('cartBadge');
-  if (badge) {
-    badge.classList.add('pulse');
-    setTimeout(()=> badge.classList.remove('pulse'), 400);
-  }
+    // Feedback visuel (pulse)
+    const badge = document.getElementById('cartBadge');
+    if (badge) { badge.classList.add('pulse'); setTimeout(()=> badge.classList.remove('pulse'), 400); }
 
-  // Anti double-clic + redirection après l’animation
-  btnAdd.disabled = true;                                  // ✅ évite les multi-ajouts
-  setTimeout(() => { window.location.href = 'carte.html'; }, 450); // ✅ redirection
-});
-
+    // Anti double-clic + redirection après l’animation
+    btnAdd.disabled = true;
+    setTimeout(() => { window.location.href = 'carte.html'; }, 450);
+  });
 
   // --- init ---
   enforceLimits();
