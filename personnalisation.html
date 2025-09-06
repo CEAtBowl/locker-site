@@ -23,9 +23,7 @@
   .pill input{display:none}
   .pill.active{background:#ffe3e3}
 
-  .ingredients-grid{
-    display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))
-  }
+  .ingredients-grid{display:grid;gap:.8rem;grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
   .ingredients-grid label{
     display:flex;flex-direction:column;align-items:center;gap:.5rem;
     border:1px solid #eee;background:#fff;border-radius:14px;padding:.8rem;cursor:pointer;
@@ -37,57 +35,15 @@
   .row{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
   .muted{color:#666}
   .actions{display:flex;gap:.8rem;flex-wrap:wrap;justify-content:flex-end;margin-top:1rem}
-  .btn{
-    background:var(--brand);color:#fff;border:none;border-radius:12px;padding:.9rem 1.2rem;
-    font-weight:700;cursor:pointer;box-shadow:var(--shadow)
-  }
+  .btn{background:var(--brand);color:#fff;border:none;border-radius:12px;padding:.9rem 1.2rem;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
   .btn[disabled]{opacity:.5;cursor:not-allowed}
   .note{background:#fff3f3;border:1px solid #ffd2d2;color:#b60000;padding:.6rem .8rem;border-radius:10px;margin:.4rem 0}
 
-.fab-cart {
-  position: fixed; 
-  right: 18px;   /* collé à droite */
-  bottom: 18px;  /* collé en bas */
-  z-index: 9999; /* toujours au-dessus */
-  background: var(--brand);
-  border: none;
-  color: #fff;
-  width: 62px;
-  height: 62px;
-  border-radius: 50%;
-  box-shadow: 0 8px 24px rgba(255,58,58,.35);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-}
-.fab-cart img {
-  width: 30px;
-  height: 30px;
-  filter: invert(1) brightness(9);
-}
-.fab-cart .badge {
-  position: absolute;
-  top: 6px;
-  right: 6px;
-  background: #fff;
-  color: var(--brand);
-  font-weight: 700;
-  font-size: .8rem;
-  border-radius: 999px;
-  padding: 2px 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.25);
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.25); }
-  100% { transform: scale(1); }
-}
-.badge.pulse {
-  animation: pulse 0.4s ease;
-}
-
+  .fab-cart{position:fixed;right:18px;bottom:18px;z-index:9999;background:var(--brand);border:none;color:#fff;width:62px;height:62px;border-radius:50%;box-shadow:0 8px 24px rgba(255,58,58,.35);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .fab-cart img{width:30px;height:30px;filter:invert(1) brightness(9)}
+  .fab-cart .badge{position:absolute;top:6px;right:6px;background:#fff;color:var(--brand);font-weight:700;font-size:.8rem;border-radius:999px;padding:2px 6px;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+  @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.25)}100%{transform:scale(1)}}
+  .badge.pulse{animation:pulse .4s ease}
 </style>
 </head>
 <body>
@@ -100,17 +56,14 @@
 </header>
 
 <main class="wrap">
-
-  <div class="breadcrumb">
-    <a href="carte.html">Carte</a> › Personnalisation du menu
-  </div>
+  <div class="breadcrumb"><a href="carte.html">Carte</a> › Personnalisation du menu</div>
 
   <!-- Étape 1 : Taille -->
   <section class="section" id="etape-taille">
     <h2>1) Choisis la taille du Poké</h2>
     <div class="choice" id="sizeChoice">
-      <label class="pill"><input type="radio" name="size" value="L" required>Poké L (5 ingrédients • 1 protéine)</label>
-      <label class="pill"><input type="radio" name="size" value="XL">Poké XL (6 ingrédients • 2 protéines)</label>
+      <label class="pill"><input type="radio" name="size" value="L" required>Poké L (3–5 ingrédients • 1 protéine • 2 toppings max)</label>
+      <label class="pill"><input type="radio" name="size" value="XL">Poké XL (3–6 ingrédients • 1–2 protéines • 2 toppings max)</label>
     </div>
     <div class="counter" id="rulesNotice"></div>
   </section>
@@ -122,8 +75,8 @@
     <div class="ingredients-grid" id="base">
       <label><input type="radio" name="base" value="riz" required><img src="images/riz.png" alt="Riz"><span>Riz</span></label>
       <label><input type="radio" name="base" value="riz noir"><img src="images/riznoir.png" alt="Riz Noir"><span>Riz Noir</span></label>
-       <label> <input type="radio" name="base" value="duo de riz"><img src="images/duoderiz.png" alt="Duo de riz"><span>Duo de riz</span></label>
-      <label><input type="radio" name="base" value="salade"><img src="images/salade.png"><span>Salade</span></label>
+      <label><input type="radio" name="base" value="duo de riz"><img src="images/duoderiz.png" alt="Duo de riz"><span>Duo de riz</span></label>
+      <label><input type="radio" name="base" value="salade"><img src="images/salade.png" alt="Salade"><span>Salade</span></label>
     </div>
   </section>
 
@@ -184,6 +137,7 @@
   <!-- Étape 6 : Toppings -->
   <section class="section">
     <h2>6) Tes toppings (optionnel)</h2>
+    <div class="counter" id="topCounter" aria-live="polite"></div>
     <div class="ingredients-grid" id="toppings">
       <label><input type="checkbox" name="toppings" value="sésame"><img src="images/sésame.png" alt="Sésame"><span>Sésame</span></label>
       <label><input type="checkbox" name="toppings" value="pavot"><img src="images/pavot.png" alt="Pavot"><span>Pavot</span></label>
@@ -233,6 +187,13 @@
     if (badge) badge.textContent = cart.length;
   }
 
+  // Limites par taille
+  const LIMITS = {
+    L:  { ingMin:3, ingMax:5, protMin:1, protMax:1, topMax:2 },
+    XL: { ingMin:3, ingMax:6, protMin:1, protMax:2, topMax:2 }
+  };
+  let current = null; // objet limites courant
+
   // UI : pills actives
   document.querySelectorAll('.pill').forEach(p=>{
     p.addEventListener('click', ()=> {
@@ -244,8 +205,6 @@
     });
   });
 
-  let limits = {ing:0, prot:0}; // définis par L/XL
-
   function currentSize(){
     const s = document.querySelector('input[name="size"]:checked');
     return s ? s.value : null;
@@ -254,40 +213,71 @@
   function updateRules(){
     const size = currentSize();
     const rules = document.getElementById('rulesNotice');
-    if(size==='L'){ limits={ing:5, prot:1}; rules.textContent='Sélectionne exactement 5 ingrédients et 1 protéine.'; }
-    else if(size==='XL'){ limits={ing:6, prot:2}; rules.textContent='Sélectionne exactement 6 ingrédients et 2 protéines.'; }
-    else { limits={ing:0, prot:0}; rules.textContent=''; }
+    current = size ? LIMITS[size] : null;
+    if(size==='L'){
+      rules.textContent = 'Règles L : 3–5 ingrédients, 1 protéine, 2 toppings max.';
+    } else if(size==='XL'){
+      rules.textContent = 'Règles XL : 3–6 ingrédients, 1 à 2 protéines, 2 toppings max.';
+    } else {
+      rules.textContent = '';
+    }
     updateCounters();
   }
 
+  function countChecked(sel){
+    return document.querySelectorAll(sel+' input[type="checkbox"]:checked').length;
+  }
+
   function updateCounters(){
-    const ingSel = document.querySelectorAll('#ingredients input[type="checkbox"]:checked').length;
-    const protSel = document.querySelectorAll('#protéines input[type="checkbox"]:checked').length;
-    document.getElementById('ingCounter').textContent =
-      limits.ing ? `Ingrédients : ${ingSel} / ${limits.ing}` : 'Choisis d’abord la taille.';
-    document.getElementById('protCounter').textContent =
-      limits.prot ? `Protéines : ${protSel} / ${limits.prot}` : '';
-    document.getElementById('ingHint').style.display = limits.ing && ingSel>limits.ing ? 'block':'none';
-    document.getElementById('ingHint').textContent = ingSel>limits.ing ? 'Tu as dépassé la limite : décoche un ingrédient.' : '';
+    const ingSel = countChecked('#ingredients');
+    const protSel = countChecked('#protéines');
+    const topSel = countChecked('#toppings');
+
+    const ingCounter = document.getElementById('ingCounter');
+    const protCounter = document.getElementById('protCounter');
+    const topCounter  = document.getElementById('topCounter');
+
+    if(current){
+      ingCounter.textContent = `Ingrédients : ${ingSel}/${current.ingMax} (min ${current.ingMin})`;
+      protCounter.textContent = `Protéines : ${protSel}/${current.protMax} (min ${current.protMin})`;
+      topCounter.textContent  = `Toppings : ${topSel}/${current.topMax}`;
+    } else {
+      ingCounter.textContent = 'Choisis d’abord la taille.';
+      protCounter.textContent = '';
+      topCounter.textContent = '';
+    }
+
+    const ingHint = document.getElementById('ingHint');
+    if(current && ingSel < current.ingMin){
+      ingHint.style.display = 'block';
+      ingHint.textContent = `Choisis encore ${current.ingMin - ingSel} ingrédient(s) pour atteindre le minimum.`;
+    } else {
+      ingHint.style.display = 'none';
+    }
+
     validateAll();
   }
 
   function enforceLimits(){
     const ing = Array.from(document.querySelectorAll('#ingredients input[type="checkbox"]'));
     const prot = Array.from(document.querySelectorAll('#protéines input[type="checkbox"]'));
+    const top  = Array.from(document.querySelectorAll('#toppings input[type="checkbox"]'));
+
     const ingSel = ing.filter(i=>i.checked).length;
     const protSel = prot.filter(i=>i.checked).length;
+    const topSel = top.filter(i=>i.checked).length;
 
-    ing.forEach(i=>{
-      i.disabled = (limits.ing && !i.checked && ingSel>=limits.ing);
-    });
-    prot.forEach(i=>{
-      i.disabled = (limits.prot && !i.checked && protSel>=limits.prot);
-    });
+    if(current){
+      ing.forEach(i=>{ i.disabled = (!i.checked && ingSel >= current.ingMax); });
+      prot.forEach(i=>{ i.disabled = (!i.checked && protSel >= current.protMax); });
+      top.forEach(i=>{  i.disabled = (!i.checked && topSel  >= current.topMax);  });
+    } else {
+      [...ing, ...prot, ...top].forEach(i=> i.disabled = false);
+    }
   }
 
   // Listeners
-  document.querySelectorAll('#ingredients input[type="checkbox"], #protéines input[type="checkbox"]').forEach(el=>{
+  document.querySelectorAll('#ingredients input[type="checkbox"], #protéines input[type="checkbox"], #toppings input[type="checkbox"]').forEach(el=>{
     el.addEventListener('change', ()=>{ enforceLimits(); updateCounters(); });
   });
   document.querySelectorAll('input[name="size"]').forEach(el=>{
@@ -299,15 +289,20 @@
 
   function validateAll(){
     const size = currentSize();
-    const ingSel = document.querySelectorAll('#ingredients input[type="checkbox"]:checked').length;
-    const protSel = document.querySelectorAll('#protéines input[type="checkbox"]:checked').length;
+    const ingSel = countChecked('#ingredients');
+    const protSel = countChecked('#protéines');
+    const topSel  = countChecked('#toppings');
     const baseOk = !!document.querySelector('input[name="base"]:checked');
     const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
     const smoothieOk = !!document.querySelector('input[name="smoothie"]:checked');
 
     let rulesOk = false;
-    if(size==='L') rulesOk = (ingSel===5 && protSel===1);
-    if(size==='XL') rulesOk = (ingSel===6 && protSel===2);
+    if(current){
+      const okIngr = (ingSel >= current.ingMin && ingSel <= current.ingMax);
+      const okProt = (protSel >= current.protMin && protSel <= current.protMax);
+      const okTop  = (topSel <= current.topMax);
+      rulesOk = okIngr && okProt && okTop;
+    }
 
     document.getElementById('addToCart').disabled = !(rulesOk && baseOk && sauceOk && smoothieOk && size);
 
@@ -329,52 +324,44 @@
     return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(x=>x.value);
   }
 
- // Ajouter au panier
-const btnAdd = document.getElementById('addToCart');
-btnAdd.addEventListener('click', ()=>{
-  const size = currentSize();
-  let price = 0;
-  if(size === 'L') price = 14.0;
-  if(size === 'XL') price = 17.0;
+  // Ajouter au panier
+  const btnAdd = document.getElementById('addToCart');
+  btnAdd.addEventListener('click', ()=>{
+    const size = currentSize();
+    let price = 0;
+    if(size === 'L') price = 14.0;
+    if(size === 'XL') price = 17.0;
 
-  const item = {
-    type:'menu',
-    poke_size: size,
-    base: valChecked('base'),
-    ingredients: valsChecked('ingredients'),
-    proteines: valsChecked('proteines'),
-    sauce: valChecked('sauce'),
-    toppings: valsChecked('toppings'),
-    smoothie: valChecked('smoothie'),
-    qty: 1,
-    price: price,
-    ts: Date.now()
-  };
+    const item = {
+      type:'menu',
+      poke_size: size,
+      base: valChecked('base'),
+      ingredients: valsChecked('ingredients'),
+      proteines: valsChecked('proteines'),
+      sauce: valChecked('sauce'),
+      toppings: valsChecked('toppings'),
+      smoothie: valChecked('smoothie'),
+      qty: 1,
+      price: price,
+      ts: Date.now()
+    };
 
-  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  cart.push(item);
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    cart.push(item);
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
-  updateBadge(); // MAJ de la pastille
+    updateBadge();
 
-  // Feedback visuel (pulse)
-  const badge = document.getElementById('cartBadge');
-  if (badge) {
-    badge.classList.add('pulse');
-    setTimeout(()=> badge.classList.remove('pulse'), 400);
-  }
+    const badge = document.getElementById('cartBadge');
+    if (badge) { badge.classList.add('pulse'); setTimeout(()=> badge.classList.remove('pulse'), 400); }
 
-  // Anti double-clic + redirection après l’animation
-  btnAdd.disabled = true;
-  setTimeout(() => { window.location.href = 'carte.html'; }, 450);
-  // Variante section directe :
-  // setTimeout(() => { window.location.href = 'carte.html#menu'; }, 450);
-});
-
+    btnAdd.disabled = true;
+    setTimeout(() => { window.location.href = 'carte.html'; }, 450);
+  });
 
   // init
   updateRules(); enforceLimits(); updateCounters(); validateAll();
-  updateBadge();                   // <— initialiser la pastille au chargement
+  updateBadge();
 </script>
 
 </body>
