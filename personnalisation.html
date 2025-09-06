@@ -329,39 +329,48 @@
     return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(x=>x.value);
   }
 
-  // Ajouter au panier
-  document.getElementById('addToCart').addEventListener('click', ()=>{
-    const size = currentSize();
-    let price = 0;
-    if(size === 'L') price = 14.0;
-    if(size === 'XL') price = 17.0;
+ // Ajouter au panier
+const btnAdd = document.getElementById('addToCart');
+btnAdd.addEventListener('click', ()=>{
+  const size = currentSize();
+  let price = 0;
+  if(size === 'L') price = 14.0;
+  if(size === 'XL') price = 17.0;
 
-    const item = {
-      type:'menu',
-      poke_size: size,
-      base: valChecked('base'),
-      ingredients: valsChecked('ingredients'),
-      proteines: valsChecked('proteines'),
-      sauce: valChecked('sauce'),
-      toppings: valsChecked('toppings'),
-      smoothie: valChecked('smoothie'),
-      qty: 1,
-      price: price,
-      ts: Date.now()
-    };
+  const item = {
+    type:'menu',
+    poke_size: size,
+    base: valChecked('base'),
+    ingredients: valsChecked('ingredients'),
+    proteines: valsChecked('proteines'),
+    sauce: valChecked('sauce'),
+    toppings: valsChecked('toppings'),
+    smoothie: valChecked('smoothie'),
+    qty: 1,
+    price: price,
+    ts: Date.now()
+  };
 
-    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-    cart.push(item);
-    localStorage.setItem(CART_KEY, JSON.stringify(cart));
+  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+  cart.push(item);
+  localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
-    updateBadge();                 // <— MAJ de la pastille
-      const badge = document.getElementById('cartBadge');
+  updateBadge(); // MAJ de la pastille
+
+  // Feedback visuel (pulse)
+  const badge = document.getElementById('cartBadge');
   if (badge) {
     badge.classList.add('pulse');
     setTimeout(()=> badge.classList.remove('pulse'), 400);
   }
 
-  });
+  // Anti double-clic + redirection après l’animation
+  btnAdd.disabled = true;
+  setTimeout(() => { window.location.href = 'carte.html'; }, 450);
+  // Variante section directe :
+  // setTimeout(() => { window.location.href = 'carte.html#menu'; }, 450);
+});
+
 
   // init
   updateRules(); enforceLimits(); updateCounters(); validateAll();
