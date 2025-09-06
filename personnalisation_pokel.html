@@ -102,7 +102,7 @@
 
   <!-- Ingrédients -->
   <div class="section">
-    <h2>Ingrédients (5 max)</h2>
+    <h2>Ingrédients (3 à 5)</h2>
     <div class="counter" id="ingCounter"></div>
     <div class="ingredients-grid" id="ingredients">
       <label><input type="checkbox" value="avocat"><img src="images/avocat.png"><span>Avocat</span></label>
@@ -156,7 +156,8 @@
 
   <!-- Toppings -->
   <div class="section">
-    <h2>Toppings (optionnels)</h2>
+    <h2>Toppings (optionnels, 2 max)</h2>
+    <div class="counter" id="topCounter"></div>
     <div class="ingredients-grid" id="toppings">
       <label><input type="checkbox" value="sésame"><img src="images/sésame.png"><span>Sésame</span></label>
       <label><input type="checkbox" value="pavot"><img src="images/pavot.png"><span>Pavot</span></label>
@@ -179,82 +180,113 @@
 
 
 <script>
-  // --- stockage & badge ---
+  // --- paramètres ---
   const CART_KEY = 'ce-panier';
+  const ING_MIN = 3;
+  const ING_MAX = 5;
+  const TOP_MAX = 2;
+
+  // --- stockage & badge ---
   if (!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
 
   function updateBadge() {
     const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-    const badge = document.getElementById('cartBadge'); // doit exister dans le bouton caddie
+    const badge = document.getElementById('cartBadge');
     if (badge) badge.textContent = cart.length;
   }
 
-  // --- validation + limites (L = 5 ingrédients, 1 protéine) ---
+  // --- validation + limites (L = 3 à 5 ingrédients, 1 protéine, 0 à 2 toppings) ---
   function validate() {
     const ingSel = document.querySelectorAll('#ingredients input:checked').length;
     const protSel = document.querySelectorAll('#proteines input:checked').length;
+    const topSel = document.querySelectorAll('#toppings input:checked').length;
     const baseOk = !!document.querySelector('input[name="base"]:checked');
     const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
 
-    // Affichage compteur
+    // Compteurs
     const ingCounter = document.getElementById('ingCounter');
-    if (ingCounter) ingCounter.textContent = `Ingrédients : ${ingSel}/5`;
+    if (ingCounter) ingCounter.textContent = `Ingrédients : ${ingSel}/${ING_MAX} (min ${ING_MIN})`;
 
-    // Bouton Ajouter
-    document.getElementById('addToCart').disabled = !(ingSel === 5 && protSel === 1 && baseOk && sauceOk);
+    const protCounter = document.getElementById('protCounter');
+    if (protCounter) protCounter.textContent = `Protéines : ${protSel}/1`;
+
+    const topCounter = document.getElementById('topCounter');
+    if (topCounter) topCounter.textContent = `Toppings : ${topSel}/${TOP_MAX}`;
+
+    // Hint si < min
+    const ingHint = document.getElementById('ingHint');
+    if (ingHint) {
+      if (ingSel < ING_MIN) {
+        ingHint.style.display = 'block';
+        ingHint.textContent = `Choisis encore ${ING_MIN - ingSel} ingrédient(s) pour atteindre le minimum.`;
+      } else {
+        ingHint.style.display = 'none';
+      }
+    }
+
+    // Activation du bouton
+    const validIngr = ingSel >= ING_MIN && ingSel <= ING_MAX;
+    const validProt = protSel === 1;
+    const validTop = topSel <= TOP_MAX; // 0, 1 ou 2
+
+    document.getElementById('addToCart').disabled = !(validIngr && validProt && baseOk && sauceOk && validTop);
   }
 
   function enforceLimits() {
     const ingInputs = Array.from(document.querySelectorAll('#ingredients input[type="checkbox"]'));
     const protInputs = Array.from(document.querySelectorAll('#proteines input[type="checkbox"]'));
+    const topInputs = Array.from(document.querySelectorAll('#toppings input[type="checkbox"]'));
+
     const ingSel = ingInputs.filter(i => i.checked).length;
     const protSel = protInputs.filter(i => i.checked).length;
+    const topSel = topInputs.filter(i => i.checked).length;
 
     // Désactiver les cases non cochées quand on atteint la limite
-    ingInputs.forEach(i => { i.disabled = (!i.checked && ingSel >= 5); });
+    ingInputs.forEach(i => { i.disabled = (!i.checked && ingSel >= ING_MAX); });
     protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= 1); });
+    topInputs.forEach(i => { i.disabled = (!i.checked && topSel >= TOP_MAX); });
   }
 
   // --- listeners ---
-  // NB: assure-toi que les IDs #ingredients et #proteines existent bien dans le HTML
-  document.querySelectorAll('#ingredients input, #proteines input, input[name="base"], input[name="sauce"]')
-    .forEach(el => el.addEventListener('change', () => { enforceLimits(); validate(); }));
+  document.querySelectorAll('#ingredients input, #proteines input, #toppings input, input[name="base"], input[name="sauce"]').forEach(el => {
+    el.addEventListener('change', () => { enforceLimits(); validate(); });
+  });
 
-// --- Ajouter au panier ---
-const btnAdd = document.getElementById('addToCart');
-btnAdd.addEventListener('click', () => {
-  const item = {
-    type: 'poke',
-    size: 'L',
-    base: document.querySelector('input[name="base"]:checked').value,
-    ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
-    proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
-    sauce: document.querySelector('input[name="sauce"]:checked').value,
-    toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
-    price: 11.5,
-    qty: 1,
-    ts: Date.now()
-  };
+  // --- Ajouter au panier ---
+  const btnAdd = document.getElementById('addToCart');
+  btnAdd.addEventListener('click', () => {
+    const item = {
+      type: 'poke',
+      size: 'L',
+      base: document.querySelector('input[name="base"]:checked').value,
+      ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
+      proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
+      sauce: document.querySelector('input[name="sauce"]:checked').value,
+      toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
+      price: 11.5,
+      qty: 1,
+      ts: Date.now()
+    };
 
-  const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
-  cart.push(item);
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
+    const cart = JSON.parse(localStorage.getItem(CART_KEY) || '[]');
+    cart.push(item);
+    localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
-  updateBadge(); // MAJ bulle
+    updateBadge(); // MAJ bulle
 
-  // Feedback visuel (pulse)
-  const badge = document.getElementById('cartBadge');
-  if (badge) {
-    badge.classList.add('pulse');
-    setTimeout(()=> badge.classList.remove('pulse'), 400);
-  }
+    // Feedback visuel (pulse)
+    const badge = document.getElementById('cartBadge');
+    if (badge) {
+      badge.classList.add('pulse');
+      setTimeout(()=> badge.classList.remove('pulse'), 400);
+    }
 
-  // Anti double-clic + redirection après l’animation
-  btnAdd.disabled = true;
-  setTimeout(() => { window.location.href = 'carte.html'; }, 450);
-  // Variante directe vers une section :
-  // setTimeout(() => { window.location.href = 'carte.html#pokebowls'; }, 450);
-});
+    // Anti double-clic + redirection après l’animation
+    btnAdd.disabled = true;
+    setTimeout(() => { window.location.href = 'carte.html'; }, 450);
+    // Variante directe vers une section :
+    // setTimeout(() => { window.location.href = 'carte.html#pokebowls'; }, 450);
+  });
 
   // --- init ---
   enforceLimits();
