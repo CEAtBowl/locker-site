@@ -80,6 +80,16 @@
   border-radius:999px; padding:2px 6px;
   box-shadow:0 2px 6px rgba(0,0,0,.25);
 }
+  /* Etat désactivé/lock visuel pour les boutons */
+.btn:disabled,
+.btn.is-disabled{
+  opacity:.55;
+  cursor:not-allowed;
+  filter:grayscale(1);
+  box-shadow:none;
+}
+.btn-primary:disabled{ background:#d6d6d6; color:#888; border:1px solid #ddd; }
+
 </style>
 </head>
 <body>
@@ -164,6 +174,19 @@
   const elSumItems = document.getElementById('sumItems');
   const elSumPrice = document.getElementById('sumPrice');
   const elSumTotal = document.getElementById('sumTotal');
+const btnCheckout = document.getElementById('btnCheckout');
+
+/** Verrouille le bouton pendant `ms` millisecondes */
+function lockCheckout(ms = 5000){
+  if (!btnCheckout) return;
+  btnCheckout.disabled = true;
+  btnCheckout.classList.add('is-disabled');
+  // Déverrouille après ms millisecondes
+  setTimeout(()=>{
+    btnCheckout.disabled = false;
+    btnCheckout.classList.remove('is-disabled');
+  }, ms);
+}
 
   function loadCart(){
     try{
@@ -391,6 +414,11 @@ function populateSlotSelect(selectId='chkSlot'){
 }
 
   document.getElementById('btnCheckout').addEventListener('click', async ()=>{
+      // --- Début ajouté : anti-double-clic immédiat + verrou 5s ---
+  if (btnCheckout.disabled) return;      // ignore si déjà verrouillé
+  lockCheckout(5000);                     // grise et bloque 5 secondes
+  // --- Fin ajouté ---
+
     const items = loadCart();
     if(items.length === 0){
       alert('Votre panier est vide.');
