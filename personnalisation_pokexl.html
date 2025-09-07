@@ -293,7 +293,7 @@
     }
     if (protCounter) {
       protCounter.textContent =
-        `Protéines : ${protSel}/${PROT_MAX} (${PROT_MIN} minimum, ${PROT_INCLUDED} incluses, +0,80€ par protéine supplémentaire` +
+        `Protéines : ${protSel}/2 (${PROT_MIN} minimum, ${PROT_INCLUDED} incluses, +0,80€ par protéine supplémentaire` +
         (extraProtCount>0 ? ` • +${extraProtCount} extra = +${fmt(extraProtCost)}` : '') + ')';
     }
     if (topCounter)  topCounter.textContent  = `Toppings : ${topSel}/${TOP_MAX}`;
@@ -311,7 +311,7 @@
 
     // Règles : min 3 ingrédients (pas de plafond), 1–2 protéines, toppings ≤ 2, base + sauce
     const validIngr = ingSel >= ING_MIN;
-    const validProt = (protSel >= PROT_MIN && protSel <= PROT_MAX);
+    const validProt = (protSel >= PROT_MIN && protSel <= 2);
     const validTop  = (topSel  <= TOP_MAX);
 
     const btn = document.getElementById('addToCart');
@@ -331,7 +331,7 @@
     const protSel = protInputs.filter(i => i.checked).length;
     const topSel  = topInputs .filter(i => i.checked).length;
 
-    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= PROT_MAX); });
+    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= 2); });
     topInputs .forEach(i => { i.disabled = (!i.checked && topSel  >= TOP_MAX ); });
   }
 
