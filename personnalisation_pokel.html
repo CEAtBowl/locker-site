@@ -240,7 +240,7 @@
   // Protéines (1 incluse, pas de plafond)
   const PROT_MIN = 1;               // au moins 1
   const PROT_INCLUDED = 1;          // incluses sans supplément
-  const EXTRA_PROT_PRICE = 0.80;    // +€/protéine au-delà
+  const EXTRA_PROT_PRICE = 1,50;    // +€/protéine au-delà
 
   // Toppings
   const TOP_MAX  = 2;
@@ -294,7 +294,7 @@
     }
     if (protCounter) {
       protCounter.textContent =
-        `Protéines : ${protSel}/1 (${PROT_MIN} minimum, ${PROT_INCLUDED} incluse, +0,80€/protéine supplémentaire` +
+        `Protéines : ${protSel}/1 (${PROT_MIN} minimum, ${PROT_INCLUDED} incluse, +1,50€/protéine supplémentaire` +
         (extraProtCount>0 ? ` • +${extraProtCount} = +${fmt(extraProtCost)}` : '') + ')';
     }
     if (topCounter) topCounter.textContent = `Toppings : ${topSel}/${TOP_MAX}`;
