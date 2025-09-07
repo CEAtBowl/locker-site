@@ -221,10 +221,21 @@
 
   // ------- Helpers images (miniatures) -------
   const alias = {
-    'coca-cola':'coca.png','coca':'coca.png','sprite':'sprite.png','ice tea':'icetea.png','oasis':'oasis.png','orangina':'o.png',
-    'cookie':'cookie.png','cookie chocolat':'cookie.png','cookie framboise':'cookief.png','cookie mangue':'cookiem.png',
-    'smoothie bowl kiwi':'smoothiekiwi.png','smoothie bowl mangue':'smoothiemangue.png','smoothie bowl fruits rouges':'smoothierouge.png',
-    'menu poke':'pokesmoothie.png','poke l':'pokel.png','poke xl':'pokexl.png','bubble tea':'bbt.png'
+    'riz':'riz.png','riz noir':'riznoir.png','duo riz':'duoderiz.png','salade':'salade.png','pates':'pates.png', 
+    'saumon':'saumon.png','poulet':'poulet.png','oeufs':'oeufs.png','tofu':'tofu.png','thon':'thon.png',
+    'avocat':'avocat.png','betterave':'betterave.png','carotte':'carotte.png','champignon':'champignon.png',
+    'choux rouge':'chouxrouge.png','concombre':'concombre.png','edamame':'edamame.png','feta':'feta.png', 
+    'grenade':'grenade.png','mais':'mais.png','mangue':'mangue.png','mozzarella':'mozzarella.png', 'oignon rouge':'oignonrouge.png',
+    'poivrons':'poivrons.png','radis':'radis.png','tomates':'tomates.png','wakame':'wakame.png', 'soja sucree':'soja_sucrée.png',
+    'soja salee':'soja_salée.png','cesar':'césar.png','moutarde miel':'moutarde_miel.png', 'curry mangue':'curry_mango.png',
+    'mayo epicee':'mayo_epicée.png','passion':'passion.png','balsamique':'balsamique.png', 'sesame':'sésame.png','pavot':'pavot.png',
+    'cacahuete':'cacahuète.png','croutons':'croutons.png', 'coriandre':'coriandre.png','coriandre fraiche':'coriandre.png',
+    'oignons frits':'oignons_frits.png', 'coca-cola':'coca.png','sprite':'sprite.png','ice tea':'icetea.png','oasis':'oasis.png',
+    'orangina':'o.png','zero':'zéro.png','cherry':'cherry.png','fanta':'fanta.png', 'cookie':'cookie.png','cookie chocolat':'cookie.png',
+    'cookie framboise':'cookief.png','cookie mangue':'cookiem.png', 'smoothie':'smoothie.png','smoothie kiwi':'smoothiekiwi.png',
+    'smoothie mangue':'smoothiemangue.png','smoothie fruits rouges':'smoothierouge.png', 'smoothie bowl kiwi':'smoothiekiwi.png',
+    'smoothie bowl mangue':'smoothiemangue.png','smoothie bowl fruits rouges':'smoothierouge.png', 'jus concombre':'jusconcombre.png',
+    'jus pasteque':'juspasteque.png','jus carotte':'juscarotte.png','bubble tea' :'bbt.png'
   };
   function deaccent(str=''){ return String(str).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
   function slugify(str=''){ return deaccent(str).replace(/[^a-z0-9]+/g,' ').trim(); }
