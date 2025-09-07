@@ -46,7 +46,15 @@
       padding:.65rem 1rem;background:#fff;border-bottom:1px solid #f1f1f1;
       backdrop-filter:saturate(1.2) blur(4px);
     }
-    .brand{font-weight:800;color:var(--brand);letter-spacing:.2px}
+   /* Topbar brand */
+.brand{
+  display:flex;align-items:center;gap:.6rem;
+  font-weight:800;color:var(--brand);
+  letter-spacing:.2px;
+}
+.brand .logo{height:32px;width:auto;display:block}
+@media (max-width:480px){ .brand-name{display:none} } /* logo seul sur petit mobile */
+
     .nav{display:flex;gap:.6rem;flex-wrap:wrap}
     .nav a{padding:.55rem .9rem;border-radius:999px;text-decoration:none;color:#374151;font-weight:600}
     .nav a:hover{background:#f8f8f8}
@@ -117,7 +125,9 @@
 <body>
   <!-- Topbar -->
   <div class="topbar" role="navigation" aria-label="Navigation principale">
-    <div class="brand">L'Atelier du Bowl</div>
+<div class="brand">
+  <img src="images/logo222.png" alt="L'Atelier du Bowl" class="logo" width="36" height="36" decoding="async">
+</div>
     <nav class="nav">
       <a href="carte.html">Carte</a>
       <a href="#horaires">Horaires & Accès</a>
@@ -266,3 +276,4 @@
   </script>
 </body>
 </html>
+
