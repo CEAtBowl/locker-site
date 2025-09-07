@@ -323,17 +323,18 @@
   // --- Limites d’activation ---
   // Ingrédients : jamais désactivés (on autorise > 6)
   // Protéines & toppings : plafonds respectés
-  function enforceLimits() {
-    document.querySelectorAll('#ingredients input[type="checkbox"]').forEach(i => i.disabled = false);
+function enforceLimits() {
+  // Ingrédients : jamais désactivés (on autorise > 6)
+  document.querySelectorAll('#ingredients input[type="checkbox"]').forEach(i => i.disabled = false);
 
-    const protInputs = Array.from(document.querySelectorAll('#proteines input[type="checkbox"]'));
-    const topInputs  = Array.from(document.querySelectorAll('#toppings  input[type="checkbox"]'));
-    const protSel = protInputs.filter(i => i.checked).length;
-    const topSel  = topInputs .filter(i => i.checked).length;
+  // ✅ Protéines : ne JAMAIS désactiver (plus de 2 autorisées, le prix s’ajuste)
+  document.querySelectorAll('#proteines input[type="checkbox"]').forEach(i => i.disabled = false);
 
-    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= 2); });
-    topInputs .forEach(i => { i.disabled = (!i.checked && topSel  >= TOP_MAX ); });
-  }
+  // Toppings : on garde le plafond (2 max)
+  const topInputs = Array.from(document.querySelectorAll('#toppings input[type="checkbox"]'));
+  const topSel = topInputs.filter(i => i.checked).length;
+  topInputs.forEach(i => { i.disabled = (!i.checked && topSel >= TOP_MAX); });
+}
 
   // --- listeners ---
   document.querySelectorAll('#ingredients input, #proteines input, #toppings input, input[name="base"], input[name="sauce"]').forEach(el => {
