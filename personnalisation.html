@@ -278,7 +278,7 @@
 
   // ⚙️ Règles de suppléments
   const EXTRA_ING_PRICE  = 0.80; // +€/ingrédient au-delà des inclus
-  const EXTRA_PROT_PRICE = 0.80; // +€/protéine au-delà des inclus
+  const EXTRA_PROT_PRICE = 1.50; // +€/protéine au-delà des inclus
 
   // Par taille : inclus + contraintes min
   const LIMITS = {
@@ -311,10 +311,10 @@
     current = size ? LIMITS[size] : null;
     if(size==='L'){
       rules.textContent =
-        'Règles L : min 3 ingrédients (5 inclus, +0,80€/ingrédient sup.), protéines : min 1 (1 incluse, +0,80€/protéine sup.), toppings : 2 max.';
+        'Règles L : min 3 ingrédients (5 inclus, +0,80€/ingrédient sup.), protéines : min 1 (1 incluse, +1,50€/protéine sup.), toppings : 2 max.';
     } else if(size==='XL'){
       rules.textContent =
-        'Règles XL : min 3 ingrédients (6 inclus, +0,80€/ingrédient sup.), protéines : min 1 (2 incluses, +0,80€/protéine sup.), toppings : 2 max.';
+        'Règles XL : min 3 ingrédients (6 inclus, +0,80€/ingrédient sup.), protéines : min 1 (2 incluses, +1,50€/protéine sup.), toppings : 2 max.';
     } else {
       rules.textContent = '';
     }
@@ -355,7 +355,7 @@
       }
       if (protCounter) {
         protCounter.textContent =
-          `Protéines : ${protSel} (min ${current.protMin}, ${current.protIncluded} incluses, +0,80€/protéine sup.` +
+          `Protéines : ${protSel} (min ${current.protMin}, ${current.protIncluded} incluses, +1,50€/protéine sup.` +
           (extraProt>0 ? ` • +${extraProt} = +${fmt(protCost)}` : '') + ')';
       }
       if (topCounter) topCounter.textContent  = `Toppings : ${topSel}/${current.topMax}`;
