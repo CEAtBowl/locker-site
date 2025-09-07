@@ -113,6 +113,14 @@
     <!-- Réserver (placeholder) -->
     
     <!-- Horaires & Accès -->
+    <section class="section" id="pub-video" aria-labelledby="titre-video">
+      <h2 id="titre-video">En 30 secondes</h2>
+      <video controls preload="metadata" playsinline style="width:100%;border-radius:var(--radius);box-shadow:var(--shadow)" aria-label="Vidéo de présentation">
+        <source src="images/pub.mp4" type="video/mp4">
+        Votre navigateur ne supporte pas la lecture vidéo. Vous pouvez <a href="images/pub.mp4">télécharger la vidéo</a>.
+      </video>
+    </section>
+
     <section class="section" id="horaires" aria-labelledby="titre-horaires">
       <h2 id="titre-horaires">Horaires & Accès</h2>
       <div class="hours">
@@ -125,16 +133,16 @@
           <strong>Adresse</strong>
           <div id="address">
             <!-- TODO: Remplacer par l'adresse exacte -->
-            10 Rue Megevand, 25000 Besançon
+            12 Rue Exemple, 25000 Besançon
           </div>
           <div style="margin-top:.4rem">
-            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=10+Rue+Megevand+25000+Besan%C3%A7on" target="_blank" rel="noopener">Itinéraire</a>
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=12+Rue+Exemple+25000+Besan%C3%A7on" target="_blank" rel="noopener">Itinéraire</a>
           </div>
         </div>
       </div>
       <div style="margin-top:1rem">
         <!-- TODO: Remplacer l'embed par l'iframe placeid Google Maps de votre adresse -->
-       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5418.020384810505!2d6.0208030758636415!3d47.23594651350019!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478d633e60c5eba1%3A0x48960770a2ffa6ef!2s10%20Rue%20Megevand%2C%2025000%20Besan%C3%A7on!5e0!3m2!1sfr!2sfr!4v1757249958454!5m2!1sfr!2sfr" width="100%" height="280" style="border:0;border-radius:12px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe title="Carte d'accès" src="https://www.google.com/maps?q=Besan%C3%A7on&output=embed" width="100%" height="280" style="border:0;border-radius:12px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
 
@@ -265,4 +273,3 @@
   </script>
 </body>
 </html>
-
