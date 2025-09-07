@@ -136,6 +136,38 @@
     @media (prefers-reduced-motion: reduce){
       .btn, .nav a.cta{transition:none}
     }
+
+    /* === Overrides compacts (à coller en bas de ton <style>) === */
+:root{
+  --sep-w: 36px;   /* largeur de la barre décorative */
+  --sep-h: 2px;    /* épaisseur de la barre */
+  --sep-mt: 6px;   /* marge au-dessus de la barre */
+}
+
+/* Barres sous les titres de sections (tu l'avais déjà sur h2) */
+.section h2::after{
+  width: var(--sep-w);
+  height: var(--sep-h);
+  margin-top: var(--sep-mt);
+}
+
+/* Si tu as une barre sur le H1 du hero, on la miniaturise pareil */
+header.hero h1::after{
+  content:"";
+  display:block;
+  width: var(--sep-w);
+  height: var(--sep-h);
+  background: linear-gradient(90deg,var(--brand),var(--brand-2));
+  border-radius: 999px;
+  margin: var(--sep-mt) auto 0;
+}
+
+/* Air autour du logo du hero et des textes (plus resserré) */
+.logo-hero{ margin: 4px auto 6px; }
+header.hero p{ margin-top: 6px; }
+.statusrow{ margin: .6rem 0 .8rem; }
+.cta-group{ margin-top: 10px; }
+
   </style>
 </head>
 <body>
@@ -292,6 +324,7 @@
   </script>
 </body>
 </html>
+
 
 
 
