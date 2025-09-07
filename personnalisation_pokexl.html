@@ -226,9 +226,12 @@
 <script>
   // === Paramètres ===
   const CART_KEY = 'ce-panier';
-  const ING_MIN = 3, ING_MAX = 6;
+  const BASE_PRICE = 14.5;        // prix Poké XL
+  const INCLUDED_ING = 6;         // ingrédients inclus
+  const EXTRA_ING_PRICE = 0.80;   // prix par ingrédient supplémentaire
+  const ING_MIN = 3;              // minimum requis
   const PROT_MIN = 1, PROT_MAX = 2;
-  const TOP_MAX = 2;
+  const TOP_MAX  = 2;
 
   // --- stockage & badge ---
   if (!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
@@ -238,7 +241,7 @@
     if (badge) badge.textContent = cart.length;
   }
 
-  // Surbrillance visuelle (.selected) – compat anciens navigateurs sans :has()
+  // Surbrillance visuelle (.selected) – compat anciens navigateurs
   function refreshSelectedClasses(scope){
     const root = scope || document;
     root.querySelectorAll('.ingredients-grid').forEach(grid=>{
@@ -249,20 +252,31 @@
     });
   }
 
-  // --- validation + limites ---
+  const fmt = n => n.toFixed(2).replace('.', ',') + ' €';
+
+  // --- validation + compteurs + bouton (prix dynamique) ---
   function validate() {
     const ingSel = document.querySelectorAll('#ingredients input:checked').length;
     const protSel = document.querySelectorAll('#proteines input:checked').length;
-    const topSel  = document.querySelectorAll('#toppings input:checked').length;
+    const topSel  = document.querySelectorAll('#toppings  input:checked').length;
     const baseOk  = !!document.querySelector('input[name="base"]:checked');
     const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
+
+    // Extras
+    const extraCount = Math.max(0, ingSel - INCLUDED_ING);
+    const extraCost  = extraCount * EXTRA_ING_PRICE;
+    const total      = BASE_PRICE + extraCost;
 
     // Compteurs
     const ingCounter  = document.getElementById('ingCounter');
     const protCounter = document.getElementById('protCounter');
     const topCounter  = document.getElementById('topCounter');
 
-    if (ingCounter)  ingCounter.textContent  = `Ingrédients : ${ingSel}/${ING_MAX} (min ${ING_MIN})`;
+    if (ingCounter) {
+      ingCounter.textContent =
+        `Ingrédients : ${ingSel} ( ${INCLUDED_ING} inclus, +0,80€ par ingrédients supplémentaires`+
+        (extraCount>0 ? ` • +${extraCount} extra = +${fmt(extraCost)}` : '') + ' )';
+    }
     if (protCounter) protCounter.textContent = `Protéines : ${protSel}/${PROT_MAX} (min ${PROT_MIN})`;
     if (topCounter)  topCounter.textContent  = `Toppings : ${topSel}/${TOP_MAX}`;
 
@@ -277,23 +291,28 @@
       }
     }
 
-    const validIngr = ingSel >= ING_MIN && ingSel <= ING_MAX;
-    const validProt = protSel >= PROT_MIN && protSel <= PROT_MAX;
-    const validTop  = topSel <= TOP_MAX;
+    // Règles : min 3 ingrédients (pas de plafond), 1–2 protéines, toppings ≤ 2, base + sauce
+    const validIngr = ingSel >= ING_MIN;
+    const validProt = (protSel >= PROT_MIN && protSel <= PROT_MAX);
+    const validTop  = (topSel  <= TOP_MAX);
 
-    document.getElementById('addToCart').disabled = !(validIngr && validProt && baseOk && sauceOk && validTop);
+    const btn = document.getElementById('addToCart');
+    const enabled = (validIngr && validProt && baseOk && sauceOk && validTop);
+    btn.disabled = !enabled;
+    btn.textContent = enabled ? `Ajouter au panier (${fmt(total)})` : `Ajouter au panier (${fmt(BASE_PRICE)})`;
   }
 
+  // --- Limites d’activation ---
+  // Ingrédients : jamais désactivés (on autorise au-delà de 6)
+  // Protéines & toppings : plafonds respectés
   function enforceLimits() {
-    const ingInputs  = Array.from(document.querySelectorAll('#ingredients input[type="checkbox"]'));
-    const protInputs = Array.from(document.querySelectorAll('#proteines  input[type="checkbox"]'));
-    const topInputs  = Array.from(document.querySelectorAll('#toppings   input[type="checkbox"]'));
+    document.querySelectorAll('#ingredients input[type="checkbox"]').forEach(i => i.disabled = false);
 
-    const ingSel  = ingInputs .filter(i => i.checked).length;
+    const protInputs = Array.from(document.querySelectorAll('#proteines input[type="checkbox"]'));
+    const topInputs  = Array.from(document.querySelectorAll('#toppings  input[type="checkbox"]'));
     const protSel = protInputs.filter(i => i.checked).length;
     const topSel  = topInputs .filter(i => i.checked).length;
 
-    ingInputs .forEach(i => { i.disabled = (!i.checked && ingSel  >= ING_MAX ); });
     protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= PROT_MAX); });
     topInputs .forEach(i => { i.disabled = (!i.checked && topSel  >= TOP_MAX ); });
   }
@@ -306,15 +325,21 @@
   // --- Ajouter au panier ---
   const btnAdd = document.getElementById('addToCart');
   btnAdd.addEventListener('click', () => {
+    const ingSel = document.querySelectorAll('#ingredients input:checked').length;
+    const extraCount = Math.max(0, ingSel - INCLUDED_ING);
+    const extraCost  = +(extraCount * EXTRA_ING_PRICE).toFixed(2);
+    const total      = +(BASE_PRICE + extraCost).toFixed(2);
+
     const item = {
       type: 'poke',
       size: 'XL',
       base: document.querySelector('input[name="base"]:checked').value,
       ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
-      proteines:  [...document.querySelectorAll('#proteines  input:checked')].map(x => x.value),
+      proteines:   [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
       sauce: document.querySelector('input[name="sauce"]:checked').value,
-      toppings:    [...document.querySelectorAll('#toppings   input:checked')].map(x => x.value),
-      price: 14.5,
+      toppings:     [...document.querySelectorAll('#toppings  input:checked')].map(x => x.value),
+      price: total,                                   // ✅ prix avec extras
+      extras: { extra_ingredients: extraCount, extra_cost: extraCost },
       qty: 1,
       ts: Date.now()
     };
@@ -324,7 +349,6 @@
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
     updateBadge();
-
     const badge = document.getElementById('cartBadge');
     if (badge) { badge.classList.add('pulse'); setTimeout(()=> badge.classList.remove('pulse'), 400); }
 
@@ -338,6 +362,7 @@
   updateBadge();
   refreshSelectedClasses();
 </script>
+
 
 </body>
 </html>
