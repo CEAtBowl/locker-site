@@ -167,6 +167,19 @@ header.hero h1::after{
 header.hero p{ margin-top: 6px; }
 .statusrow{ margin: .6rem 0 .8rem; }
 .cta-group{ margin-top: 10px; }
+/* 1) Topbar un peu plus fine (garde un logo impactant) */
+.topbar{ padding: .35rem 1rem; }         /* était .65rem */
+.brand .logo{ height: 56px; }            /* était 80px */
+
+/* 2) Réduire l’espace au-dessus du logo du hero */
+header.hero{ padding: 20px 16px 48px; }  /* était 64px 16px 56px */
+@media (max-width:720px){
+  header.hero{ padding: 14px 12px 36px; }
+}
+
+/* 3) Option si tu veux garder un très grand logo topbar :
+      on “remonte” visuellement le logo du hero */
+header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
 
   </style>
 </head>
@@ -324,6 +337,7 @@ header.hero p{ margin-top: 6px; }
   </script>
 </body>
 </html>
+
 
 
 
