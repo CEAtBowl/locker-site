@@ -46,14 +46,30 @@
       padding:.65rem 1rem;background:#fff;border-bottom:1px solid #f1f1f1;
       backdrop-filter:saturate(1.2) blur(4px);
     }
-   /* Topbar brand */
+/* Topbar brand */
 .brand{
   display:flex;align-items:center;gap:.6rem;
   font-weight:800;color:var(--brand);
   letter-spacing:.2px;
 }
-.brand .logo{height:32px;width:auto;display:block}
-@media (max-width:480px){ .brand-name{display:none} } /* logo seul sur petit mobile */
+.brand .logo{
+  height:40px;      /* ← plus grand qu'avant (32px) */
+  width:auto;display:block
+}
+@media (max-width:480px){
+  .brand-name{display:none} /* logo seul sur petit mobile */
+}
+/* Logo en haut de la page (dans le hero) */
+.logo-hero{
+  height:96px;           /* taille confortable desktop */
+  width:auto;display:block;
+  margin:0 auto 12px;    /* centré au-dessus du H1 */
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,.12));
+}
+@media (max-width:480px){
+  .logo-hero{height:72px;}
+}
+
 
     .nav{display:flex;gap:.6rem;flex-wrap:wrap}
     .nav a{padding:.55rem .9rem;border-radius:999px;text-decoration:none;color:#374151;font-weight:600}
@@ -136,9 +152,9 @@
     </nav>
   </div>
 
-  <!-- Hero -->
-  <header class="hero" role="banner">
-    <h1>L'Atelier du Bowl</h1>
+<!-- APRÈS -->
+<header class="hero" role="banner">
+  <img src="images/logo.png" alt="L'Atelier du Bowl" class="logo-hero" width="160" height="160" decoding="async">
     <p>Compose ton pokébowl avec des produits frais, colorés et tropicaux 🌿</p>
     <div class="statusrow">
       <span id="storeDot" class="dot" aria-hidden="true"></span>
@@ -276,4 +292,5 @@
   </script>
 </body>
 </html>
+
 
