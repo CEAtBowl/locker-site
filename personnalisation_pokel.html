@@ -228,9 +228,12 @@
 <script>
   // --- paramètres ---
   const CART_KEY = 'ce-panier';
-  const ING_MIN = 3;
-  const ING_MAX = 5;
-  const TOP_MAX = 2;
+  const BASE_PRICE = 11.5;         // prix Poké L
+  const INCLUDED_ING = 5;          // ingrédients inclus
+  const EXTRA_ING_PRICE = 0.80;    // prix par ingrédient supplémentaire
+  const ING_MIN = 3;               // minimum requis
+  const TOP_MAX = 2;               // toppings max
+  const PROT_MAX = 1;              // protéines max (exactement 1)
 
   // --- stockage & badge ---
   if (!localStorage.getItem(CART_KEY)) localStorage.setItem(CART_KEY, JSON.stringify([]));
@@ -241,7 +244,10 @@
     if (badge) badge.textContent = cart.length;
   }
 
-  // Surbrillance visuelle (.selected) pour compatibilité anciens navigateurs
+  // helper d’affichage
+  const fmt = n => n.toFixed(2).replace('.', ',') + ' €';
+
+  // Surbrillance visuelle (.selected)
   function refreshSelectedClasses(scope){
     const root = scope || document;
     root.querySelectorAll('.ingredients-grid').forEach(grid=>{
@@ -252,20 +258,29 @@
     });
   }
 
-  // --- validation + limites (L = 3 à 5 ingrédients, 1 protéine, 0 à 2 toppings) ---
+  // Compteurs + validation + bouton (avec total dynamique)
   function validate() {
     const ingSel = document.querySelectorAll('#ingredients input:checked').length;
     const protSel = document.querySelectorAll('#proteines input:checked').length;
-    const topSel = document.querySelectorAll('#toppings input:checked').length;
-    const baseOk = !!document.querySelector('input[name="base"]:checked');
+    const topSel  = document.querySelectorAll('#toppings input:checked').length;
+    const baseOk  = !!document.querySelector('input[name="base"]:checked');
     const sauceOk = !!document.querySelector('input[name="sauce"]:checked');
+
+    // extras
+    const extraCount = Math.max(0, ingSel - INCLUDED_ING);
+    const extraCost  = extraCount * EXTRA_ING_PRICE;
+    const total      = BASE_PRICE + extraCost;
 
     // Compteurs
     const ingCounter = document.getElementById('ingCounter');
-    if (ingCounter) ingCounter.textContent = `Ingrédients : ${ingSel}/${ING_MAX} (min ${ING_MIN})`;
+    if (ingCounter) {
+      ingCounter.textContent =
+        `Ingrédients : ${ingSel} ( ${INCLUDED_ING} inclus` +
+        (extraCount>0 ? ` • +${extraCount} extra = +${fmt(extraCost)}` : '') + ' )';
+    }
 
     const protCounter = document.getElementById('protCounter');
-    if (protCounter) protCounter.textContent = `Protéines : ${protSel}/1`;
+    if (protCounter) protCounter.textContent = `Protéines : ${protSel}/${PROT_MAX}`;
 
     const topCounter = document.getElementById('topCounter');
     if (topCounter) topCounter.textContent = `Toppings : ${topSel}/${TOP_MAX}`;
@@ -281,46 +296,58 @@
       }
     }
 
-    // Activation du bouton
-    const validIngr = ingSel >= ING_MIN && ingSel <= ING_MAX;
+    // Règles : au moins 3 ingrédients (pas de plafond), 1 protéine, toppings ≤ 2, base + sauce
+    const validIngr = ingSel >= ING_MIN;
     const validProt = protSel === 1;
-    const validTop = topSel <= TOP_MAX; // 0, 1 ou 2
+    const validTop  = topSel <= TOP_MAX;
 
-    document.getElementById('addToCart').disabled = !(validIngr && validProt && baseOk && sauceOk && validTop);
+    const btn = document.getElementById('addToCart');
+    const enabled = (validIngr && validProt && baseOk && sauceOk && validTop);
+    btn.disabled = !enabled;
+    btn.textContent = enabled ? `Ajouter au panier (${fmt(total)})` : `Ajouter au panier (${fmt(BASE_PRICE)})`;
   }
 
+  // Limites d’activation : ❌ plus de plafond sur ingrédients ; ✅ on garde pour protéines et toppings
   function enforceLimits() {
-    const ingInputs = Array.from(document.querySelectorAll('#ingredients input[type="checkbox"]'));
     const protInputs = Array.from(document.querySelectorAll('#proteines input[type="checkbox"]'));
-    const topInputs = Array.from(document.querySelectorAll('#toppings input[type="checkbox"]'));
+    const topInputs  = Array.from(document.querySelectorAll('#toppings input[type="checkbox"]'));
 
-    const ingSel = ingInputs.filter(i => i.checked).length;
     const protSel = protInputs.filter(i => i.checked).length;
-    const topSel = topInputs.filter(i => i.checked).length;
+    const topSel  = topInputs.filter(i => i.checked).length;
 
-    // Désactiver les cases non cochées quand on atteint la limite
-    ingInputs.forEach(i => { i.disabled = (!i.checked && ingSel >= ING_MAX); });
-    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= 1); });
-    topInputs.forEach(i => { i.disabled = (!i.checked && topSel >= TOP_MAX); });
+    // Ingrédients : jamais désactivés
+    document.querySelectorAll('#ingredients input[type="checkbox"]').forEach(i => i.disabled = false);
+
+    // Protéines et toppings : respect des plafonds
+    protInputs.forEach(i => { i.disabled = (!i.checked && protSel >= PROT_MAX); });
+    topInputs.forEach(i  => { i.disabled = (!i.checked && topSel  >= TOP_MAX ); });
   }
 
   // --- listeners ---
-  document.querySelectorAll('#ingredients input, #proteines input, #toppings input, input[name="base"], input[name="sauce"]').forEach(el => {
+  document.querySelectorAll(
+    '#ingredients input, #proteines input, #toppings input, input[name="base"], input[name="sauce"]'
+  ).forEach(el => {
     el.addEventListener('change', () => { enforceLimits(); validate(); refreshSelectedClasses(); });
   });
 
   // --- Ajouter au panier ---
   const btnAdd = document.getElementById('addToCart');
   btnAdd.addEventListener('click', () => {
+    const ingSel = document.querySelectorAll('#ingredients input:checked').length;
+    const extraCount = Math.max(0, ingSel - INCLUDED_ING);
+    const extraCost  = extraCount * EXTRA_ING_PRICE;
+    const total      = +(BASE_PRICE + extraCost).toFixed(2);
+
     const item = {
       type: 'poke',
       size: 'L',
       base: document.querySelector('input[name="base"]:checked').value,
       ingredients: [...document.querySelectorAll('#ingredients input:checked')].map(x => x.value),
-      proteines: [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
+      proteines:   [...document.querySelectorAll('#proteines input:checked')].map(x => x.value),
       sauce: document.querySelector('input[name="sauce"]:checked').value,
-      toppings: [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
-      price: 11.5,
+      toppings:     [...document.querySelectorAll('#toppings input:checked')].map(x => x.value),
+      price: total,                                      // ✅ prix avec extras
+      extras: { extra_ingredients: extraCount, extra_cost: +extraCost.toFixed(2) },
       qty: 1,
       ts: Date.now()
     };
@@ -330,19 +357,12 @@
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
     updateBadge(); // MAJ bulle
-
-    // Feedback visuel (pulse)
     const badge = document.getElementById('cartBadge');
-    if (badge) {
-      badge.classList.add('pulse');
-      setTimeout(()=> badge.classList.remove('pulse'), 400);
-    }
+    if (badge) { badge.classList.add('pulse'); setTimeout(()=> badge.classList.remove('pulse'), 400); }
 
     // Anti double-clic + redirection après l’animation
     btnAdd.disabled = true;
     setTimeout(() => { window.location.href = 'carte.html'; }, 450);
-    // Ou direct vers #pokebowls :
-    // setTimeout(() => { window.location.href = 'carte.html#pokebowls'; }, 450);
   });
 
   // --- init ---
