@@ -1,135 +1,353 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>C&E Atelier de Bowl</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>C&E Atelier de Bowl – Poké bowls à composer, sur place & à emporter</title>
+  <meta name="description" content="Compose ton pokébowl avec des produits frais, colorés et tropicaux. Réserve, commande en click & collect ou livraison. Allergènes, horaires & accès." />
+  <link rel="canonical" href="https://www.exemple.com/" />
+  <meta name="theme-color" content="#ff3a3a" />
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="C&E Atelier de Bowl – Poké bowls à composer" />
+  <meta property="og:description" content="Compose ton pokébowl avec des produits frais, colorés et tropicaux. Réserve ou commande en ligne." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.exemple.com/" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:image" content="https://www.exemple.com/og-cover.jpg" /> <!-- TODO: remplacer par une photo -->
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="C&E Atelier de Bowl – Poké bowls à composer" />
+  <meta name="twitter:description" content="Compose ton pokébowl et réserve/commande en ligne." />
+  <meta name="twitter:image" content="https://www.exemple.com/og-cover.jpg" />
+
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fff8f5;
-      color: #333;
-      text-align: center;
+    :root{
+      --brand:#ff3a3a; --bg:#fff8f5; --ink:#333; --muted:#666; --panel:#ffffff;
+      --shadow:0 2px 10px rgba(0,0,0,.08); --radius:16px;
     }
+    *{box-sizing:border-box}
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;color:var(--ink);background:var(--bg);}
+    a{color:var(--brand)}
 
-    header {
-      padding: 2em 1em;
-      background-color: #ff3a3a;
-      color: white;
-    }
+    /* Header / nav */
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.5rem 1rem;background:#fff;border-bottom:1px solid #f0f0f0;position:sticky;top:0;z-index:20}
+    .brand{display:flex;align-items:center;gap:.5rem;font-weight:800;color:var(--brand)}
+    .nav{display:flex;gap:.8rem;flex-wrap:wrap}
+    .nav a{padding:.5rem .8rem;border-radius:12px;text-decoration:none;color:#333}
+    .nav a.cta{background:var(--brand);color:#fff;box-shadow:var(--shadow)}
 
-    header h1 {
-      margin-bottom: 0.5em;
-    }
+    header.hero{padding:3rem 1rem;background:var(--brand);color:#fff;text-align:center}
+    header.hero h1{margin:.2rem 0 1rem}
+    .btn{display:inline-block;background:#fff;color:var(--brand);padding:1rem 1.4rem;border-radius:12px;font-weight:700;text-decoration:none;box-shadow:var(--shadow)}
+    .btn:hover{filter:brightness(.95)}
+    .btn.alt{background:transparent;color:#fff;border:2px solid #fff}
 
-    .btn {
-      display: inline-block;
-      background-color: white;
-      color: #ff3a3a;
-      padding: 1em 2em;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 12px;
-      transition: background 0.3s, color 0.3s;
-    }
+    main{max-width:1100px;margin:0 auto;padding:1rem}
 
-    .btn:hover {
-      background-color: #e73232;
-      color: white;
-    }
+    /* Sections */
+    .section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem;margin:1rem 0}
+    .section h2{margin:.2rem 0 1rem;color:var(--brand)}
 
-    .ingredients-gallery {
-      padding: 2em;
-    }
+    /* Ingrédients (existant, avec lazy) */
+    .ingredients-gallery{padding:1rem}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:1em;justify-items:center;max-width:1000px;margin:0 auto}
+    .ingredient-item{display:flex;flex-direction:column;align-items:center}
+    .ingredient-item img{width:80px;height:80px;object-fit:contain;border-radius:12px;background:#fff;padding:8px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+    .ingredient-item span{margin-top:.5em;font-size:.9em;font-weight:500}
 
-    .ingredients-gallery h2 {
-      margin-bottom: 1em;
-      color: #ff3a3a;
-    }
+    /* Horaires & accès */
+    .hours{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+    .hours .card{background:#fff;border-radius:12px;padding:.8rem;border:1px solid #f3f3f3}
+    .status{font-weight:800}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 1em;
-      justify-items: center;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
+    /* Avis */
+    .testis{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem}
+    .testi{background:#fff;border:1px solid #eee;border-radius:12px;padding:1rem}
 
-    .ingredient-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+    /* FAQ */
+    details{background:#fff;border:1px solid #eee;border-radius:12px;padding:.8rem}
+    details+details{margin-top:.6rem}
 
-    .ingredient-item img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      border-radius: 12px;
-      background-color: #fff;
-      padding: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
+    /* Footer */
+    footer{margin-top:2rem;padding:1.2rem;background:#f4f4f4}
+    .footgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;max-width:1100px;margin:0 auto}
+    .footgrid a{display:block;margin:.25rem 0;color:#333;text-decoration:none}
 
-    .ingredient-item span {
-      margin-top: 0.5em;
-      font-size: 0.9em;
-      font-weight: 500;
-    }
+    /* Fab bar mobile */
+    .stickybar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;gap:.8rem;justify-content:center;padding:.6rem;z-index:40}
+    .stickybar .btn{padding:.8rem 1rem}
 
-    footer {
-      margin-top: 3em;
-      padding: 1em;
-      background-color: #f4f4f4;
-    }
+    /* Cookie banner */
+    .cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;background:#fff;border:1px solid #ddd;border-radius:12px;box-shadow:var(--shadow);padding:1rem;z-index:50;display:none}
+    .cookie .actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:.6rem}
   </style>
 </head>
 <body>
-  <header>
+  <!-- Topbar navigation -->
+  <div class="topbar" role="navigation" aria-label="Navigation principale">
+    <div class="brand">C&E Atelier de Bowl</div>
+    <nav class="nav">
+      <a href="#carte">Carte</a>
+      <a href="#horaires">Horaires & Accès</a>
+      <a href="#allergenes">Allergènes</a>
+      <a href="#contact">Contact</a>
+      <a class="cta" href="carte.html" aria-label="Commander maintenant">Commander</a>
+    </nav>
+  </div>
+
+  <!-- Hero -->
+  <header class="hero" role="banner">
     <h1>C&E Atelier de Bowl</h1>
     <p>Compose ton pokébowl avec des produits frais, colorés et tropicaux 🌿</p>
-    <a href="carte.html" class="btn">Commander maintenant</a>
+    <p style="margin:.6rem 0 1.2rem"><span class="status" id="storeStatus">•</span> <span id="statusText">Vérification des horaires…</span></p>
+    <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+      <a href="carte.html" class="btn">Commander maintenant</a>
+      <a href="#reserver" class="btn alt">Réserver une table</a>
+    </div>
   </header>
 
   <main>
-    <section class="ingredients-gallery">
-      <h2>Nos Ingrédients</h2>
+    <!-- Ingrédients (existant) -->
+    <section class="section ingredients-gallery" id="carte" aria-labelledby="titre-ing">
+      <h2 id="titre-ing">Nos Ingrédients</h2>
       <div class="grid">
-        <div class="ingredient-item"><img src="images/avocat.png" alt="Avocat"><span>Avocat</span></div>
-        <div class="ingredient-item"><img src="images/betterave.png" alt="Betterave"><span>Betterave</span></div>
-        <div class="ingredient-item"><img src="images/carotte.png" alt="Carotte"><span>Carotte</span></div>
-        <div class="ingredient-item"><img src="images/champignon.png" alt="Champignon"><span>Champignon</span></div>
-        <div class="ingredient-item"><img src="images/chouxrouge.png" alt="Choux Rouge"><span>Choux rouge</span></div>
-        <div class="ingredient-item"><img src="images/concombre.png" alt="Concombre"><span>Concombre</span></div>
-        <div class="ingredient-item"><img src="images/edamame.png" alt="Edamame"><span>Edamame</span></div>
-        <div class="ingredient-item"><img src="images/feta.png" alt="Feta"><span>Feta</span></div>
-        <div class="ingredient-item"><img src="images/grenade.png" alt="Grenade"><span>Grenade</span></div>
-        <div class="ingredient-item"><img src="images/mais.png" alt="Maïs"><span>Maïs</span></div>
-        <div class="ingredient-item"><img src="images/mangue.png" alt="Mangue"><span>Mangue</span></div>
-        <div class="ingredient-item"><img src="images/mozzarella.png" alt="Mozzarella"><span>Mozzarella</span></div>
-        <div class="ingredient-item"><img src="images/oeufs.png" alt="Œufs"><span>Œufs</span></div>
-        <div class="ingredient-item"><img src="images/oignonrouge.png" alt="Oignon rouge"><span>Oignon rouge</span></div>
-        <div class="ingredient-item"><img src="images/pates.png" alt="Pâtes"><span>Pâtes</span></div>
-        <div class="ingredient-item"><img src="images/poivrons.png" alt="Poivrons"><span>Poivrons</span></div>
-        <div class="ingredient-item"><img src="images/poulet.png" alt="Poulet"><span>Poulet</span></div>
-        <div class="ingredient-item"><img src="images/radis.png" alt="Radis"><span>Radis</span></div>
-        <div class="ingredient-item"><img src="images/riz.png" alt="Riz"><span>Riz</span></div>
-        <div class="ingredient-item"><img src="images/salade.png" alt="Salade"><span>Salade</span></div>
-        <div class="ingredient-item"><img src="images/saumon.png" alt="Saumon"><span>Saumon</span></div>
-        <div class="ingredient-item"><img src="images/thon.png" alt="Thon"><span>Thon</span></div>
-        <div class="ingredient-item"><img src="images/tofu.png" alt="Tofu"><span>Tofu</span></div>
-        <div class="ingredient-item"><img src="images/tomates.png" alt="Tomates"><span>Tomates</span></div>
-        <div class="ingredient-item"><img src="images/wakame.png" alt="Wakame"><span>Wakame</span></div>
+        <!-- NOTE: images à remplacer par vos photos; lazy pour performance -->
+        <div class="ingredient-item"><img loading="lazy" src="images/avocat.png" alt="Avocat"><span>Avocat</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/betterave.png" alt="Betterave"><span>Betterave</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/carotte.png" alt="Carotte"><span>Carotte</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/champignon.png" alt="Champignon"><span>Champignon</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/chouxrouge.png" alt="Choux rouge"><span>Choux rouge</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/concombre.png" alt="Concombre"><span>Concombre</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/edamame.png" alt="Edamame"><span>Edamame</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/feta.png" alt="Feta"><span>Feta</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/grenade.png" alt="Grenade"><span>Grenade</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/mais.png" alt="Maïs"><span>Maïs</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/mangue.png" alt="Mangue"><span>Mangue</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/mozzarella.png" alt="Mozzarella"><span>Mozzarella</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/oeufs.png" alt="Œufs"><span>Œufs</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/oignonrouge.png" alt="Oignon rouge"><span>Oignon rouge</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/pates.png" alt="Pâtes"><span>Pâtes</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/poivrons.png" alt="Poivrons"><span>Poivrons</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/poulet.png" alt="Poulet"><span>Poulet</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/radis.png" alt="Radis"><span>Radis</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/riz.png" alt="Riz"><span>Riz</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/salade.png" alt="Salade"><span>Salade</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/saumon.png" alt="Saumon"><span>Saumon</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/thon.png" alt="Thon"><span>Thon</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/tofu.png" alt="Tofu"><span>Tofu</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/tomates.png" alt="Tomates"><span>Tomates</span></div>
+        <div class="ingredient-item"><img loading="lazy" src="images/wakame.png" alt="Wakame"><span>Wakame</span></div>
       </div>
+    </section>
+
+    <!-- Réserver (placeholder) -->
+    <section class="section" id="reserver" aria-labelledby="titre-resa">
+      <h2 id="titre-resa">Réserver une table</h2>
+      <p>Réserve en ligne ou par téléphone. Choisis ton créneau, c’est rapide 👇</p>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <a class="btn" href="tel:+33XXXXXXXXX" aria-label="Appeler le restaurant">Appeler le restaurant</a>
+        <a class="btn" href="reserver.html" aria-label="Réserver en ligne">Réserver en ligne</a>
+        <a class="btn" href="https://wa.me/33XXXXXXXXX" aria-label="Nous écrire sur WhatsApp">WhatsApp</a>
+      </div>
+      <p style="margin-top:.6rem" class="muted">Astuce : ajoute une note si besoin (allergènes, poussette, terrasse…)</p>
+    </section>
+
+    <!-- Horaires & Accès -->
+    <section class="section" id="horaires" aria-labelledby="titre-horaires">
+      <h2 id="titre-horaires">Horaires & Accès</h2>
+      <div class="hours">
+        <div class="card" aria-live="polite">
+          <strong>Aujourd'hui</strong>
+          <div id="todayHours">—</div>
+          <div class="muted">Mise à jour automatique selon le jour</div>
+        </div>
+        <div class="card">
+          <strong>Adresse</strong>
+          <div id="address">
+            <!-- TODO: Remplacer par l'adresse exacte -->
+            12 Rue Exemple, 25000 Besançon
+          </div>
+          <div style="margin-top:.4rem">
+            <a class="btn" href="https://www.google.com/maps/search/?api=1&query=12+Rue+Exemple+25000+Besan%C3%A7on" target="_blank" rel="noopener">Itinéraire</a>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:1rem">
+        <!-- TODO: Remplacer l'embed par l'iframe placeid Google Maps de votre adresse -->
+        <iframe title="Carte d'accès" src="https://www.google.com/maps?q=Besan%C3%A7on&output=embed" width="100%" height="280" style="border:0;border-radius:12px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </section>
+
+    <!-- Allergènes & régimes -->
+    <section class="section" id="allergenes" aria-labelledby="titre-allergenes">
+      <h2 id="titre-allergenes">Allergènes & régimes</h2>
+      <ul style="text-align:left;max-width:860px;margin:0 auto;line-height:1.6">
+        <li>Icônes et mentions sur la carte : <em>gluten, lactose, fruits à coque, soja, œufs, sésame</em>.</li>
+        <li>Options <strong>végétariennes</strong> et <strong>sans gluten</strong> disponibles.</li>
+        <li>Nous préparons vos bols à la minute ; signale toute allergie lors de la commande.</li>
+      </ul>
+      <p class="muted">Voir le détail sur la page <a href="allergenes.html">Allergènes</a>.</p>
+    </section>
+
+    <!-- Avis clients (placeholders sans photos) -->
+    
+    <!-- Newsletter (Brevo prêt) -->
+    <section class="section" id="newsletter" aria-labelledby="titre-news">
+      <h2 id="titre-news">Recevoir les nouveautés</h2>
+      <form id="newsletterForm" style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap" aria-label="Formulaire newsletter">
+        <label for="newsEmail" class="visually-hidden">Email</label>
+        <input id="newsEmail" name="email" type="email" placeholder="ton.email@exemple.com" required style="padding:.8rem 1rem;border-radius:12px;border:1px solid #ddd;min-width:260px" />
+        <button class="btn" type="submit">S'inscrire</button>
+      </form>
+      <p id="newsMsg" class="muted" role="status" aria-live="polite" style="margin-top:.4rem"></p>
+      <p class="muted" style="font-size:.9em">En t'inscrivant, tu acceptes de recevoir nos emails. Tu peux te désinscrire à tout moment.</p>
     </section>
   </main>
 
-  <footer>
-    <p>&copy; 2025 C&E Atelier de Bowl – Tous droits réservés</p>
+  <footer role="contentinfo">
+    <div class="footgrid">
+      <div>
+        <strong>C&E Atelier de Bowl</strong>
+        <a href="tel:+33XXXXXXXXX">Tél. +33 X XX XX XX XX</a>
+        <a href="mailto:contact@exemple.com">contact@exemple.com</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+      <div>
+        <strong>Infos</strong>
+        <a href="#horaires">Horaires & Accès</a>
+        <a href="carte.html">Commander</a>
+        <a href="#reserver">Réserver</a>
+      </div>
+      <div>
+        <strong>Légal</strong>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Politique de confidentialité</a>
+        <a href="cgv.html">CGV</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:1rem">&copy; 2025 C&E Atelier de Bowl – Tous droits réservés</p>
   </footer>
+
+  <!-- Sticky bar mobile -->
+  <div class="stickybar" aria-hidden="false">
+    <a class="btn" href="carte.html">Commander</a>
+    <a class="btn" href="tel:+33XXXXXXXXX">Appeler</a>
+  </div>
+
+  <!-- Cookie banner RGPD (basique) -->
+  <div class="cookie" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Bandeau cookies">
+    <div><strong>🍪 Cookies</strong> — Nous utilisons des cookies techniques pour faire fonctionner le site et, avec ton accord, des cookies de mesure d'audience.
+    </div>
+    <div class="actions">
+      <button id="cookieDecline" class="btn" style="background:#eee;color:#333">Refuser</button>
+      <button id="cookieAccept" class="btn">Accepter</button>
+    </div>
+  </div>
+
+  <!-- Données structurées Restaurant (SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": "C&E Atelier de Bowl",
+    "url": "https://www.exemple.com/",
+    "menu": "https://www.exemple.com/carte.html",
+    "telephone": "+33XXXXXXXXX",
+    "servesCuisine": ["Hawaïen", "Poké", "Healthy"],
+    "priceRange": "€€",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "12 Rue Exemple",
+      "addressLocality": "Besançon",
+      "postalCode": "25000",
+      "addressCountry": "FR"
+    },
+    "openingHoursSpecification": [
+      {"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"11:30","closes":"21:00"}
+    ]
+  }
+  </script>
+
+  <script>
+    // --- Utilitaires horaires ---
+    const HOURS = {
+      0: [["11:30","21:00"]],
+      1: [["11:30","21:00"]],
+      2: [["11:30","21:00"]],
+      3: [["11:30","21:00"]],
+      4: [["11:30","21:00"]],
+      5: [["11:30","21:00"]],
+      6: [["11:30","21:00"]],
+    };
+    function toMinutes(hm){ const [h,m] = hm.split(":").map(Number); return h*60+m; }
+    function formatRange(r){ return r.map(x=>x.replace(":",":" )).join(" – "); }
+
+    function updateStatus(){
+      const now = new Date();
+      const day = now.getDay();
+      const minutes = now.getHours()*60 + now.getMinutes();
+      const ranges = HOURS[day] || [];
+      const openNow = ranges.some(([o,c]) => minutes >= toMinutes(o) && minutes < toMinutes(c));
+      const nextRange = ranges.find(([o]) => minutes < toMinutes(o));
+      const statusDot = document.getElementById('storeStatus');
+      const statusTxt = document.getElementById('statusText');
+      if(openNow){
+        statusDot.textContent = '•';
+        statusDot.style.color = '#34c759';
+        statusTxt.textContent = 'Ouvert en ce moment';
+      } else if(nextRange){
+        statusDot.textContent = '•';
+        statusDot.style.color = '#ff9500';
+        statusTxt.textContent = `Réouvre à ${nextRange[0]}`;
+      } else {
+        statusDot.textContent = '•';
+        statusDot.style.color = '#e74c3c';
+        statusTxt.textContent = 'Fermé aujourd\'hui';
+      }
+
+      // Aujourd'hui (texte)
+      const today = document.getElementById('todayHours');
+      today.textContent = ranges.length ? ranges.map(r=>r.join('–')).join(' / ') : 'Fermé';
+    }
+
+    // --- Newsletter (placeholder, prêt pour Brevo) ---
+    document.getElementById('newsletterForm').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('newsEmail').value.trim();
+      const msg = document.getElementById('newsMsg');
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+        msg.textContent = "Adresse email invalide"; return;
+      }
+      // TODO: Remplacer par le code d\'embed Brevo (formulaire hébergé) ou un endpoint serveur
+      localStorage.setItem('newsletter-optin', email);
+      msg.textContent = "Merci ! Tu es pré-inscrit(e).";
+      e.target.reset();
+    });
+
+    // --- Cookie banner ---
+    const banner = document.getElementById('cookieBanner');
+    const CONSENT_KEY = 'ce-consent';
+    function showCookieBannerIfNeeded(){
+      const val = localStorage.getItem(CONSENT_KEY);
+      if(val===null) banner.style.display='block';
+    }
+    document.getElementById('cookieAccept').addEventListener('click',()=>{
+      localStorage.setItem(CONSENT_KEY,'accepted');
+      banner.style.display='none';
+      // TODO: charger ici vos scripts de mesure (ex: analytics) si besoin
+    });
+    document.getElementById('cookieDecline').addEventListener('click',()=>{
+      localStorage.setItem(CONSENT_KEY,'declined');
+      banner.style.display='none';
+    });
+
+    // Init
+    updateStatus();
+    setInterval(updateStatus, 60*1000);
+    showCookieBannerIfNeeded();
+  </script>
 </body>
 </html>
-
