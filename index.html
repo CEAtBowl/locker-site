@@ -4,18 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>L'Atelier du Bowl – Poké bowls à composer, sur place & à emporter</title>
-  <meta name="description" content="Compose ton pokébowl avec des produits frais, colorés et tropicaux. commande en click & collect ou livraison. Allergènes, horaires & accès." />
+  <meta name="description" content="Compose ton pokébowl avec des produits frais, colorés et tropicaux. Commande en click & collect ou livraison. Horaires & accès." />
   <link rel="canonical" href="https://www.exemple.com/" />
   <meta name="theme-color" content="#ff3a3a" />
   <link rel="icon" href="/favicon.ico" />
+  <!-- Police soignée -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
   <!-- Open Graph -->
   <meta property="og:title" content="L'Atelier du Bowl – Poké bowls à composer" />
-  <meta property="og:description" content="Compose ton pokébowl avec des produits frais, colorés et tropicaux. commande en ligne." />
+  <meta property="og:description" content="Compose ton pokébowl avec des produits frais, colorés et tropicaux. Commande en ligne." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://www.exemple.com/" />
   <meta property="og:locale" content="fr_FR" />
-  <meta property="og:image" content="https://www.exemple.com/og-cover.jpg" /> <!-- TODO: remplacer par une photo -->
+  <meta property="og:image" content="https://www.exemple.com/og-cover.jpg" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
@@ -25,68 +29,93 @@
 
   <style>
     :root{
-      --brand:#ff3a3a; --bg:#fff8f5; --ink:#333; --muted:#666; --panel:#ffffff;
-      --shadow:0 2px 10px rgba(0,0,0,.08); --radius:16px;
+      --brand:#ff3a3a; --brand-2:#ff7a59;
+      --bg:#fff8f5; --ink:#232323; --muted:#6b7280; --panel:#ffffff;
+      --ring:rgba(255,58,58,.35);
+      --shadow:0 10px 30px rgba(0,0,0,.08);
+      --radius:18px;
     }
     *{box-sizing:border-box}
-    body{font-family:Arial,Helvetica,sans-serif;margin:0;color:var(--ink);background:var(--bg);}
-    a{color:var(--brand)}
+    html{scroll-behavior:smooth}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;margin:0;color:var(--ink);background:var(--bg);}
 
-    /* Header / nav */
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.5rem 1rem;background:#fff;border-bottom:1px solid #f0f0f0;position:sticky;top:0;z-index:20}
-    .brand{display:flex;align-items:center;gap:.5rem;font-weight:800;color:var(--brand)}
-    .nav{display:flex;gap:.8rem;flex-wrap:wrap}
-    .nav a{padding:.5rem .8rem;border-radius:12px;text-decoration:none;color:#333}
-    .nav a.cta{background:var(--brand);color:#fff;box-shadow:var(--shadow)}
+    /* Topbar */
+    .topbar{
+      position:sticky;top:0;z-index:50;
+      display:flex;align-items:center;justify-content:space-between;gap:.5rem;
+      padding:.65rem 1rem;background:#fff;border-bottom:1px solid #f1f1f1;
+      backdrop-filter:saturate(1.2) blur(4px);
+    }
+    .brand{font-weight:800;color:var(--brand);letter-spacing:.2px}
+    .nav{display:flex;gap:.6rem;flex-wrap:wrap}
+    .nav a{padding:.55rem .9rem;border-radius:999px;text-decoration:none;color:#374151;font-weight:600}
+    .nav a:hover{background:#f8f8f8}
+    .nav a.cta{
+      background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff;box-shadow:0 6px 16px var(--ring)
+    }
+    .nav a.cta:hover{filter:brightness(.98)}
 
-    header.hero{padding:3rem 1rem;background:var(--brand);color:#fff;text-align:center}
-    header.hero h1{margin:.2rem 0 1rem}
-    .btn{display:inline-block;background:#fff;color:var(--brand);padding:1rem 1.4rem;border-radius:12px;font-weight:700;text-decoration:none;box-shadow:var(--shadow)}
-    .btn:hover{filter:brightness(.95)}
-    .btn.alt{background:transparent;color:#fff;border:2px solid #fff}
+    /* Hero */
+    header.hero{
+      color:#fff;text-align:center;padding:64px 16px 56px;
+      background:
+        radial-gradient(1100px 380px at 50% -60%, rgba(255,255,255,.22), transparent),
+        linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+    }
+    header.hero h1{margin:.2rem 0 .6rem;font-size:clamp(28px,4vw,42px);letter-spacing:.2px}
+    header.hero p{opacity:.95}
+    .cta-group{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:16px}
+    .btn{
+      display:inline-block;padding:1rem 1.4rem;border-radius:14px;font-weight:800;text-decoration:none;
+      box-shadow:0 8px 24px var(--ring);background:#fff;color:var(--brand);transition:transform .15s ease, box-shadow .15s ease
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.alt{background:transparent;color:#fff;border:2px solid #fff;box-shadow:none}
+    .statusrow{margin:.8rem 0 1.1rem;display:flex;gap:.5rem;justify-content:center;align-items:center}
+    .dot{width:10px;height:10px;border-radius:999px;display:inline-block;background:#34c759;box-shadow:0 0 0 6px rgba(52,199,89,.12)}
 
-    main{max-width:1100px;margin:0 auto;padding:1rem}
+    /* Main + sections */
+    main{max-width:1100px;margin:0 auto;padding:16px}
+    .section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin:16px 0}
+    .section h2{margin:.2rem 0 1rem;color:var(--brand);font-size:clamp(18px,2.6vw,24px)}
+    .section h2::after{content:"";display:block;width:64px;height:4px;background:linear-gradient(90deg,var(--brand),var(--brand-2));border-radius:999px;margin-top:8px}
 
-    /* Sections */
-    .section{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem;margin:1rem 0}
-    .section h2{margin:.2rem 0 1rem;color:var(--brand)}
-
-    /* Ingrédients (existant, avec lazy) */
-    .ingredients-gallery{padding:1rem}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:1em;justify-items:center;max-width:1000px;margin:0 auto}
-    .ingredient-item{display:flex;flex-direction:column;align-items:center}
-    .ingredient-item img{width:80px;height:80px;object-fit:contain;border-radius:12px;background:#fff;padding:8px;box-shadow:0 2px 6px rgba(0,0,0,.1)}
-    .ingredient-item span{margin-top:.5em;font-size:.9em;font-weight:500}
+    /* Carte/vidéo */
+    .video-wrapper{display:block;max-width:720px;margin:8px auto 0}
+    .video-wrapper video{
+      width:100%;border-radius:16px;box-shadow:var(--shadow);display:block
+    }
 
     /* Horaires & accès */
-    .hours{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
-    .hours .card{background:#fff;border-radius:12px;padding:.8rem;border:1px solid #f3f3f3}
-    .status{font-weight:800}
-
-    /* Avis */
-    .testis{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.8rem}
-    .testi{background:#fff;border:1px solid #eee;border-radius:12px;padding:1rem}
-
-    /* FAQ */
-    details{background:#fff;border:1px solid #eee;border-radius:12px;padding:.8rem}
-    details+details{margin-top:.6rem}
+    .hours{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+    .card{background:#fff;border-radius:14px;padding:14px;border:1px solid #f3f3f3;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+    .muted{color:var(--muted)}
+    iframe.map{width:100%;height:300px;border:0;border-radius:16px;box-shadow:var(--shadow)}
 
     /* Footer */
-    footer{margin-top:2rem;padding:1.2rem;background:#f4f4f4}
+    footer{margin-top:28px;padding:18px;background:#f6f6f6}
     .footgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;max-width:1100px;margin:0 auto}
     .footgrid a{display:block;margin:.25rem 0;color:#333;text-decoration:none}
+    .copyright{margin-top:10px;text-align:center;color:#6b7280}
 
-    /* Fab bar mobile */
+    /* Sticky bar mobile */
     .stickybar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid #eee;display:flex;gap:.8rem;justify-content:center;padding:.6rem;z-index:40}
-    .stickybar .btn{padding:.8rem 1rem}
+    .stickybar .btn{padding:.85rem 1.1rem;box-shadow:0 6px 18px var(--ring)}
 
-    /* Cookie banner */
-    .cookie{position:fixed;left:1rem;right:1rem;bottom:1rem;background:#fff;border:1px solid #ddd;border-radius:12px;box-shadow:var(--shadow);padding:1rem;z-index:50;display:none}
-    .cookie .actions{display:flex;gap:.6rem;justify-content:flex-end;margin-top:.6rem}
+    /* Accessibilité */
+    :focus-visible{outline:3px solid var(--brand-2);outline-offset:2px}
+
+    @media (max-width: 720px){
+      .hours{grid-template-columns:1fr}
+      .video-wrapper{max-width:560px}
+    }
+    @media (prefers-reduced-motion: reduce){
+      .btn, .nav a.cta{transition:none}
+    }
   </style>
 </head>
 <body>
-  <!-- Topbar navigation -->
+  <!-- Topbar -->
   <div class="topbar" role="navigation" aria-label="Navigation principale">
     <div class="brand">L'Atelier du Bowl</div>
     <nav class="nav">
@@ -101,54 +130,59 @@
   <header class="hero" role="banner">
     <h1>L'Atelier du Bowl</h1>
     <p>Compose ton pokébowl avec des produits frais, colorés et tropicaux 🌿</p>
-    <p style="margin:.6rem 0 1.2rem"><span class="status" id="storeStatus">•</span> <span id="statusText">Vérification des horaires…</span></p>
-    <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">
+    <div class="statusrow">
+      <span id="storeDot" class="dot" aria-hidden="true"></span>
+      <span id="statusText">Vérification des horaires…</span>
+    </div>
+    <div class="cta-group">
       <a href="carte.html" class="btn">Commander maintenant</a>
     </div>
   </header>
 
   <main>
-    <!-- Ingrédients (existant) -->
-    
-    <!-- Réserver (placeholder) -->
-    
-    <!-- Horaires & Accès -->
+    <!-- Carte (vidéo) -->
     <section class="section" id="pub-video" aria-labelledby="titre-video">
       <h2 id="titre-video">Notre carte</h2>
-      <video controls muted autoplay loop preload="metadata" playsinline style="width:100%; max-width:850px; margin:0 auto; display:block; border-radius:var(--radius); box-shadow:var(--shadow)" aria-label="Vidéo de présentation">
-        <source src="images/pub.mp4" type="video/mp4">
-        Votre navigateur ne supporte pas la lecture vidéo. Vous pouvez <a href="images/pub.mp4">télécharger la vidéo</a>.
-      </video>
+      <div class="video-wrapper">
+        <video controls muted autoplay loop preload="metadata" playsinline aria-label="Vidéo de présentation">
+          <source src="images/pub.mp4" type="video/mp4">
+          <!-- Optionnel : ajoute aussi une source WebM si tu en crées une -->
+          <!-- <source src="images/pub.webm" type="video/webm"> -->
+          Votre navigateur ne supporte pas la lecture vidéo.
+          <a href="images/pub.mp4">Télécharger la vidéo</a>.
+        </video>
+      </div>
     </section>
 
+    <!-- Horaires & Accès -->
     <section class="section" id="horaires" aria-labelledby="titre-horaires">
       <h2 id="titre-horaires">Horaires & Accès</h2>
       <div class="hours">
         <div class="card" aria-live="polite">
           <strong>Aujourd'hui</strong>
           <div id="todayHours">—</div>
-          <div class="muted">Mise à jour automatique selon le jour</div>
+          <div class="muted">Ouvert en continu 11:30 → 21:00</div>
         </div>
         <div class="card">
           <strong>Adresse</strong>
-          <div id="address">
-            <!-- TODO: Remplacer par l'adresse exacte -->
-            10 Rue Megevand, 25000 Besançon
-          </div>
-          <div style="margin-top:.4rem">
+          <div>10 Rue Megevand, 25000 Besançon</div>
+          <div style="margin-top:.5rem">
             <a class="btn" href="https://www.google.com/maps/search/?api=1&query=10+Rue+Megevand+25000+Besan%C3%A7on" target="_blank" rel="noopener">Itinéraire</a>
           </div>
         </div>
       </div>
       <div style="margin-top:1rem">
-        <!-- TODO: Remplacer l'embed par l'iframe placeid Google Maps de votre adresse -->
-        <iframe title="Carte d'accès" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5418.020384810505!2d6.0208030758636415!3d47.23594651350019!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478d633e60c5eba1%3A0x48960770a2ffa6ef!2s10%20Rue%20Megevand%2C%2025000%20Besan%C3%A7on!5e0!3m2!1sfr!2sfr!4v1757249958454!5m2!1sfr!2sfr"  width="100%" height="280" style="border:0;border-radius:12px" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe class="map" title="Carte d'accès" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5418.020384810505!2d6.0208030758636415!3d47.23594651350019!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478d633e60c5eba1%3A0x48960770a2ffa6ef!2s10%20Rue%20Megevand%2C%2025000%20Besan%C3%A7on!5e0!3m2!1sfr!2sfr!4v1757249958454!5m2!1sfr!2sfr" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </section>
 
-    <!-- Allergènes & régimes -->
-    
-    <!-- Avis clients (placeholders sans photos) -->  </main>
+    <!-- Contact (pour le lien #contact) -->
+    <section class="section" id="contact" aria-labelledby="titre-contact">
+      <h2 id="titre-contact">Contact</h2>
+      <p class="muted">Une question ? Nous répondons rapidement.</p>
+      <p><a class="btn" href="tel:+33XXXXXXXXX">Appeler</a> <a class="btn alt" href="mailto:contact@exemple.com">Envoyer un email</a></p>
+    </section>
+  </main>
 
   <footer role="contentinfo">
     <div class="footgrid">
@@ -164,7 +198,7 @@
         <a href="carte.html">Commander</a>
       </div>
     </div>
-    <p style="text-align:center;margin-top:1rem">&copy; 2025 L'Atelier du Bowl – Tous droits réservés</p>
+    <p class="copyright">&copy; 2025 L'Atelier du Bowl – Tous droits réservés</p>
   </footer>
 
   <!-- Sticky bar mobile -->
@@ -173,17 +207,16 @@
     <a class="btn" href="tel:+33XXXXXXXXX">Appeler</a>
   </div>
 
-  <!-- Cookie banner RGPD (basique) -->
+  <!-- Bandeau cookies -->
   <div class="cookie" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Bandeau cookies">
-    <div><strong>🍪 Cookies</strong> — Nous utilisons des cookies techniques pour faire fonctionner le site et, avec ton accord, des cookies de mesure d'audience.
-    </div>
+    <div><strong>🍪 Cookies</strong> — Nous utilisons des cookies techniques pour faire fonctionner le site et, avec ton accord, des cookies de mesure d'audience.</div>
     <div class="actions">
-      <button id="cookieDecline" class="btn" style="background:#eee;color:#333">Refuser</button>
+      <button id="cookieDecline" class="btn" style="background:#eee;color:#333;box-shadow:none">Refuser</button>
       <button id="cookieAccept" class="btn">Accepter</button>
     </div>
   </div>
 
-  <!-- Données structurées Restaurant (SEO) -->
+  <!-- Données structurées Restaurant -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -196,7 +229,7 @@
     "priceRange": "€€",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "12 Rue Exemple",
+      "streetAddress": "10 Rue Megevand",
       "addressLocality": "Besançon",
       "postalCode": "25000",
       "addressCountry": "FR"
@@ -208,77 +241,28 @@
   </script>
 
   <script>
-    // --- Utilitaires horaires ---
-    const HOURS = {
-      0: [["11:30","21:00"]],
-      1: [["11:30","21:00"]],
-      2: [["11:30","21:00"]],
-      3: [["11:30","21:00"]],
-      4: [["11:30","21:00"]],
-      5: [["11:30","21:00"]],
-      6: [["11:30","21:00"]],
-    };
-    function toMinutes(hm){ const [h,m] = hm.split(":").map(Number); return h*60+m; }
-    function formatRange(r){ return r.map(x=>x.replace(":",":" )).join(" – "); }
-
+    // Horaires (ouvert non-stop)
+    const HOURS = {0:[["11:30","21:00"]],1:[["11:30","21:00"]],2:[["11:30","21:00"]],
+                   3:[["11:30","21:00"]],4:[["11:30","21:00"]],5:[["11:30","21:00"]],6:[["11:30","21:00"]]};
+    const toMinutes = hm => {const [h,m]=hm.split(":").map(Number);return h*60+m;}
     function updateStatus(){
-      const now = new Date();
-      const day = now.getDay();
-      const minutes = now.getHours()*60 + now.getMinutes();
-      const ranges = HOURS[day] || [];
-      const openNow = ranges.some(([o,c]) => minutes >= toMinutes(o) && minutes < toMinutes(c));
-      const nextRange = ranges.find(([o]) => minutes < toMinutes(o));
-      const statusDot = document.getElementById('storeStatus');
-      const statusTxt = document.getElementById('statusText');
-      if(openNow){
-        statusDot.textContent = '•';
-        statusDot.style.color = '#34c759';
-        statusTxt.textContent = 'Ouvert en ce moment';
-      } else if(nextRange){
-        statusDot.textContent = '•';
-        statusDot.style.color = '#ff9500';
-        statusTxt.textContent = `Réouvre à ${nextRange[0]}`;
-      } else {
-        statusDot.textContent = '•';
-        statusDot.style.color = '#e74c3c';
-        statusTxt.textContent = 'Fermé aujourd\'hui';
-      }
-
-      // Aujourd'hui (texte)
-      const today = document.getElementById('todayHours');
-      today.textContent = ranges.length ? ranges.map(r=>r.join('–')).join(' / ') : 'Fermé';
+      const now=new Date(), d=now.getDay(), min=now.getHours()*60+now.getMinutes();
+      const ranges=HOURS[d]||[], open=ranges.some(([o,c])=>min>=toMinutes(o)&&min<toMinutes(c));
+      const next=ranges.find(([o])=>min<toMinutes(o));
+      const dot=document.getElementById('storeDot'), txt=document.getElementById('statusText');
+      if(open){ dot.style.background='#34c759'; txt.textContent='Ouvert en ce moment'; }
+      else if(next){ dot.style.background='#ff9500'; txt.textContent=`Réouvre à ${next[0]}`; }
+      else{ dot.style.background='#e74c3c'; txt.textContent=`Fermé aujourd'hui`; }
+      document.getElementById('todayHours').textContent = ranges.length ? ranges.map(r=>r.join('–')).join(' / ') : 'Fermé';
     }
 
-    // --- Cookie banner ---
-    const banner = document.getElementById('cookieBanner');
-    const CONSENT_KEY = 'ce-consent';
-    function showCookieBannerIfNeeded(){
-      const val = localStorage.getItem(CONSENT_KEY);
-      if(val===null) banner.style.display='block';
-    }
-    document.getElementById('cookieAccept').addEventListener('click',()=>{
-      localStorage.setItem(CONSENT_KEY,'accepted');
-      banner.style.display='none';
-      // TODO: charger ici vos scripts de mesure (ex: analytics) si besoin
-    });
-    document.getElementById('cookieDecline').addEventListener('click',()=>{
-      localStorage.setItem(CONSENT_KEY,'declined');
-      banner.style.display='none';
-    });
+    // Cookies
+    const banner=document.getElementById('cookieBanner'); const KEY='ce-consent';
+    (function(){ if(localStorage.getItem(KEY)===null) banner.style.display='block'; })();
+    document.getElementById('cookieAccept').addEventListener('click',()=>{localStorage.setItem(KEY,'accepted');banner.style.display='none';});
+    document.getElementById('cookieDecline').addEventListener('click',()=>{localStorage.setItem(KEY,'declined');banner.style.display='none';});
 
-    // Init
-    updateStatus();
-    setInterval(updateStatus, 60*1000);
-    showCookieBannerIfNeeded();
+    updateStatus(); setInterval(updateStatus,60*1000);
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
