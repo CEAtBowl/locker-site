@@ -325,7 +325,7 @@ header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
       const dot=document.getElementById('storeDot'), txt=document.getElementById('statusText');
       if(open){ dot.style.background='#34c759'; txt.textContent='Ouvert en ce moment'; }
       else if(next){ dot.style.background='#ff9500'; txt.textContent=`Réouvre à ${next[0]}`; }
-      else{ dot.style.background='#e74c3c'; txt.textContent=`Fermé aujourd'hui`; }
+      else{ dot.style.background='#e74c3c'; txt.textContent=`Fermé depuis 21h`; }
       document.getElementById('todayHours').textContent = ranges.length ? ranges.map(r=>r.join('–')).join(' / ') : 'Fermé';
     }
 
@@ -377,6 +377,7 @@ header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
 
 </body>
 </html>
+
 
 
 
