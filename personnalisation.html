@@ -276,10 +276,11 @@
     if (badge) badge.textContent = cart.length;
   }
 
-  // Limites par taille
+  // ⚙️ Nouvelle règle: extras à +0,80€ au-delà des inclus
+  const EXTRA_ING_PRICE = 0.80;
   const LIMITS = {
-    L:  { ingMin:3, ingMax:5, protMin:1, protMax:1, topMax:2 },
-    XL: { ingMin:3, ingMax:6, protMin:1, protMax:2, topMax:2 }
+    L:  { ingMin:3, ingIncluded:5, protMin:1, protMax:1, topMax:2 },
+    XL: { ingMin:3, ingIncluded:6, protMin:1, protMax:2, topMax:2 }
   };
   let current = null;
 
@@ -304,9 +305,9 @@
     const rules = document.getElementById('rulesNotice');
     current = size ? LIMITS[size] : null;
     if(size==='L'){
-      rules.textContent = 'Règles L : 3–5 ingrédients, 1 protéine, 2 toppings max.';
+      rules.textContent = 'Règles L : min 3 ingrédients (5 inclus), 1 protéine, 2 toppings max. Ingrédients supplémentaires : +0,80 € / ingrédient.';
     } else if(size==='XL'){
-      rules.textContent = 'Règles XL : 3–6 ingrédients, 1 à 2 protéines, 2 toppings max.';
+      rules.textContent = 'Règles XL : min 3 ingrédients (6 inclus), 1 à 2 protéines, 2 toppings max. Ingrédients supplémentaires : +0,80 € / ingrédient.';
     } else {
       rules.textContent = '';
     }
@@ -317,17 +318,28 @@
     return document.querySelectorAll(sel+' input[type="checkbox"]:checked').length;
   }
 
+  function computeExtraCost(){
+    if(!current) return {extra:0, cost:0};
+    const ingSel = countChecked('#ingredients');
+    const extra = Math.max(0, ingSel - current.ingIncluded);
+    const cost = extra * EXTRA_ING_PRICE;
+    return {extra, cost};
+  }
+
   function updateCounters(){
     const ingSel = countChecked('#ingredients');
     const protSel = countChecked('#protéines');
-    const topSel = countChecked('#toppings');
+    const topSel  = countChecked('#toppings');
 
     const ingCounter = document.getElementById('ingCounter');
     const protCounter = document.getElementById('protCounter');
     const topCounter  = document.getElementById('topCounter');
+    const {extra, cost} = computeExtraCost();
 
     if(current){
-      ingCounter.textContent = `Ingrédients : ${ingSel}/${current.ingMax} (min ${current.ingMin})`;
+      ingCounter.textContent =
+        `Ingrédients : ${ingSel} (inclus ${current.ingIncluded}` +
+        (extra>0 ? ` • +${extra} extra = +${cost.toFixed(2)} €` : '') + ')';
       protCounter.textContent = `Protéines : ${protSel}/${current.protMax} (min ${current.protMin})`;
       topCounter.textContent  = `Toppings : ${topSel}/${current.topMax}`;
     } else {
@@ -354,20 +366,22 @@
     const prot = Array.from(document.querySelectorAll('#protéines input[type="checkbox"]'));
     const top  = Array.from(document.querySelectorAll('#toppings input[type="checkbox"]'));
 
-    const ingSel = ing.filter(i=>i.checked).length;
     const protSel = prot.filter(i=>i.checked).length;
-    const topSel = top.filter(i=>i.checked).length;
+    const topSel  = top.filter(i=>i.checked).length;
 
+    // ✅ Plus AUCUNE limite dure sur les ingrédients (on facture les extras)
+    ing.forEach(i=> i.disabled = false);
+
+    // On conserve les limites pour protéines et toppings
     if(current){
-      ing.forEach(i=>{ i.disabled = (!i.checked && ingSel >= current.ingMax); });
       prot.forEach(i=>{ i.disabled = (!i.checked && protSel >= current.protMax); });
       top.forEach(i=>{  i.disabled = (!i.checked && topSel  >= current.topMax);  });
     } else {
-      [...ing, ...prot, ...top].forEach(i=> i.disabled = false);
+      [...prot, ...top].forEach(i=> i.disabled = false);
     }
   }
 
-  // Surbrillance visuelle des selections (classe .selected)
+  // Surbrillance visuelle
   function refreshSelectedClasses(scope){
     const root = scope || document;
     root.querySelectorAll('.ingredients-grid').forEach(grid=>{
@@ -376,7 +390,6 @@
         const label = input.closest('label');
         if(!label) return;
         if(input.type === 'radio'){
-          // enlever des radios du même groupe
           const name = input.name;
           grid.querySelectorAll(`input[type="radio"][name="${name}"]`).forEach(r=>{
             const l = r.closest('label'); if(l) l.classList.toggle('selected', r.checked);
@@ -399,6 +412,19 @@
     el.addEventListener('change', ()=>{ validateAll(); refreshSelectedClasses(); });
   });
 
+  function valChecked(name){
+    const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null;
+  }
+  function valsChecked(name){
+    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(x=>x.value);
+  }
+
+  function basePriceFor(size){
+    if(size==='L') return 14.0;
+    if(size==='XL') return 17.0;
+    return 0;
+  }
+
   function validateAll(){
     const size = currentSize();
     const ingSel = countChecked('#ingredients');
@@ -410,39 +436,45 @@
 
     let rulesOk = false;
     if(current){
-      const okIngr = (ingSel >= current.ingMin && ingSel <= current.ingMax);
+      const okIngr = (ingSel >= current.ingMin);                 // ✅ plus de plafond
       const okProt = (protSel >= current.protMin && protSel <= current.protMax);
       const okTop  = (topSel <= current.topMax);
       rulesOk = okIngr && okProt && okTop;
     }
 
-    document.getElementById('addToCart').disabled = !(rulesOk && baseOk && sauceOk && smoothieOk && size);
+    const btn = document.getElementById('addToCart');
+    btn.disabled = !(rulesOk && baseOk && sauceOk && smoothieOk && size);
+
+    // Affiche le total estimé sur le bouton
+    const {cost} = computeExtraCost();
+    const total = basePriceFor(size) + cost;
+    if (!btn.disabled && size){
+      btn.textContent = `Ajouter au panier — ${total.toFixed(2)} €`;
+    } else {
+      btn.textContent = 'Ajouter au panier';
+    }
 
     const sel = {
       size, base: valChecked('base'), ingredients: valsChecked('ingredients'),
       proteines: valsChecked('proteines'), sauce: valChecked('sauce'), toppings: valsChecked('toppings'),
       smoothie: valChecked('smoothie')
     };
-    document.getElementById('review').textContent =
-      (rulesOk && baseOk && sauceOk && smoothieOk && size)
-        ? `Prêt : Poké ${size} + Smoothie ${sel.smoothie}`
-        : '';
-  }
-
-  function valChecked(name){
-    const el = document.querySelector(`input[name="${name}"]:checked`); return el ? el.value : null;
-  }
-  function valsChecked(name){
-    return Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(x=>x.value);
+    const review = document.getElementById('review');
+    if (review){
+      review.textContent =
+        (rulesOk && baseOk && sauceOk && smoothieOk && size)
+          ? `Prêt : Poké ${size} + Smoothie • Total estimé ${total.toFixed(2)} €`
+          : '';
+    }
   }
 
   // Ajouter au panier
   const btnAdd = document.getElementById('addToCart');
   btnAdd.addEventListener('click', ()=>{
     const size = currentSize();
-    let price = 0;
-    if(size === 'L') price = 14.0;
-    if(size === 'XL') price = 17.0;
+    const basePrice = basePriceFor(size);
+    const {extra, cost} = computeExtraCost();
+    const total = +(basePrice + cost).toFixed(2);
 
     const item = {
       type:'menu',
@@ -454,7 +486,8 @@
       toppings: valsChecked('toppings'),
       smoothie: valChecked('smoothie'),
       qty: 1,
-      price: price,
+      price: total,                               // ✅ prix avec extras
+      extras: { extra_ingredients: extra, extra_cost: +cost.toFixed(2) },
       ts: Date.now()
     };
 
@@ -463,7 +496,6 @@
     localStorage.setItem(CART_KEY, JSON.stringify(cart));
 
     updateBadge();
-
     const badge = document.getElementById('cartBadge');
     if (badge) { badge.classList.add('pulse'); setTimeout(()=> badge.classList.remove('pulse'), 400); }
 
@@ -475,6 +507,7 @@
   updateRules(); enforceLimits(); updateCounters(); validateAll(); updateBadge();
   refreshSelectedClasses();
 </script>
+
 
 </body>
 </html>
