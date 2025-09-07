@@ -434,7 +434,7 @@
     return out;
   }
 
-  function buildTimeSlots(start="11:30", end="21:30", stepMinutes=30){
+  function buildTimeSlots(start="11:30", end="21:30", stepMinutes=15){
     const [sH, sM] = start.split(':').map(Number);
     const [eH, eM] = end.split(':').map(Number);
     const slots = [];
@@ -453,7 +453,7 @@
     if(!sel) return;
     sel.innerHTML = '';
     const now = new Date();
-    const allSlots = buildTimeSlots("11:30","21:30",30);
+    const allSlots = buildTimeSlots("11:30","21:30",15);
     allSlots.forEach(t=>{
       const [h,m] = t.split(':').map(Number);
       const slotDate = new Date(); slotDate.setHours(h, m, 0, 0);
