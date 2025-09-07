@@ -236,8 +236,8 @@
   const ING_MIN = 3;                // minimum requis
 
   // Protéines
-  const PROT_MIN = 1, PROT_MAX = 2; // bornes autorisées
-  const PROT_INCLUDED = 1;          // protéines incluses
+  const PROT_MIN = 1;; // bornes autorisées
+  const PROT_INCLUDED = 2;          // protéines incluses
   const EXTRA_PROT_PRICE = 0.80;    // +€/protéine au-delà
 
   // Toppings
@@ -288,7 +288,7 @@
 
     if (ingCounter) {
       ingCounter.textContent =
-        `Ingrédients : ${ingSel} (min ${ING_MIN}, ${INCLUDED_ING} inclus` +
+        `Ingrédients : ${ingSel} (${ING_MIN} minimum, ${INCLUDED_ING} inclus, +0,80€ par ingrédients supplémentaire` +
         (extraIngCount>0 ? ` • +${extraIngCount} extra = +${fmt(extraIngCost)}` : '') + ')';
     }
     if (protCounter) {
