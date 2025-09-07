@@ -289,12 +289,12 @@
 
     if (ingCounter) {
       ingCounter.textContent =
-        `Ingrédients : ${ingSel} (min ${ING_MIN}, ${INCLUDED_ING} inclus, +0,80€/ingrédient supplémentaire` +
+        `Ingrédients : ${ingSel} (${ING_MIN} minimum, ${INCLUDED_ING} inclus, +0,80€/ingrédient supplémentaire` +
         (extraIngCount>0 ? ` • +${extraIngCount} = +${fmt(extraIngCost)}` : '') + ')';
     }
     if (protCounter) {
       protCounter.textContent =
-        `Protéines : ${protSel} (min ${PROT_MIN}, ${PROT_INCLUDED} incluse, +0,80€/protéine supplémentaire` +
+        `Protéines : ${protSel} (${PROT_MIN} minimum, ${PROT_INCLUDED} incluse, +0,80€/protéine supplémentaire` +
         (extraProtCount>0 ? ` • +${extraProtCount} = +${fmt(extraProtCost)}` : '') + ')';
     }
     if (topCounter) topCounter.textContent = `Toppings : ${topSel}/${TOP_MAX}`;
