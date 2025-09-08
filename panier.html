@@ -79,8 +79,6 @@
   .summary .total{font-weight:900;font-size:1.05rem}
   .muted{color:var(--ink-muted)}
 
-  <meta id="vp" name="viewport" content="width=device-width, initial-scale=1">
-
   /* Buttons */
   .actions{display:flex;gap:.6rem;flex-wrap:wrap}
   .btn{border:none;border-radius:12px;padding:.85rem 1.1rem;cursor:pointer;font-weight:800;box-shadow:var(--shadow);letter-spacing:.2px}
@@ -106,6 +104,19 @@
       box-shadow:0 -6px 18px rgba(0,0,0,.06)
     }
   }
+
+  /* Fix boutons : bloc, non cassés */
+.btn{
+  display:inline-flex;            /* pour un vrai bloc bouton */
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;             /* empêche la coupure en 2 lignes */
+  line-height:1;                  /* évite les décalages */
+  text-decoration:none;           /* pour les <a> */
+}
+
+.actions .btn{ flex:0 0 auto; }   /* évite que le bouton s’étire / se casse dans le flex */
+
 </style>
 </head>
 <body>
