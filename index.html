@@ -2,6 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
+  <!-- UNE SEULE VIEWPORT, pilotée par JS ensuite -->
+  <meta id="vp" name="viewport" content="width=1200, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
   <title>L'Atelier du Bowl – Poké bowls à composer, sur place & à emporter</title>
   <meta name="description" content="Compose ton pokébowl avec des produits frais, colorés et tropicaux. Commande en click & collect ou livraison. Horaires & accès." />
   <link rel="canonical" href="https://www.exemple.com/" />
@@ -26,8 +29,6 @@
   <meta name="twitter:description" content="Compose ton pokébowl et commande en ligne." />
   <meta name="twitter:image" content="https://www.exemple.com/og-cover.jpg" />
 
-  <meta id="vp" name="viewport" content="width=1200, initial-scale=1, maximum-scale=1, user-scalable=no">
-
   <style>
     :root{
       --brand:#ff3a3a; --brand-2:#ff7a59;
@@ -47,42 +48,33 @@
       padding:.65rem 1rem;background:#fff;border-bottom:1px solid #f1f1f1;
       backdrop-filter:saturate(1.2) blur(4px);
     }
-/* Topbar brand */
-.brand{
-  display:flex;align-items:center;gap:.6rem;
-  font-weight:800;color:var(--brand);
-  letter-spacing:.2px;
-}
-.brand .logo{
-  height:80px;      /* ← plus grand qu'avant (32px) */
-  width:auto;display:block
-}
-@media (max-width:480px){
-  .brand-name{display:none} /* logo seul sur petit mobile */
-}
-/* Logo en haut de la page (dans le hero) */
-.logo-hero{
-  height:200px;           /* taille confortable desktop */
-  width:auto;display:block;
-  margin:0 auto 12px;    /* centré au-dessus du H1 */
-  filter: drop-shadow(0 6px 16px rgba(0,0,0,.12));
-}
-@media (max-width:480px){
-  .logo-hero{height:180px;}
-}
+    /* Topbar brand */
+    .brand{
+      display:flex;align-items:center;gap:.6rem;
+      font-weight:800;color:var(--brand);
+      letter-spacing:.2px;
+    }
+    .brand .logo{
+      height:56px; /* taille raisonnable pour éviter l'impression de zoom */
+      width:auto;display:block
+    }
+    @media (max-width:480px){ .brand-name{display:none} }
 
+    /* Logo hero */
+    .logo-hero{
+      height:180px; width:auto; display:block; margin:0 auto 12px;
+      filter: drop-shadow(0 6px 16px rgba(0,0,0,.12));
+    }
 
     .nav{display:flex;gap:.6rem;flex-wrap:wrap}
     .nav a{padding:.55rem .9rem;border-radius:999px;text-decoration:none;color:#374151;font-weight:600}
     .nav a:hover{background:#f8f8f8}
-    .nav a.cta{
-      background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff;box-shadow:0 6px 16px var(--ring)
-    }
+    .nav a.cta{background:linear-gradient(90deg,var(--brand),var(--brand-2));color:#fff;box-shadow:0 6px 16px var(--ring)}
     .nav a.cta:hover{filter:brightness(.98)}
 
     /* Hero */
     header.hero{
-      color:#fff;text-align:center;padding:64px 16px 56px;
+      color:#fff;text-align:center;padding:32px 16px 40px;
       background:
         radial-gradient(1100px 380px at 50% -60%, rgba(255,255,255,.22), transparent),
         linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
@@ -91,8 +83,10 @@
     header.hero p{opacity:.95}
     .cta-group{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin-top:16px}
     .btn{
-      display:inline-block;padding:1rem 1.4rem;border-radius:14px;font-weight:800;text-decoration:none;
-      box-shadow:0 8px 24px var(--ring);background:#fff;color:var(--brand);transition:transform .15s ease, box-shadow .15s ease
+      display:inline-flex; align-items:center; justify-content:center; white-space:nowrap; line-height:1;
+      padding:1rem 1.2rem;border-radius:14px;font-weight:800;text-decoration:none;
+      box-shadow:0 8px 24px var(--ring);background:#fff;color:var(--brand);
+      transition:transform .15s ease, box-shadow .15s ease
     }
     .btn:hover{transform:translateY(-1px)}
     .btn.alt{background:transparent;color:#fff;border:2px solid #fff;box-shadow:none}
@@ -107,9 +101,7 @@
 
     /* Carte/vidéo */
     .video-wrapper{display:block;max-width:720px;margin:8px auto 0}
-    .video-wrapper video{
-      width:100%;border-radius:16px;box-shadow:var(--shadow);display:block
-    }
+    .video-wrapper video{width:100%;border-radius:16px;box-shadow:var(--shadow);display:block}
 
     /* Horaires & accès */
     .hours{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
@@ -137,59 +129,14 @@
     @media (prefers-reduced-motion: reduce){
       .btn, .nav a.cta{transition:none}
     }
-
-    /* === Overrides compacts (à coller en bas de ton <style>) === */
-:root{
-  --sep-w: 36px;   /* largeur de la barre décorative */
-  --sep-h: 2px;    /* épaisseur de la barre */
-  --sep-mt: 6px;   /* marge au-dessus de la barre */
-}
-
-/* Barres sous les titres de sections (tu l'avais déjà sur h2) */
-.section h2::after{
-  width: var(--sep-w);
-  height: var(--sep-h);
-  margin-top: var(--sep-mt);
-}
-
-/* Si tu as une barre sur le H1 du hero, on la miniaturise pareil */
-header.hero h1::after{
-  content:"";
-  display:block;
-  width: var(--sep-w);
-  height: var(--sep-h);
-  background: linear-gradient(90deg,var(--brand),var(--brand-2));
-  border-radius: 999px;
-  margin: var(--sep-mt) auto 0;
-}
-
-/* Air autour du logo du hero et des textes (plus resserré) */
-.logo-hero{ margin: 4px auto 6px; }
-header.hero p{ margin-top: 6px; }
-.statusrow{ margin: .6rem 0 .8rem; }
-.cta-group{ margin-top: 10px; }
-/* 1) Topbar un peu plus fine (garde un logo impactant) */
-.topbar{ padding: .35rem 1rem; }         /* était .65rem */
-.brand .logo{ height: 56px; }            /* était 80px */
-
-/* 2) Réduire l’espace au-dessus du logo du hero */
-header.hero{ padding: 20px 16px 48px; }  /* était 64px 16px 56px */
-@media (max-width:720px){
-  header.hero{ padding: 14px 12px 36px; }
-}
-
-/* 3) Option si tu veux garder un très grand logo topbar :
-      on “remonte” visuellement le logo du hero */
-header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
-
   </style>
 </head>
 <body>
   <!-- Topbar -->
   <div class="topbar" role="navigation" aria-label="Navigation principale">
-<div class="brand">
-  <img src="images/Logonouveautest4.png" alt="L'Atelier du Bowl" class="logo" width="36" height="36" decoding="async">
-</div>
+    <div class="brand">
+      <img src="images/Logonouveautest4.png" alt="L'Atelier du Bowl" class="logo" width="56" height="56" decoding="async">
+    </div>
     <nav class="nav">
       <a href="carte.html">Carte</a>
       <a href="#horaires">Horaires & Accès</a>
@@ -198,9 +145,8 @@ header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
     </nav>
   </div>
 
-<!-- APRÈS -->
-<header class="hero" role="banner">
-  <img src="images/logo222.png" alt="L'Atelier du Bowl" class="logo-hero" width="400" height="400" decoding="async">
+  <header class="hero" role="banner">
+    <img src="images/logo222.png" alt="L'Atelier du Bowl" class="logo-hero" width="400" height="400" decoding="async">
     <p>Compose ton pokébowl avec des produits frais, colorés et tropicaux 🌿</p>
     <div class="statusrow">
       <span id="storeDot" class="dot" aria-hidden="true"></span>
@@ -218,8 +164,6 @@ header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
       <div class="video-wrapper">
         <video controls muted autoplay loop preload="metadata" playsinline aria-label="Vidéo de présentation">
           <source src="images/pub.mp4" type="video/mp4">
-          <!-- Optionnel : ajoute aussi une source WebM si tu en crées une -->
-          <!-- <source src="images/pub.webm" type="video/webm"> -->
           Votre navigateur ne supporte pas la lecture vidéo.
           <a href="images/pub.mp4">Télécharger la vidéo</a>.
         </video>
@@ -248,11 +192,11 @@ header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
       </div>
     </section>
 
-    <!-- Contact (pour le lien #contact) -->
+    <!-- Contact -->
     <section class="section" id="contact" aria-labelledby="titre-contact">
       <h2 id="titre-contact">Contact</h2>
       <p class="muted">Une question ? Nous répondons rapidement.</p>
-      <p><a class="btn" href="tel:+33XXXXXXXXX">Appeler</a> </p>
+      <p><a class="btn" href="tel:+33XXXXXXXXX">Appeler</a></p>
     </section>
   </main>
 
@@ -278,8 +222,6 @@ header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
     <a class="btn" href="carte.html">Commander</a>
     <a class="btn" href="tel:+33XXXXXXXXX">Appeler</a>
   </div>
-
-
 
   <!-- Données structurées Restaurant -->
   <script type="application/ld+json">
@@ -315,74 +257,50 @@ header.hero .logo-hero{ margin-top: -8px; }  /* mets -12px/-16px si besoin */
       const ranges=HOURS[d]||[], open=ranges.some(([o,c])=>min>=toMinutes(o)&&min<toMinutes(c));
       const next=ranges.find(([o])=>min<toMinutes(o));
       const dot=document.getElementById('storeDot'), txt=document.getElementById('statusText');
-      if(open){ dot.style.background='#34c759'; txt.textContent='Ouvert en ce moment'; }
-      else if(next){ dot.style.background='#ff9500'; txt.textContent=`Réouvre à ${next[0]}`; }
-      else{ dot.style.background='#e74c3c'; txt.textContent=`Fermé depuis 21h`; }
-      document.getElementById('todayHours').textContent = ranges.length ? ranges.map(r=>r.join('–')).join(' / ') : 'Fermé';
+      if(dot && txt){
+        if(open){ dot.style.background='#34c759'; txt.textContent='Ouvert en ce moment'; }
+        else if(next){ dot.style.background='#ff9500'; txt.textContent=`Réouvre à ${next[0]}`; }
+        else{ dot.style.background='#e74c3c'; txt.textContent=`Fermé depuis 21h`; }
+      }
+      const th=document.getElementById('todayHours');
+      if(th) th.textContent = ranges.length ? ranges.map(r=>r.join('–')).join(' / ') : 'Fermé';
     }
-
-    // Cookies
-    const banner=document.getElementById('cookieBanner'); const KEY='ce-consent';
-    (function(){ if(localStorage.getItem(KEY)===null) banner.style.display='block'; })();
-    document.getElementById('cookieAccept').addEventListener('click',()=>{localStorage.setItem(KEY,'accepted');banner.style.display='none';});
-    document.getElementById('cookieDecline').addEventListener('click',()=>{localStorage.setItem(KEY,'declined');banner.style.display='none';});
-
     updateStatus(); setInterval(updateStatus,60*1000);
 
-(function(){
-  const TARGET = 1200; // largeur "desktop" visée en px
+    // —— Forcer rendu "desktop" sans effet tout-zoomé —— //
+    (function(){
+      const TARGET = 1200;               // largeur CSS cible (desktop)
+      const MIN_SCALE = 0.28;            // échelle minimale (évite un rendu trop minuscule)
+      const MAX_SCALE = 1;               // jamais >1
 
-  function ensureViewportTag(){
-    let m = document.getElementById('vp');
-    if (!m){
-      m = document.createElement('meta');
-      m.id = 'vp';
-      m.name = 'viewport';
-      document.head.appendChild(m);
-    }
-    return m;
-  }
+      function getDeviceWidth(){
+        // largeur dispo la plus fiable selon navigateur
+        const w = Math.max(320, Math.min(window.innerWidth || 0, screen.width || 0));
+        return w;
+      }
 
-  function setDesktopViewport(){
-    const vp = ensureViewportTag();
+      function setDesktopViewport(){
+        const vp = document.querySelector('meta[name="viewport"]') || (()=>{
+          const m=document.createElement('meta'); m.name='viewport'; document.head.prepend(m); return m;
+        })();
 
-    // largeur dispo (prend la plus fiable selon l’appareil)
-    const devW = Math.max(320, Math.min(window.innerWidth || 0, screen.width || 0));
-    // calcule le zoom pour faire tenir 1200px dans l’écran
-    const scale = Math.max(0.25, Math.min(1, devW / TARGET));
+        const devW = getDeviceWidth();
+        let scale = devW / TARGET;       // ajuste pour faire "tenir" 1200px
+        scale = Math.max(MIN_SCALE, Math.min(MAX_SCALE, scale));
 
-    // verrouille l’échelle pour garder le rendu "desktop"
-    vp.setAttribute('content',
-      `width=${TARGET},initial-scale=${scale},maximum-scale=${scale},user-scalable=no`
-    );
+        // verrouille l’échelle pour stabilité visuelle
+        vp.setAttribute('content',
+          `width=${TARGET}, initial-scale=${scale}, maximum-scale=${scale}, user-scalable=no`
+        );
 
-    document.documentElement.classList.add('desktop-mode');
-  }
+        document.documentElement.classList.add('desktop-mode');
+      }
 
-  // appliquer dès que possible et réappliquer si l’orientation change
-  document.addEventListener('DOMContentLoaded', setDesktopViewport);
-  window.addEventListener('load', setDesktopViewport);
-  window.addEventListener('orientationchange', ()=> setTimeout(setDesktopViewport, 150));
-  window.addEventListener('resize', setDesktopViewport);
-})();
-</script>
-
+      document.addEventListener('DOMContentLoaded', setDesktopViewport, { once:true });
+      window.addEventListener('load', setDesktopViewport);
+      window.addEventListener('orientationchange', ()=> setTimeout(setDesktopViewport, 150));
+      window.addEventListener('resize', setDesktopViewport);
+    })();
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
