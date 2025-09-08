@@ -269,8 +269,8 @@
 
     // —— Forcer rendu "desktop" sans effet tout-zoomé —— //
     (function(){
-      const TARGET = 1200;               // largeur CSS cible (desktop)
-      const MIN_SCALE = 0.28;            // échelle minimale (évite un rendu trop minuscule)
+      const TARGET = 1000;               // largeur CSS cible (desktop)
+      const MIN_SCALE = 0.15;            // échelle minimale (évite un rendu trop minuscule)
       const MAX_SCALE = 1;               // jamais >1
 
       function getDeviceWidth(){
@@ -304,3 +304,4 @@
   </script>
 </body>
 </html>
+
